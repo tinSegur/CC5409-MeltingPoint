@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 @onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
