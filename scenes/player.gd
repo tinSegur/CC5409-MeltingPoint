@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-var gravity = 0.98
+var gravity = 9.8
 var jump_speed = 0.2
 var speed = 0.15
 var acceleration = 0.1
@@ -30,7 +30,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
-		velocity.y -= gravity * delta
+		velocity.y += gravity * delta
 		
 	if is_multiplayer_authority():
 		if Input.is_action_just_pressed("jump"):
