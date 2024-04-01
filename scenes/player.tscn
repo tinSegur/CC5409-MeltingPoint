@@ -30,3 +30,10 @@ spawn_path = NodePath(".")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8jyo0")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+
+[node name="MiningRaycast" type="RayCast2D" parent="."]
+target_position = Vector2(280, 0)
+collision_mask = 2
