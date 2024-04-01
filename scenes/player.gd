@@ -2,9 +2,9 @@ class_name Player
 extends CharacterBody2D
 
 var gravity = 98
-var jump_speed = 20
-var speed = 15
-var acceleration = 10
+var jump_speed = 80
+var speed = 60
+var acceleration = 60
 
 @onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
 @onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
@@ -33,8 +33,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y += gravity * delta
 		
 	if is_multiplayer_authority():
-		if Input.is_action_just_pressed("jump"):
-			test.rpc("jump!")
+		if Input.is_action_just_pressed("jump") && is_on_floor():
 			velocity.y = -jump_speed
 		
 		var move_input = Input.get_axis("move_left", "move_right")
