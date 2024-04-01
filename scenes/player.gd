@@ -20,6 +20,11 @@ var acceleration = 60
 
 var mining = false
 var mining_radius = 400
+var can_mine = true
+@onready var mine_timer = $MineTimer
+
+func _ready():
+	mine_timer.connect("timeout", _on_mine_timer_timeout)
 
 func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
@@ -51,6 +56,16 @@ func _physics_process(delta: float) -> void:
 		mining_raycast.target_position = mining_radius * Vector2.ZERO.direction_to(mouse_dir)
 		
 	move_and_slide()
+	
+	if mining:
+		if can_mine and mining_raycast.is_colliding():
+			var tilemap = mining_raycast.get_collider()
+			if tilemap.is_class("TileMap"):
+				var collision_point = mining_raycast.get_collision_point()
+				var dir = Vector2.ZERO.direction_to(mining_raycast.target_position)
+				tilemap.mine(collision_point + dir)
+				can_mine = false
+				mine_timer.start()
 
 
 
@@ -61,6 +76,9 @@ func setup(player_data: Statics.PlayerData):
 	multiplayer_synchronizer.set_multiplayer_authority(player_data.id)
 	if is_multiplayer_authority():
 		camera.enabled = true
+
+func _on_mine_timer_timeout():
+	can_mine = true
 
 @rpc("authority", "call_local", "reliable")
 func test(name):
