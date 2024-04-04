@@ -9,7 +9,10 @@ const PORT = 5409
 enum Role {
 	NONE,
 	ROLE_A,
-	ROLE_B
+	ROLE_B,
+	ENGINEER,
+	SCIENTIST,
+	SCOUT
 }
 
 
