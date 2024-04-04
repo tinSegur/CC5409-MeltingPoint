@@ -20,4 +20,5 @@ role = 0
 
 [node name="Game" type="Node"]
 script = ExtResource("1_fmbhi")
+multiplayer_test = false
 test_players = Array[ExtResource("2_xaonh")]([SubResource("Resource_idn80"), SubResource("Resource_bfnpb"), SubResource("Resource_0u2jv")])
