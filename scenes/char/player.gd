@@ -19,7 +19,6 @@ var class_scene_dict = {
 @onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
 @onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var camera = $Camera2D
-@onready var mining_raycast: RayCast2D = $MiningRaycast
 @export var bullet_scene: PackedScene
 
 @export var score = 1 :
@@ -27,10 +26,12 @@ var class_scene_dict = {
 		score = value
 		Debug.sprint("Player %s score %d" % [name, score])
 
+@onready var mining_raycast: RayCast2D = $MiningRaycast
+@onready var mine_timer = $MineTimer
 var mining = false
 var mining_radius = 400
-var can_mine = true
-@onready var mine_timer = $MineTimer
+var mining_coords : Vector2 = Vector2.ZERO
+var mining_progress = 0
 
 func _ready():
 	mine_timer.connect("timeout", _on_mine_timer_timeout)
@@ -39,8 +40,19 @@ func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
 		if event.is_action_pressed("mine"):
 			mining = true
+			if mining_raycast.is_colliding():
+				var tilemap = mining_raycast.get_collider()
+				var collision_point = mining_raycast.get_collision_point()
+				var dir = Vector2.ZERO.direction_to(mining_raycast.target_position)
+				mining_coords = tilemap.get_tile_coords(collision_point + dir)
+				tilemap.breaking(mining_coords, 0)
+				mine_timer.start(0.5)
 		if event.is_action_released("mine"):
 			mining = false
+			mining_progress = 0
+			if mining_raycast.is_colliding():
+				var tilemap = mining_raycast.get_collider()
+				tilemap.breaking(mining_coords, 0)
 		if event.is_action_pressed("test"):
 			test.rpc(Game.get_current_player().name)
 			var bullet = bullet_scene.instantiate()
@@ -67,16 +79,26 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	if mining:
-		if can_mine and mining_raycast.is_colliding():
+		if mining_raycast.is_colliding():
 			var tilemap = mining_raycast.get_collider()
-			if tilemap.is_class("TileMap"):
-				var collision_point = mining_raycast.get_collision_point()
-				var dir = Vector2.ZERO.direction_to(mining_raycast.target_position)
-				tilemap.mine(collision_point + dir)
-				can_mine = false
-				mine_timer.start()
-
-
+			var collision_point = mining_raycast.get_collision_point()
+			var dir = Vector2.ZERO.direction_to(mining_raycast.target_position)
+			var tile_coords = tilemap.get_tile_coords(collision_point + dir)
+			if(tile_coords == mining_coords):
+				tilemap.breaking(mining_coords, mining_progress)
+				if mine_timer.is_stopped():
+					mine_timer.start(0.5)
+			else:
+				tilemap.breaking(mining_coords, 0)
+				mining_coords = tile_coords
+				mining_progress = 0
+				mine_timer.start(0.5)
+		else:
+			if mining_progress > 0:
+				var tilemap = get_tree().current_scene.find_child("TileMap")
+				tilemap.breaking(mining_coords, 0)
+				mining_progress = 0
+				mine_timer.stop()
 
 func setup(player_data: Statics.PlayerData):
 	name = str(player_data.id)
@@ -93,7 +115,10 @@ func setup(player_data: Statics.PlayerData):
 		camera.enabled = true
 
 func _on_mine_timer_timeout():
-	can_mine = true
+	if mining:
+		Debug.sprint(mining_progress)
+		mining_progress += 1
+		mine_timer.start(0.5)
 
 @rpc("authority", "call_local", "reliable")
 func test(name):
