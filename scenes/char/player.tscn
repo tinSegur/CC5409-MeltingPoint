@@ -14,7 +14,7 @@ properties/0/replication_mode = 2
 
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(0.2, 0.2)
-collision_mask = 2
+collision_mask = 8
 script = ExtResource("1_7q1sy")
 bullet_scene = ExtResource("2_pyqhq")
 
@@ -36,7 +36,8 @@ enabled = false
 
 [node name="MiningRaycast" type="RayCast2D" parent="."]
 target_position = Vector2(280, 0)
-collision_mask = 2
+collision_mask = 8
 
 [node name="MineTimer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 0.5
+one_shot = true
