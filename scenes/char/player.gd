@@ -116,7 +116,6 @@ func setup(player_data: Statics.PlayerData):
 
 func _on_mine_timer_timeout():
 	if mining:
-		Debug.sprint(mining_progress)
 		mining_progress += 1
 		mine_timer.start(0.5)
 
