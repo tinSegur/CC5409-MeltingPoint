@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bal6y01g2thj2"]
+
+[ext_resource type="Script" path="res://scenes/char/scientist_node.gd" id="1_o8qcv"]
+[ext_resource type="Texture2D" uid="uid://b1jtc6diajig3" path="res://assets/tilemaps/rock.png" id="2_lpdun"]
+
+[node name="ScientistNode" type="Node2D"]
+script = ExtResource("1_o8qcv")
+player_sprite = ExtResource("2_lpdun")

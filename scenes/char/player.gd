@@ -5,6 +5,15 @@ var gravity = 98
 var jump_speed = 80
 var speed = 60
 var acceleration = 60
+var class_enum = Statics.Role
+
+var class_node
+
+var class_scene_dict = {
+	class_enum.ENGINEER : preload("res://scenes/char/engineer_node.tscn"),
+	class_enum.SCIENTIST : preload("res://scenes/char/scientist_node.tscn"),
+	class_enum.SCOUT : preload("res://scenes/char/scout_node.tscn")	
+}
 
 
 @onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
@@ -74,6 +83,12 @@ func setup(player_data: Statics.PlayerData):
 	set_multiplayer_authority(player_data.id)
 	multiplayer_spawner.set_multiplayer_authority(player_data.id)
 	multiplayer_synchronizer.set_multiplayer_authority(player_data.id)
+	
+	class_node = class_scene_dict[player_data.role].instantiate()
+	add_child(class_node)
+	
+	$Sprite2D.set_texture(class_node.get_player_sprite())
+	
 	if is_multiplayer_authority():
 		camera.enabled = true
 

@@ -3,15 +3,18 @@
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_fmbhi"]
 [ext_resource type="Script" path="res://scripts/player_data_resource.gd" id="2_xaonh"]
 
-[sub_resource type="Resource" id="Resource_idn80"]
+
+[sub_resource type="Resource" id="Resource_wvgo3"]
 script = ExtResource("2_xaonh")
-name = "Server"
-role = 0
+name = "server"
+role = 3
+
 
 [sub_resource type="Resource" id="Resource_bfnpb"]
 script = ExtResource("2_xaonh")
-name = "Client"
-role = 0
+
+name = "client"
+role = 4
 
 [sub_resource type="Resource" id="Resource_0u2jv"]
 script = ExtResource("2_xaonh")
@@ -22,3 +25,4 @@ role = 0
 script = ExtResource("1_fmbhi")
 multiplayer_test = false
 test_players = Array[ExtResource("2_xaonh")]([SubResource("Resource_idn80"), SubResource("Resource_bfnpb"), SubResource("Resource_0u2jv")])
+
