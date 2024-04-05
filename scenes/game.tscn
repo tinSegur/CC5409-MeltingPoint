@@ -1,28 +1,24 @@
 [gd_scene load_steps=6 format=3 uid="uid://b6cfq0qe7ynw6"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_fmbhi"]
-[ext_resource type="Script" path="res://scripts/player_data_resource.gd" id="2_xaonh"]
+[ext_resource type="Script" path="res://scripts/player_data_resource.gd" id="2_jtkqd"]
 
-
-[sub_resource type="Resource" id="Resource_wvgo3"]
-script = ExtResource("2_xaonh")
-name = "server"
+[sub_resource type="Resource" id="Resource_7n774"]
+script = ExtResource("2_jtkqd")
+name = "Server"
 role = 3
 
-
-[sub_resource type="Resource" id="Resource_bfnpb"]
-script = ExtResource("2_xaonh")
-
-name = "client"
+[sub_resource type="Resource" id="Resource_whfqj"]
+script = ExtResource("2_jtkqd")
+name = "Client1"
 role = 4
 
-[sub_resource type="Resource" id="Resource_0u2jv"]
-script = ExtResource("2_xaonh")
+[sub_resource type="Resource" id="Resource_d74em"]
+script = ExtResource("2_jtkqd")
 name = "Client2"
-role = 0
+role = 5
 
 [node name="Game" type="Node"]
 script = ExtResource("1_fmbhi")
 multiplayer_test = false
-test_players = Array[ExtResource("2_xaonh")]([SubResource("Resource_idn80"), SubResource("Resource_bfnpb"), SubResource("Resource_0u2jv")])
-
+test_players = Array[ExtResource("2_jtkqd")]([SubResource("Resource_7n774"), SubResource("Resource_whfqj"), SubResource("Resource_d74em")])

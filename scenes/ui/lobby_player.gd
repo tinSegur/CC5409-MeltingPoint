@@ -37,12 +37,12 @@ func _set_player_name(value: String) -> void:
 func _set_player_role(value: Statics.Role) -> void:
 	player_role.visible = value != Statics.Role.NONE
 	match value:
-		Statics.Role.ROLE_A:
-			player_role.text = "Role A"
-		Statics.Role.ROLE_B:
-			player_role.text = "Role B"
-		Statics.Role.ROLE_C:
-			player_role.text = "Role C"
+		Statics.Role.SCOUT:
+			player_role.text = "Scout"
+		Statics.Role.SCIENTIST:
+			player_role.text = "Scientist"
+		Statics.Role.ENGINEER:
+			player_role.text = "Engineer"
 
 
 func set_ready(value: bool) -> void:

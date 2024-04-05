@@ -63,9 +63,9 @@ func _ready():
 	back_join.pressed.connect(_back_menu)
 	back_ready.pressed.connect(_back_menu)
 	
-	role_a.pressed.connect(func(): Game.set_current_player_role(Statics.Role.ROLE_A))
-	role_b.pressed.connect(func(): Game.set_current_player_role(Statics.Role.ROLE_B))
-	role_c.pressed.connect(func(): Game.set_current_player_role(Statics.Role.ROLE_C))
+	role_a.pressed.connect(func(): Game.set_current_player_role(Statics.Role.ENGINEER))
+	role_b.pressed.connect(func(): Game.set_current_player_role(Statics.Role.SCIENTIST))
+	role_c.pressed.connect(func(): Game.set_current_player_role(Statics.Role.SCOUT))
 	
 	ready_toggle.pressed.connect(_on_ready_toggled)
 	
@@ -244,7 +244,7 @@ func _check_ready() -> void:
 	for player in Game.players:
 		if not player.role in roles and player.role != Statics.Role.NONE:
 			roles.push_back(player.role)
-	ready_toggle.disabled = roles.size() != Statics.Role.size() - 1
+	ready_toggle.disabled = roles.size() != 3
 
 
 func _disconnect():
