@@ -2,7 +2,7 @@ class_name Statics
 extends Node
 
 
-const MAX_CLIENTS = 1
+const MAX_CLIENTS = 2
 const PORT = 5409
 
 
@@ -13,6 +13,7 @@ enum Role {
 	ENGINEER,
 	SCIENTIST,
 	SCOUT
+
 }
 
 

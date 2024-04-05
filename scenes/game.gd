@@ -3,7 +3,7 @@ extends Node
 signal players_updated
 signal player_updated(id)
 
-@export var multiplayer_test = false
+@export var multiplayer_test = true
 
 # [ {id: int, name: string, rol: Rol} ]
 var players: Array[Statics.PlayerData] = []
