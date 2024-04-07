@@ -11,15 +11,22 @@ func mine(coords: Vector2):
 func breaking(coords: Vector2, level: int):
 	if level != progress:
 		if level==0:
-			erase_cell(1, coords)
+			break_anim.rpc(coords, 0)
 			progress = 0
 		elif level >= 4:
-			erase_cell(1, coords)
+			break_anim.rpc(coords, 0)
 			mine(coords)
 			progress = 0
 		else:
-			set_cell(1, coords, 1, Vector2(level - 1, 0))
+			break_anim.rpc(coords, level)
 			progress = level
+
+@rpc("any_peer", "call_local", "reliable")
+func break_anim(coords: Vector2, level: int):
+	if level == 0 :
+		erase_cell(1, coords)
+	else:
+		set_cell(1, coords, 1, Vector2(level - 1, 0))
 
 func get_tile_coords(coords):
 	return to_local(local_to_map(coords))
