@@ -244,7 +244,7 @@ func _check_ready() -> void:
 	for player in Game.players:
 		if not player.role in roles and player.role != Statics.Role.NONE:
 			roles.push_back(player.role)
-	ready_toggle.disabled = roles.size() != 3
+	ready_toggle.disabled = roles.size() != Game.players.size()
 
 
 func _disconnect():
