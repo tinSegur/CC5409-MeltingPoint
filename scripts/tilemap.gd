@@ -2,6 +2,10 @@ extends TileMap
 
 var progress = 0
 
+func _input(event):
+	if event.is_action_pressed("show_temp"):
+		set_layer_enabled(2, !is_layer_enabled(2))
+
 func mine(coords: Vector2):
 	var tile: TileData = get_cell_tile_data(0, coords)
 	if is_instance_valid(tile):
