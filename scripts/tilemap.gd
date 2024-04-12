@@ -2,6 +2,10 @@ extends TileMap
 
 var progress = 0
 
+func _input(event):
+	if event.is_action_pressed("show_temp"):
+		set_layer_enabled(2, !is_layer_enabled(2))
+
 func mine(coords: Vector2):
 	var tile: TileData = get_cell_tile_data(0, coords)
 	if is_instance_valid(tile):
@@ -34,3 +38,21 @@ func get_tile_coords(coords):
 @rpc("any_peer", "call_local", "reliable")
 func mine_tile(layer: int, coords: Vector2):
 	erase_cell(layer, coords)
+	
+@rpc("authority", "call_local", "reliable")
+func generate_resource(ore: String, cell_position: Vector2i):
+	var ore_atlas_coordinates : Vector2
+	
+	match ore:
+		"Iron":
+			ore_atlas_coordinates = Vector2(10,1)
+		"Gold":
+			ore_atlas_coordinates = Vector2(10,0)
+		"Unstable_Ore":
+			ore_atlas_coordinates = Vector2(8,1)
+		_:
+			return
+	
+	set_cell(0,cell_position,0,ore_atlas_coordinates)
+	
+

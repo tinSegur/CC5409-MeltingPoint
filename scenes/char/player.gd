@@ -59,12 +59,7 @@ func _input(event: InputEvent) -> void:
 				var tilemap = mining_raycast.get_collider()
 				tilemap.breaking(mining_coords, 0)
 		if event.is_action_pressed("test"):
-			test.rpc(Game.get_current_player().name)
-			var bullet = bullet_scene.instantiate()
-			# spawner will spawn a bullet on every simulated
-			multiplayer_spawner.add_child(bullet, true)
-			# triggers syncronizer
-			score += 1
+			test()
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -126,13 +121,12 @@ func _on_mine_timer_timeout():
 		mining_progress += 1
 		mine_timer.start(0.5)
 
-@rpc("authority", "call_local", "reliable")
-func test(name):
-	var message = "test " + name
-	var sender_id = multiplayer.get_remote_sender_id()
-	var sender_player = Game.get_player(sender_id)
-	Debug.sprint(message)
-	Debug.sprint(sender_player.name)
+func test():
+	var tilemap = get_tree().current_scene.find_child("TileMap")
+	var tile_coords = tilemap.get_tile_coords(global_position)
+	var tile: TileData = tilemap.get_cell_tile_data(2, tile_coords)
+	if is_instance_valid(tile):
+		Debug.sprint(tile.get_custom_data("temperature"))
 
 @rpc
 func send_data(pos : Vector2, vel : Vector2):
