@@ -38,3 +38,21 @@ func get_tile_coords(coords):
 @rpc("any_peer", "call_local", "reliable")
 func mine_tile(layer: int, coords: Vector2):
 	erase_cell(layer, coords)
+	
+@rpc("authority", "call_local", "reliable")
+func generate_resource(ore: String, cell_position: Vector2i):
+	var ore_atlas_coordinates : Vector2
+	
+	match ore:
+		"Iron":
+			ore_atlas_coordinates = Vector2(10,1)
+		"Gold":
+			ore_atlas_coordinates = Vector2(10,0)
+		"Unstable_Ore":
+			ore_atlas_coordinates = Vector2(8,1)
+		_:
+			return
+	
+	set_cell(0,cell_position,0,ore_atlas_coordinates)
+	
+
