@@ -1,10 +1,10 @@
 class_name Player
 extends CharacterBody2D
 
-var gravity = 98
-var jump_speed = 80
-var speed = 60
-var acceleration = 60
+var gravity = 200#98
+var jump_speed = 135#80
+var speed = 85#60
+var acceleration = 200#60
 var class_enum = Statics.Role
 
 var class_node
@@ -20,6 +20,7 @@ var class_scene_dict = {
 @onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var camera = $Camera2D
 @export var bullet_scene: PackedScene
+@onready var pivot = $Pivot
 
 @export var score = 1 :
 	set(value):
@@ -29,7 +30,7 @@ var class_scene_dict = {
 @onready var mining_raycast: RayCast2D = $MiningRaycast
 @onready var mine_timer = $MineTimer
 var mining = false
-var mining_radius = 400
+var mining_radius = 60
 var mining_coords : Vector2 = Vector2.ZERO
 var mining_progress = 0
 
@@ -66,7 +67,11 @@ func _physics_process(delta: float) -> void:
 		
 		var move_input = Input.get_axis("move_left", "move_right")
 		velocity.x = move_toward(velocity.x, move_input * speed, acceleration * delta)
-		send_data.rpc(global_position, velocity)
+		
+		if move_input != 0:
+			pivot.scale.x = -sign(move_input)
+		
+		send_data.rpc(global_position, velocity, pivot.scale.x)
 		
 		var mouse_dir = to_local(get_global_mouse_position())
 		mining_raycast.target_position = mining_radius * Vector2.ZERO.direction_to(mouse_dir)
@@ -104,7 +109,7 @@ func setup(player_data: Statics.PlayerData):
 	class_node = class_scene_dict[player_data.role].instantiate()
 	add_child(class_node)
 	
-	$Sprite2D.set_texture(class_node.get_player_sprite())
+	$Pivot/Sprite2D.set_texture(class_node.get_player_sprite())
 	
 	if is_multiplayer_authority():
 		camera.enabled = true
@@ -122,6 +127,7 @@ func test():
 		Debug.sprint(tile.get_custom_data("temperature"))
 
 @rpc
-func send_data(pos : Vector2, vel : Vector2):
+func send_data(pos : Vector2, vel : Vector2, scale: int):
 	global_position = lerp(global_position, pos, 0.75)
 	velocity = lerp(velocity, vel, 0.75)
+	pivot.scale.x = scale
