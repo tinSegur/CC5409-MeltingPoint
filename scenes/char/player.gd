@@ -1,6 +1,12 @@
 class_name Player
 extends CharacterBody2D
 
+
+var gravity = 200
+var jump_speed = 135
+var speed = 85
+var acceleration = 200
+
 var class_enum = Statics.Role
 
 var class_node
@@ -25,6 +31,7 @@ var stat_dict = {
 @onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var camera = $Camera2D
 @export var bullet_scene: PackedScene
+@onready var pivot = $Pivot
 
 @export var score = 1 :
 	set(value):
@@ -34,7 +41,7 @@ var stat_dict = {
 @onready var mining_raycast: RayCast2D = $MiningRaycast
 @onready var mine_timer = $MineTimer
 var mining = false
-var mining_radius = 400
+var mining_radius = 60
 var mining_coords : Vector2 = Vector2.ZERO
 var mining_progress = 0
 
@@ -70,8 +77,14 @@ func _physics_process(delta: float) -> void:
 			velocity.y = -stat_dict["jump_speed"]
 		
 		var move_input = Input.get_axis("move_left", "move_right")
-		velocity.x = move_toward(velocity.x, move_input * stat_dict["speed"], stat_dict["acceleration"] * delta)
-		send_data.rpc(global_position, velocity)
+
+		velocity.x = move_toward(velocity.x, move_input * speed, acceleration * delta)
+		
+		if move_input != 0:
+			pivot.scale.x = -sign(move_input)
+		
+		send_data.rpc(global_position, velocity, pivot.scale.x)
+
 		
 		var mouse_dir = to_local(get_global_mouse_position())
 		mining_raycast.target_position = mining_radius * Vector2.ZERO.direction_to(mouse_dir)
@@ -109,7 +122,7 @@ func setup(player_data: Statics.PlayerData):
 	class_node = class_scene_dict[player_data.role].instantiate()
 	add_child(class_node)
 	
-	$Sprite2D.set_texture(class_node.get_player_sprite())
+	$Pivot/Sprite2D.set_texture(class_node.get_player_sprite())
 	
 	stat_dict = class_node.get_stats()
 	
@@ -129,6 +142,7 @@ func test():
 		Debug.sprint(tile.get_custom_data("temperature"))
 
 @rpc
-func send_data(pos : Vector2, vel : Vector2):
+func send_data(pos : Vector2, vel : Vector2, scale: int):
 	global_position = lerp(global_position, pos, 0.75)
 	velocity = lerp(velocity, vel, 0.75)
+	pivot.scale.x = scale
