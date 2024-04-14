@@ -6,6 +6,7 @@ var gravity = 200
 var jump_speed = 135
 var speed = 85
 var acceleration = 200
+var mine_time = 0.5
 
 var class_enum = Statics.Role
 
@@ -70,11 +71,11 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
-		velocity.y += stat_dict["gravity"] * delta
+		velocity.y += gravity * delta
 		
 	if is_multiplayer_authority():
 		if Input.is_action_just_pressed("jump") && is_on_floor():
-			velocity.y = -stat_dict["jump_speed"]
+			velocity.y = -jump_speed
 		
 		var move_input = Input.get_axis("move_left", "move_right")
 
@@ -100,12 +101,12 @@ func _physics_process(delta: float) -> void:
 			if(tile_coords == mining_coords):
 				tilemap.breaking(mining_coords, mining_progress)
 				if mine_timer.is_stopped():
-					mine_timer.start(stat_dict["mine_time"])
+					mine_timer.start(mine_time)
 			else:
 				tilemap.breaking(mining_coords, 0)
 				mining_coords = tile_coords
 				mining_progress = 0
-				mine_timer.start(stat_dict["mine_time"])
+				mine_timer.start(mine_time)
 		else:
 			if mining_progress > 0:
 				var tilemap = get_tree().current_scene.find_child("TileMap")
@@ -125,6 +126,14 @@ func setup(player_data: Statics.PlayerData):
 	$Pivot/Sprite2D.set_texture(class_node.get_player_sprite())
 	
 	stat_dict = class_node.get_stats()
+	
+	gravity = stat_dict.gravity
+	jump_speed = stat_dict.jump_speed
+	speed = stat_dict.speed
+	acceleration = stat_dict.acceleration
+	mine_time = stat_dict.mine_time
+	mining_radius = stat_dict.mining_radius
+	
 	
 	if is_multiplayer_authority():
 		camera.enabled = true
