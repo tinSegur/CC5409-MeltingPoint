@@ -1,10 +1,12 @@
 class_name Player
 extends CharacterBody2D
 
-var gravity = 200#98
-var jump_speed = 135#80
-var speed = 85#60
-var acceleration = 200#60
+
+var gravity = 200
+var jump_speed = 135
+var speed = 85
+var acceleration = 200
+
 var class_enum = Statics.Role
 
 var class_node
@@ -13,6 +15,15 @@ var class_scene_dict = {
 	class_enum.ENGINEER : preload("res://scenes/char/engineer_node.tscn"),
 	class_enum.SCIENTIST : preload("res://scenes/char/scientist_node.tscn"),
 	class_enum.SCOUT : preload("res://scenes/char/scout_node.tscn")	
+}
+
+var stat_dict = {
+	"gravity" : 98,
+	"jump_speed" : 80,
+	"speed" : 60,
+	"acceleration" : 60,
+	"mine_time" : 0.5,
+	"mining_radius" : 400
 }
 
 
@@ -59,19 +70,21 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
-		velocity.y += gravity * delta
+		velocity.y += stat_dict["gravity"] * delta
 		
 	if is_multiplayer_authority():
 		if Input.is_action_just_pressed("jump") && is_on_floor():
-			velocity.y = -jump_speed
+			velocity.y = -stat_dict["jump_speed"]
 		
 		var move_input = Input.get_axis("move_left", "move_right")
+
 		velocity.x = move_toward(velocity.x, move_input * speed, acceleration * delta)
 		
 		if move_input != 0:
 			pivot.scale.x = -sign(move_input)
 		
 		send_data.rpc(global_position, velocity, pivot.scale.x)
+
 		
 		var mouse_dir = to_local(get_global_mouse_position())
 		mining_raycast.target_position = mining_radius * Vector2.ZERO.direction_to(mouse_dir)
@@ -87,12 +100,12 @@ func _physics_process(delta: float) -> void:
 			if(tile_coords == mining_coords):
 				tilemap.breaking(mining_coords, mining_progress)
 				if mine_timer.is_stopped():
-					mine_timer.start(0.5)
+					mine_timer.start(stat_dict["mine_time"])
 			else:
 				tilemap.breaking(mining_coords, 0)
 				mining_coords = tile_coords
 				mining_progress = 0
-				mine_timer.start(0.5)
+				mine_timer.start(stat_dict["mine_time"])
 		else:
 			if mining_progress > 0:
 				var tilemap = get_tree().current_scene.find_child("TileMap")
@@ -110,6 +123,8 @@ func setup(player_data: Statics.PlayerData):
 	add_child(class_node)
 	
 	$Pivot/Sprite2D.set_texture(class_node.get_player_sprite())
+	
+	stat_dict = class_node.get_stats()
 	
 	if is_multiplayer_authority():
 		camera.enabled = true
