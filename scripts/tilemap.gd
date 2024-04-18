@@ -28,9 +28,9 @@ func breaking(coords: Vector2, level: int):
 @rpc("any_peer", "call_local", "reliable")
 func break_anim(coords: Vector2, level: int):
 	if level == 0 :
-		erase_cell(1, coords)
+		erase_cell(2, coords)
 	else:
-		set_cell(1, coords, 1, Vector2(level - 1, 0))
+		set_cell(2, coords, 1, Vector2(level - 1, 0))
 
 func get_tile_coords(coords):
 	return to_local(local_to_map(coords))
@@ -53,6 +53,7 @@ func generate_resource(ore: String, cell_position: Vector2i):
 		_:
 			return
 	
-	set_cell(0,cell_position,0,ore_atlas_coordinates)
-	
+	set_cell(1, cell_position, 0, ore_atlas_coordinates)
+	#var tile: TileData = get_cell_tile_data(0, cell_position)
+	#tile.set_custom_data("minable", 0)
 

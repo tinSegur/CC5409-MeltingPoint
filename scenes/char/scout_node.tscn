@@ -10,7 +10,7 @@ stat_dict = {
 "gravity": 200,
 "jump_speed": 135,
 "mine_time": 0.3,
-"mining_radius": 400,
+"mining_radius": 60,
 "speed": 85
 }
 player_sprite = ExtResource("2_yev1s")

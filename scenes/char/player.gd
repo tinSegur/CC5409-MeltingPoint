@@ -24,7 +24,7 @@ var stat_dict = {
 	"speed" : 60,
 	"acceleration" : 60,
 	"mine_time" : 0.5,
-	"mining_radius" : 400
+	"mining_radius" : 60
 }
 
 
@@ -46,28 +46,49 @@ var mining_radius = 60
 var mining_coords : Vector2 = Vector2.ZERO
 var mining_progress = 0
 
+var build_scene: PackedScene
+var build_preview: StaticBody2D
+var building = false
+
 func _ready():
 	mine_timer.connect("timeout", _on_mine_timer_timeout)
 
 func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
 		if event.is_action_pressed("mine"):
-			mining = true
-			if mining_raycast.is_colliding():
-				var tilemap = mining_raycast.get_collider()
-				var collision_point = mining_raycast.get_collision_point()
-				var dir = Vector2.ZERO.direction_to(mining_raycast.target_position)
-				mining_coords = tilemap.get_tile_coords(collision_point + dir)
-				tilemap.breaking(mining_coords, 0)
-				mine_timer.start(0.5)
+			if !building:
+				mining = true
+				if mining_raycast.is_colliding():
+					var tilemap = mining_raycast.get_collider()
+					var collision_point = mining_raycast.get_collision_point()
+					var dir = Vector2.ZERO.direction_to(mining_raycast.target_position)
+					mining_coords = tilemap.get_tile_coords(collision_point + dir)
+					tilemap.breaking(mining_coords, 0)
+					mine_timer.start(0.5)
+			else:
+				if build_preview.is_valid_place():
+					build_preview.place()
+					build_preview = null
+					building = false
 		if event.is_action_released("mine"):
-			mining = false
-			mining_progress = 0
-			if mining_raycast.is_colliding():
-				var tilemap = mining_raycast.get_collider()
-				tilemap.breaking(mining_coords, 0)
+			if !building:
+				mining = false
+				mining_progress = 0
+				if mining_raycast.is_colliding():
+					var tilemap = mining_raycast.get_collider()
+					tilemap.breaking(mining_coords, 0)
 		if event.is_action_pressed("test"):
 			test()
+		if event.is_action_pressed("build"):
+			mining = false
+			building = !building
+			if building:
+				build_scene = preload("res://scenes/machines/miner.tscn")
+				var mouse_pos = get_global_mouse_position()
+				var machine = build_scene.instantiate()
+				machine.global_position = mouse_pos
+				get_tree().current_scene.add_child(machine)
+				build_preview = machine
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -86,7 +107,6 @@ func _physics_process(delta: float) -> void:
 		
 		send_data.rpc(global_position, velocity, pivot.scale.x)
 
-		
 		var mouse_dir = to_local(get_global_mouse_position())
 		mining_raycast.target_position = mining_radius * Vector2.ZERO.direction_to(mouse_dir)
 		
@@ -113,6 +133,11 @@ func _physics_process(delta: float) -> void:
 				tilemap.breaking(mining_coords, 0)
 				mining_progress = 0
 				mine_timer.stop()
+				
+	if building:
+		if is_instance_valid(build_preview):
+			var mouse_pos = get_global_mouse_position()
+			build_preview.global_position = mouse_pos
 
 func setup(player_data: Statics.PlayerData):
 	name = str(player_data.id)
