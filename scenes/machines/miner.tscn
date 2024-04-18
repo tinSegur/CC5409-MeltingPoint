@@ -7,15 +7,17 @@
 size = Vector2(16, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2vmrc"]
-size = Vector2(16, 32)
+size = Vector2(16, 30)
 
 [node name="Miner" type="StaticBody2D"]
 modulate = Color(1, 1, 1, 0.588235)
+z_index = -1
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_85407")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_r2w5d")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -25,7 +27,6 @@ scale = Vector2(0.125, 0.25)
 texture = ExtResource("1_50ejs")
 
 [node name="Hitbox" type="Area2D" parent="."]
-z_index = -1
 collision_layer = 0
 collision_mask = 10
 

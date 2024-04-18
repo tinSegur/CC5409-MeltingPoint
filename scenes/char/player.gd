@@ -136,8 +136,10 @@ func _physics_process(delta: float) -> void:
 				
 	if building:
 		if is_instance_valid(build_preview):
-			var mouse_pos = get_global_mouse_position()
-			build_preview.global_position = mouse_pos
+			var mouse_pos = Vector2i(get_global_mouse_position())
+			var build_pos = Vector2i(mouse_pos.x - mouse_pos.x%18 + 9 * sign(mouse_pos.x), 
+									 mouse_pos.y - mouse_pos.y%18 + 2)
+			build_preview.global_position = build_pos
 
 func setup(player_data: Statics.PlayerData):
 	name = str(player_data.id)
