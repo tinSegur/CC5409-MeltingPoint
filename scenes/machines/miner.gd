@@ -2,6 +2,7 @@ extends StaticBody2D
 
 var placed = false
 @onready var hitbox = $Hitbox
+@onready var resource_detector = $ResourceDetector
 
 func place():
 	placed = true
@@ -9,4 +10,24 @@ func place():
 
 func is_valid_place() -> bool:
 	var bodies: Array = hitbox.get_overlapping_bodies()
-	return (bodies.size()-1) == 0
+	var resource: bool = false
+	if resource_detector.has_overlapping_bodies():
+		var tilemap: TileMap = resource_detector.get_overlapping_bodies()[0]
+		if is_instance_valid(tilemap):
+			var tile = tilemap.get_cell_tile_data(1, tilemap.get_tile_coords(global_position + Vector2(0, 20)))
+			#Debug.sprint(tile)
+			if is_instance_valid(tile):
+				resource = true
+	return ((bodies.size()-1) == 0) and resource
+
+func _physics_process(delta):
+	if !placed:
+		var mouse_pos = Vector2i(get_global_mouse_position())
+		var build_pos = Vector2i(mouse_pos.x - mouse_pos.x%18 + 9 * (1 if (sign(mouse_pos.x) == 0) else sign(mouse_pos.x)), 
+								 mouse_pos.y - mouse_pos.y%18 + 2)
+		global_position = build_pos
+		
+		if is_valid_place():
+			modulate = Color(1,1,1,0.8)
+		else:
+			modulate = Color(1,0.1,0.1,0.8)

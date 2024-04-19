@@ -46,11 +46,13 @@ var mining_radius = 60
 var mining_coords : Vector2 = Vector2.ZERO
 var mining_progress = 0
 
+var machine_container
 var build_scene: PackedScene
 var build_preview: StaticBody2D
 var building = false
 
 func _ready():
+	machine_container = get_tree().current_scene.find_child("Machines")
 	mine_timer.connect("timeout", _on_mine_timer_timeout)
 
 func _input(event: InputEvent) -> void:
@@ -87,8 +89,16 @@ func _input(event: InputEvent) -> void:
 				var mouse_pos = get_global_mouse_position()
 				var machine = build_scene.instantiate()
 				machine.global_position = mouse_pos
-				get_tree().current_scene.add_child(machine)
+				machine_container.add_child(machine)
 				build_preview = machine
+			else:
+				build_preview.queue_free()
+				build_preview = null
+		if event.is_action_pressed("cancel"):
+			if building:
+				building = false
+				build_preview.queue_free()
+				build_preview = null
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -134,12 +144,12 @@ func _physics_process(delta: float) -> void:
 				mining_progress = 0
 				mine_timer.stop()
 				
-	if building:
-		if is_instance_valid(build_preview):
-			var mouse_pos = Vector2i(get_global_mouse_position())
-			var build_pos = Vector2i(mouse_pos.x - mouse_pos.x%18 + 9 * sign(mouse_pos.x), 
-									 mouse_pos.y - mouse_pos.y%18 + 2)
-			build_preview.global_position = build_pos
+	#if building:
+		#if is_instance_valid(build_preview):
+			#var mouse_pos = Vector2i(get_global_mouse_position())
+			#var build_pos = Vector2i(mouse_pos.x - mouse_pos.x%18 + 9 * sign(mouse_pos.x), 
+									 #mouse_pos.y - mouse_pos.y%18 + 2)
+			#build_preview.global_position = build_pos
 
 func setup(player_data: Statics.PlayerData):
 	name = str(player_data.id)

@@ -9,6 +9,8 @@ extends Node2D
 @onready var tile_map = $TileMap
 
 func _ready() -> void:
+	%MachineSpawner.set_multiplayer_authority(Game.get_current_player().id)
+	$Machines.set_multiplayer_authority(Game.get_current_player().id)
 	
 	for player_data in Game.players:
 		var player = player_scene.instantiate()
@@ -16,12 +18,11 @@ func _ready() -> void:
 		players.add_child(player)
 		player.setup(player_data)
 	resource_generation()
-	
 
 func resource_generation():
 	if is_multiplayer_authority():
 		var rng = RandomNumberGenerator.new()
-		var N_resources = 3
+		var N_resources = 5
 		var used_positions = [Vector2(-1,-1)]
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
