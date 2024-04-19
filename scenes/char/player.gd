@@ -67,11 +67,11 @@ func _input(event: InputEvent) -> void:
 					mining_coords = tilemap.get_tile_coords(collision_point + dir)
 					tilemap.breaking(mining_coords, 0)
 					mine_timer.start(0.5)
-			#else:
+			else:
+				building = false
 				#if build_preview.is_valid_place():
 					#build_preview.place()
 					#build_preview = null
-					#building = false
 		if event.is_action_released("mine"):
 			if !building:
 				mining = false
