@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 var placed = false
+@export var builder_id: int = 0
 @onready var hitbox = $Hitbox
 @onready var resource_detector = $ResourceDetector
 
@@ -20,14 +21,26 @@ func is_valid_place() -> bool:
 				resource = true
 	return ((bodies.size()-1) == 0) and resource
 
-func _physics_process(delta):
-	if !placed:
-		var mouse_pos = Vector2i(get_global_mouse_position())
-		var build_pos = Vector2i(mouse_pos.x - mouse_pos.x%18 + 9 * (1 if (sign(mouse_pos.x) == 0) else sign(mouse_pos.x)), 
-								 mouse_pos.y - mouse_pos.y%18 + 2)
-		global_position = build_pos
-		
+func _ready():
+	$MultiplayerSynchronizer.synchronized.connect(_on_synchronice)
+
+func _input(event):
+	if event.is_action_pressed("mine"):
 		if is_valid_place():
-			modulate = Color(1,1,1,0.8)
-		else:
-			modulate = Color(1,0.1,0.1,0.8)
+			place()
+
+func _physics_process(delta):
+	if builder_id == multiplayer.get_unique_id():
+		if !placed:
+			var mouse_pos = Vector2i(get_global_mouse_position())
+			var build_pos = Vector2i(mouse_pos.x - mouse_pos.x%18 + 9 * (1 if (sign(mouse_pos.x) == 0) else sign(mouse_pos.x)), 
+									 mouse_pos.y - mouse_pos.y%18 + 2)
+			global_position = build_pos
+			
+			if is_valid_place():
+				modulate = Color(1,1,1,0.8)
+			else:
+				modulate = Color(1,0.1,0.1,0.8)
+
+func _on_synchronice():
+	set_multiplayer_authority(builder_id, true)

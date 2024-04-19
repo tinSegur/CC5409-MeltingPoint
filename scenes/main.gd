@@ -9,9 +9,6 @@ extends Node2D
 @onready var tile_map = $TileMap
 
 func _ready() -> void:
-	%MachineSpawner.set_multiplayer_authority(Game.get_current_player().id)
-	$Machines.set_multiplayer_authority(Game.get_current_player().id)
-	
 	for player_data in Game.players:
 		var player = player_scene.instantiate()
 		

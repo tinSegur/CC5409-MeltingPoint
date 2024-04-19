@@ -198,6 +198,7 @@ script = ExtResource("4_h6bot")
 
 [node name="MachineSpawner" type="MultiplayerSpawner" parent="."]
 unique_name_in_owner = true
+_spawnable_scenes = PackedStringArray("res://scenes/machines/miner.tscn")
 spawn_path = NodePath("../Machines")
 
 [node name="Machines" type="Node2D" parent="."]

@@ -15,7 +15,7 @@ var class_node
 var class_scene_dict = {
 	class_enum.ENGINEER : preload("res://scenes/char/engineer_node.tscn"),
 	class_enum.SCIENTIST : preload("res://scenes/char/scientist_node.tscn"),
-	class_enum.SCOUT : preload("res://scenes/char/scout_node.tscn")	
+	class_enum.SCOUT : preload("res://scenes/char/scout_node.tscn")
 }
 
 var stat_dict = {
@@ -47,7 +47,7 @@ var mining_coords : Vector2 = Vector2.ZERO
 var mining_progress = 0
 
 var machine_container
-var build_scene: PackedScene
+var build_scene: String
 var build_preview: StaticBody2D
 var building = false
 
@@ -67,11 +67,11 @@ func _input(event: InputEvent) -> void:
 					mining_coords = tilemap.get_tile_coords(collision_point + dir)
 					tilemap.breaking(mining_coords, 0)
 					mine_timer.start(0.5)
-			else:
-				if build_preview.is_valid_place():
-					build_preview.place()
-					build_preview = null
-					building = false
+			#else:
+				#if build_preview.is_valid_place():
+					#build_preview.place()
+					#build_preview = null
+					#building = false
 		if event.is_action_released("mine"):
 			if !building:
 				mining = false
@@ -85,20 +85,17 @@ func _input(event: InputEvent) -> void:
 			mining = false
 			building = !building
 			if building:
-				build_scene = preload("res://scenes/machines/miner.tscn")
-				var mouse_pos = get_global_mouse_position()
-				var machine = build_scene.instantiate()
-				machine.global_position = mouse_pos
-				machine_container.add_child(machine)
-				build_preview = machine
-			else:
-				build_preview.queue_free()
-				build_preview = null
+				build_scene = "res://scenes/machines/miner.tscn"
+				Debug.sprint("Pre rpc")
+				spawn_machine.rpc_id(1, build_scene)
+			#else:
+				#build_preview.queue_free()
+				#build_preview = null
 		if event.is_action_pressed("cancel"):
 			if building:
 				building = false
-				build_preview.queue_free()
-				build_preview = null
+				#build_preview.queue_free()
+				#build_preview = null
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -183,7 +180,7 @@ func _on_mine_timer_timeout():
 func test():
 	var tilemap = get_tree().current_scene.find_child("TileMap")
 	var tile_coords = tilemap.get_tile_coords(global_position)
-	var tile: TileData = tilemap.get_cell_tile_data(2, tile_coords)
+	var tile: TileData = tilemap.get_cell_tile_data(3, tile_coords)
 	if is_instance_valid(tile):
 		Debug.sprint(tile.get_custom_data("temperature"))
 
@@ -192,3 +189,15 @@ func send_data(pos : Vector2, vel : Vector2, scale: int):
 	global_position = lerp(global_position, pos, 0.75)
 	velocity = lerp(velocity, vel, 0.75)
 	pivot.scale.x = scale
+
+@rpc("call_local")#, "any_peer", "reliable")
+func spawn_machine(machine_scene: String):
+	Debug.sprint("RPC")
+	var mouse_pos = get_global_mouse_position()
+	var machine = load(machine_scene).instantiate()
+	#machine.set_multiplayer_authority(multiplayer.get_remote_sender_id(), true)
+	machine.global_position = mouse_pos
+	machine.builder_id = multiplayer.get_remote_sender_id()
+	machine_container.add_child(machine, true)
+	Debug.sprint(machine)
+	#build_preview = machine
