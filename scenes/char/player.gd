@@ -46,13 +46,13 @@ var mining_radius = 60
 var mining_coords : Vector2 = Vector2.ZERO
 var mining_progress = 0
 
-var machine_container
+var machine_container: Node2D
 var build_scene: String
 var build_preview: StaticBody2D
 var building = false
 
 func _ready():
-	machine_container = get_tree().current_scene.find_child("Machines")
+	machine_container = get_tree().current_scene.get_node("%Machines")
 	mine_timer.connect("timeout", _on_mine_timer_timeout)
 
 func _input(event: InputEvent) -> void:
@@ -68,10 +68,9 @@ func _input(event: InputEvent) -> void:
 					tilemap.breaking(mining_coords, 0)
 					mine_timer.start(0.5)
 			else:
-				building = false
-				#if build_preview.is_valid_place():
-					#build_preview.place()
-					#build_preview = null
+				if is_instance_valid(build_preview):
+					try_place_machine.rpc_id(1, build_preview.name)
+				
 		if event.is_action_released("mine"):
 			if !building:
 				mining = false
@@ -79,23 +78,26 @@ func _input(event: InputEvent) -> void:
 				if mining_raycast.is_colliding():
 					var tilemap = mining_raycast.get_collider()
 					tilemap.breaking(mining_coords, 0)
+		
 		if event.is_action_pressed("test"):
 			test()
+		
 		if event.is_action_pressed("build"):
 			mining = false
 			building = !building
 			if building:
 				build_scene = "res://scenes/machines/miner.tscn"
-				Debug.sprint("Pre rpc")
 				spawn_machine.rpc_id(1, build_scene)
-			#else:
-				#build_preview.queue_free()
-				#build_preview = null
+			else:
+				cancel_build.rpc_id(1, build_preview.name)
+				building = false
+				build_preview = null
+		
 		if event.is_action_pressed("cancel"):
 			if building:
+				cancel_build.rpc_id(1, build_preview.name)
 				building = false
-				#build_preview.queue_free()
-				#build_preview = null
+				build_preview = null
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -185,19 +187,36 @@ func test():
 		Debug.sprint(tile.get_custom_data("temperature"))
 
 @rpc
-func send_data(pos : Vector2, vel : Vector2, scale: int):
+func send_data(pos : Vector2, vel : Vector2, pivot_scale: int):
 	global_position = lerp(global_position, pos, 0.75)
 	velocity = lerp(velocity, vel, 0.75)
-	pivot.scale.x = scale
+	pivot.scale.x = pivot_scale
 
-@rpc("call_local")#, "any_peer", "reliable")
+@rpc("call_local", "reliable")
 func spawn_machine(machine_scene: String):
-	Debug.sprint("RPC")
 	var mouse_pos = get_global_mouse_position()
 	var machine = load(machine_scene).instantiate()
-	#machine.set_multiplayer_authority(multiplayer.get_remote_sender_id(), true)
 	machine.global_position = mouse_pos
 	machine.builder_id = multiplayer.get_remote_sender_id()
 	machine_container.add_child(machine, true)
-	Debug.sprint(machine)
-	#build_preview = machine
+	recieve_machine_name.rpc_id(multiplayer.get_remote_sender_id(), machine.name)
+
+@rpc("call_local", "any_peer", "reliable")
+func recieve_machine_name(m_name: String):
+	build_preview = machine_container.get_node(m_name)
+
+@rpc("call_local", "reliable")
+func try_place_machine(m_name: String):
+	var machine = machine_container.get_node(m_name)
+	if machine.try_place():
+		place_success.rpc_id(multiplayer.get_remote_sender_id())
+
+@rpc("call_local", "any_peer", "reliable")
+func place_success():
+	building = false
+	build_preview = null
+	
+@rpc("call_local", "reliable")
+func cancel_build(m_name: String):
+	var machine = machine_container.get_node(m_name)
+	machine.queue_free()

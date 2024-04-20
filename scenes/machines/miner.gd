@@ -5,6 +5,7 @@ var placed = false
 @onready var hitbox = $Hitbox
 @onready var resource_detector = $ResourceDetector
 
+@rpc("call_local", "any_peer")
 func place():
 	placed = true
 	modulate = Color(1.0, 1.0, 1.0, 1.0)
@@ -16,18 +17,18 @@ func is_valid_place() -> bool:
 		var tilemap: TileMap = resource_detector.get_overlapping_bodies()[0]
 		if is_instance_valid(tilemap):
 			var tile = tilemap.get_cell_tile_data(1, tilemap.get_tile_coords(global_position + Vector2(0, 20)))
-			#Debug.sprint(tile)
 			if is_instance_valid(tile):
 				resource = true
 	return ((bodies.size()-1) == 0) and resource
 
-#func _ready():
-	#$MultiplayerSynchronizer.synchronized.connect(_on_synchronice)
+func try_place() -> bool:
+	if is_valid_place():
+		place.rpc()
+		return true
+	return false
 
-func _input(event):
-	if event.is_action_pressed("mine"):
-		if is_valid_place():
-			place()
+func cancel_build():
+	queue_free()
 
 func _physics_process(delta):
 	if !placed:
@@ -44,8 +45,5 @@ func _physics_process(delta):
 
 @rpc("call_local", "any_peer")
 func send_pos(pos: Vector2):
-	Debug.sprint(pos)
 	global_position = pos
 
-#func _on_synchronice():
-	#set_multiplayer_authority(builder_id, true)
