@@ -7,10 +7,22 @@
 radius = 64.0
 
 [node name="Bullet" type="RigidBody2D"]
+modulate = Color(0, 1, 0, 1)
+z_index = 3
+collision_layer = 0
+collision_mask = 0
+gravity_scale = -0.05
 script = ExtResource("1_udq8v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.05, 0.05)
 texture = ExtResource("1_usr5u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.05, 0.05)
 shape = SubResource("CircleShape2D_xkdmo")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true

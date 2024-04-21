@@ -58,6 +58,8 @@ func is_online() -> bool:
 	return not multiplayer.multiplayer_peer is OfflineMultiplayerPeer and \
 		multiplayer.multiplayer_peer.get_connection_status() != MultiplayerPeer.CONNECTION_DISCONNECTED
 
+func get_player_instance(id: int) -> CharacterBody2D:
+	return get_tree().current_scene.find_child("Players").find_child(str(id))
 
 func _upnp_setup(server_port):
 	# UPNP queries take some time.

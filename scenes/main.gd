@@ -7,17 +7,21 @@ extends Node2D
 @export var player_scene: PackedScene
 @onready var players: Node2D = $Players
 @onready var tile_map = $TileMap
+var players_ready = 0
 
 func _ready() -> void:
-	%MachineSpawner.set_multiplayer_authority(Game.get_current_player().id)
-	$Machines.set_multiplayer_authority(Game.get_current_player().id)
-	
 	for player_data in Game.players:
 		var player = player_scene.instantiate()
 		
 		players.add_child(player)
 		player.setup(player_data)
-	resource_generation()
+	player_ready.rpc_id(1)
+
+@rpc("call_local", "any_peer")
+func player_ready():
+	players_ready += 1
+	if players_ready == Game.players.size():
+		resource_generation()
 
 func resource_generation():
 	if is_multiplayer_authority():

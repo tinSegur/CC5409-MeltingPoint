@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgvcs0ee1pr6"]
+[gd_scene load_steps=8 format=3 uid="uid://bgvcs0ee1pr6"]
 
 [ext_resource type="Texture2D" uid="uid://tw8t38ns0seh" path="res://icon.svg" id="1_50ejs"]
 [ext_resource type="Script" path="res://scenes/machines/miner.gd" id="1_85407"]
+[ext_resource type="PackedScene" uid="uid://cbmugsoctody6" path="res://scenes/machines/output.tscn" id="3_ca5a8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r2w5d"]
 size = Vector2(16, 32)
@@ -11,6 +12,17 @@ size = Vector2(16, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ae5w5"]
 size = Vector2(16, 10)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ba351"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:modulate")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:builder_id")
+properties/2/spawn = true
+properties/2/replication_mode = 0
 
 [node name="Miner" type="StaticBody2D"]
 modulate = Color(1, 1, 1, 0.588235)
@@ -41,3 +53,12 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceDetector"]
 position = Vector2(0, 21)
 shape = SubResource("RectangleShape2D_ae5w5")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ba351")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="Output" parent="." instance=ExtResource("3_ca5a8")]
+position = Vector2(0, -18)
