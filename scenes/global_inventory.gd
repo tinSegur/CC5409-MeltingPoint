@@ -17,6 +17,7 @@ class InternalStock:
 
 signal stock_change(mat_id : Statics.Materials, amount)
 
+
 @export var materials : Array[MPMaterial]
 var stocks : Dictionary
 
@@ -27,28 +28,21 @@ func _ready():
 
 
 func set_stock(id : Statics.Materials, amount : int):
+	if amount < 0:
+		return
 	stocks[id].set_amount(amount)
 	Debug.sprint(stocks[id].quantity)
 	emit_signal("stock_change", id, amount)
 
 func add_stock(id : Statics.Materials, amount : int = 1):
-	stocks[id].add_amount(amount)
-	Debug.sprint(stocks[id].quantity)
-	emit_signal("stock_change", id, amount)
-
-
-
+	set_stock(id, stocks[id] + amount)
 
 @rpc("call_remote", "reliable")
 func update_stock(id, amount):
 	set_stock(id, amount)
 
-
-
-@rpc("call_local", "reliable")
+@rpc("call_local", "reliable", "any_peer")
 func add_resource(id : Statics.Materials, amount = 1):
 	if is_multiplayer_authority():
 		add_stock(id, amount)
 		update_stock.rpc(id, stocks[id].quantity)
-
-
