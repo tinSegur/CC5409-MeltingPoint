@@ -16,6 +16,12 @@ enum Role {
 
 }
 
+enum Materials {
+	IRON,
+	GOLD,
+	CRYSTALS
+}
+
 
 class PlayerData:
 	var id: int

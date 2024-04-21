@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b5hufqs7sbm01"]
+[gd_scene load_steps=12 format=3 uid="uid://b5hufqs7sbm01"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_ysfbh"]
 [ext_resource type="PackedScene" uid="uid://8d3ys4aw51lk" path="res://scenes/char/player.tscn" id="2_jyiyy"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://f4ugedo7t46x" path="res://assets/tilemaps/tile_break.png" id="4_d8bom"]
 [ext_resource type="Script" path="res://scripts/tilemap.gd" id="4_h6bot"]
 [ext_resource type="Texture2D" uid="uid://7hrxsaobmsjo" path="res://assets/tilemaps/temperature_tileset.png" id="5_ffcko"]
+[ext_resource type="PackedScene" uid="uid://cuig2335qo1ln" path="res://scenes/inventory.tscn" id="7_bvks4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6da87"]
 texture = ExtResource("3_jasfh")
@@ -202,3 +203,5 @@ spawn_path = NodePath("../Machines")
 
 [node name="Machines" type="Node2D" parent="."]
 unique_name_in_owner = true
+
+[node name="Inventory" parent="." instance=ExtResource("7_bvks4")]
