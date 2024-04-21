@@ -19,8 +19,8 @@ func _ready():
 	for mat in materials:
 		stocks[mat.type] = InternalStock.new(mat)
 
-@rpc("call_remote", "reliable")
+@rpc("call_local", "reliable")
 func add_resource(id : Statics.Materials, amount = 1):
-	if is_multiplayer_authority():
-		stocks[id].add_amount(amount)
+	stocks[id].add_amount(amount)
+	Debug.sprint(stocks[id].quantity)
 
