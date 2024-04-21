@@ -202,3 +202,6 @@ spawn_path = NodePath("../Machines")
 
 [node name="Machines" type="Node2D" parent="."]
 unique_name_in_owner = true
+
+[node name="Items" type="Node2D" parent="."]
+unique_name_in_owner = true
