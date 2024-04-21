@@ -1,11 +1,4 @@
-extends StaticBody2D
-
-var placed = false
-@export var builder_id: int = 0
-@onready var hitbox = $Hitbox
-@onready var resource_detector = $ResourceDetector
-@onready var timer = $Timer
-@onready var output = $Output
+extends Machine
 
 @rpc("call_local", "any_peer")
 func place():
