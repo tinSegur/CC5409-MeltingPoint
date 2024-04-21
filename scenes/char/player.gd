@@ -81,7 +81,6 @@ func _input(event: InputEvent) -> void:
 		
 		if event.is_action_pressed("test"):
 			test()
-			$Inventory.add_resource.rpc(Statics.Materials.IRON, 1)
 		
 		if event.is_action_pressed("build"):
 			mining = false
