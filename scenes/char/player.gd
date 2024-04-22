@@ -208,8 +208,13 @@ func recieve_machine_name(m_name: String):
 @rpc("call_local", "reliable")
 func try_place_machine(m_name: String):
 	var machine = machine_container.get_node(m_name)
-	if machine.try_place():
-		place_success.rpc_id(multiplayer.get_remote_sender_id())
+	
+	# Costo placeholder
+	var inventory = get_tree().current_scene.get_node("Inventory")
+	if inventory.check_stock(Statics.Materials.IRON, 5):
+		if machine.try_place():
+			inventory.remove_stock(Statics.Materials.IRON, 5)
+			place_success.rpc_id(multiplayer.get_remote_sender_id())
 
 @rpc("call_local", "any_peer", "reliable")
 func place_success():

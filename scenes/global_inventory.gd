@@ -35,7 +35,13 @@ func set_stock(id : Statics.Materials, amount : int):
 	emit_signal("stock_change", id, amount)
 
 func add_stock(id : Statics.Materials, amount : int = 1):
-	set_stock(id, stocks[id] + amount)
+	set_stock(id, stocks[id].quantity + amount)
+
+func remove_stock(id : Statics.Materials, amount : int = 1):
+	set_stock(id, stocks[id].quantity - amount)
+
+func check_stock(id : Statics.Materials, amount : int = 1):
+	return stocks[id].quantity >= amount
 
 @rpc("call_remote", "reliable")
 func update_stock(id, amount):
