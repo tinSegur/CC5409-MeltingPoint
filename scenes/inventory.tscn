@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuig2335qo1ln"]
+
+[ext_resource type="Script" path="res://scenes/global_inventory.gd" id="1_wqxfl"]
+[ext_resource type="Resource" uid="uid://f004kgvtcc22" path="res://scenes/materials/iron.tres" id="2_rlfp0"]
+
+[node name="Inventory" type="Node"]
+script = ExtResource("1_wqxfl")
+materials = Array[Resource("res://scenes/materials/material.gd")]([ExtResource("2_rlfp0")])

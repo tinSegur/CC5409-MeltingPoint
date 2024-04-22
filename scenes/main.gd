@@ -7,6 +7,7 @@ extends Node2D
 @export var player_scene: PackedScene
 @onready var players: Node2D = $Players
 @onready var tile_map = $TileMap
+@onready var inventory = $Inventory
 var players_ready = 0
 
 func _ready() -> void:
@@ -16,6 +17,11 @@ func _ready() -> void:
 		players.add_child(player)
 		player.setup(player_data)
 	player_ready.rpc_id(1)
+
+func _input(event):
+	if event.is_action_pressed("test"):
+		inventory.add_resource.rpc(Statics.Materials.IRON, 1)
+
 
 @rpc("call_local", "any_peer")
 func player_ready():
