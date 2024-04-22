@@ -1,14 +1,12 @@
-extends StaticBody2D
-
-var placed = false
-@export var builder_id: int = 0
-@onready var hitbox = $Hitbox
-@onready var resource_detector = $ResourceDetector
+extends Machine
 
 @rpc("call_local", "any_peer")
 func place():
+	timer.timeout.connect(spawn_resource)
 	placed = true
 	modulate = Color(1.0, 1.0, 1.0, 1.0)
+	output.output_scene = load("res://scenes/bullet.tscn")
+	timer.start()
 
 func is_valid_place() -> bool:
 	var bodies: Array = hitbox.get_overlapping_bodies()
@@ -43,7 +41,10 @@ func _physics_process(delta):
 		else:
 			modulate = Color(1,0.1,0.1,0.8)
 
+
 @rpc("call_local", "any_peer")
 func send_pos(pos: Vector2):
 	global_position = pos
 
+func spawn_resource():
+	output.generate(0, 2)

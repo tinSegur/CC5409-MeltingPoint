@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bgvcs0ee1pr6"]
+[gd_scene load_steps=8 format=3 uid="uid://bgvcs0ee1pr6"]
 
 [ext_resource type="Texture2D" uid="uid://tw8t38ns0seh" path="res://icon.svg" id="1_50ejs"]
 [ext_resource type="Script" path="res://scenes/machines/miner.gd" id="1_85407"]
+[ext_resource type="PackedScene" uid="uid://cbmugsoctody6" path="res://scenes/machines/output.tscn" id="3_ca5a8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r2w5d"]
 size = Vector2(16, 32)
@@ -55,3 +56,9 @@ shape = SubResource("RectangleShape2D_ae5w5")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ba351")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="Output" parent="." instance=ExtResource("3_ca5a8")]
+position = Vector2(0, -18)
