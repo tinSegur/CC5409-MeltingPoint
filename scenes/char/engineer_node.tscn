@@ -5,4 +5,12 @@
 
 [node name="EngineerNode" type="Node2D"]
 script = ExtResource("1_6u4kn")
+stat_dict = {
+"acceleration": 200,
+"gravity": 200,
+"jump_speed": 135,
+"mine_time": 0.5,
+"mining_radius": 60,
+"speed": 85
+}
 player_sprite = ExtResource("2_7o0hv")
