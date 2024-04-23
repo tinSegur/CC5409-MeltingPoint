@@ -1,13 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://dskjy6yd4quog"]
 
 [ext_resource type="Script" path="res://scenes/bullet.gd" id="1_udq8v"]
-[ext_resource type="Texture2D" uid="uid://tw8t38ns0seh" path="res://icon.svg" id="1_usr5u"]
+[ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="2_1yeg8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xkdmo"]
 radius = 64.0
 
 [node name="Bullet" type="RigidBody2D"]
-modulate = Color(0, 1, 0, 1)
 z_index = 3
 collision_layer = 0
 collision_mask = 0
@@ -15,8 +14,8 @@ gravity_scale = -0.05
 script = ExtResource("1_udq8v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.05, 0.05)
-texture = ExtResource("1_usr5u")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_1yeg8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.05, 0.05)
