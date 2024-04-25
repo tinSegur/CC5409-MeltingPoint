@@ -46,14 +46,19 @@ var mining_radius = 60
 var mining_coords : Vector2 = Vector2.ZERO
 var mining_progress = 0
 
+@onready var build_menu = $CanvasLayer/BuildMenu
 var machine_container: Node2D
 var build_scene: String
 var build_preview: StaticBody2D
 var building = false
 
+var inventory: Node2D
+
 func _ready():
 	machine_container = get_tree().current_scene.get_node("%Machines")
+	inventory = get_tree().current_scene.get_node("Inventory")
 	mine_timer.connect("timeout", _on_mine_timer_timeout)
+	build_menu.machine_selected.connect(on_machine_selected)
 
 func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
@@ -86,15 +91,17 @@ func _input(event: InputEvent) -> void:
 			mining = false
 			building = !building
 			if building:
-				build_scene = "res://scenes/machines/miner.tscn"
-				spawn_machine.rpc_id(1, build_scene)
+				build_menu.visible = true
+				#build_scene = "res://scenes/machines/miner.tscn"
+				#spawn_machine.rpc_id(1, build_scene)
 			else:
+				build_menu.visible = false
 				cancel_build.rpc_id(1, build_preview.name)
-				building = false
 				build_preview = null
 		
 		if event.is_action_pressed("cancel"):
 			if building:
+				build_menu.visible = false
 				cancel_build.rpc_id(1, build_preview.name)
 				building = false
 				build_preview = null
@@ -192,6 +199,9 @@ func send_data(pos : Vector2, vel : Vector2, pivot_scale: int):
 	velocity = lerp(velocity, vel, 0.75)
 	pivot.scale.x = pivot_scale
 
+func on_machine_selected():
+	spawn_machine.rpc_id(1, build_scene)
+
 @rpc("call_local", "reliable")
 func spawn_machine(machine_scene: String):
 	var mouse_pos = get_global_mouse_position()
@@ -210,7 +220,6 @@ func try_place_machine(m_name: String):
 	var machine = machine_container.get_node(m_name)
 	
 	# Costo placeholder
-	var inventory = get_tree().current_scene.get_node("Inventory")
 	if inventory.check_stock(Statics.Materials.IRON, 5):
 		if machine.try_place():
 			inventory.remove_stock(Statics.Materials.IRON, 5)
