@@ -23,7 +23,10 @@ func _ready():
 	
 	
 	if not try_host():
+		Debug.sprint("Client", 15)
 		try_join()
+	else:
+		Debug.sprint("Server", 15)
 	
 	timer.timeout.connect(start_game)
 

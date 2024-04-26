@@ -1,5 +1,6 @@
 extends RigidBody2D
 
+@onready var timer = $Timer
 
 func _ready() -> void:
-	global_position = Vector2.ONE * 200
+	timer.timeout.connect(queue_free)
