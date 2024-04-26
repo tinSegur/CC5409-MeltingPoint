@@ -1,5 +1,7 @@
 extends Machine
 
+@onready var resource_detector = $ResourceDetector
+
 @rpc("call_local", "any_peer")
 func place():
 	timer.timeout.connect(spawn_resource)
