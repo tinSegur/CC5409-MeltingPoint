@@ -1,7 +1,7 @@
 extends MarginContainer
 
 var player: Player
-@onready var miner_button = $PanelContainer/MarginContainer/VBoxContainer/GridContainer/MinerButton
+@onready var miner_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/MinerButton
 
 signal machine_selected
 

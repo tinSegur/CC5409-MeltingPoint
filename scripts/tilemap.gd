@@ -7,6 +7,19 @@ func _input(event):
 		set_layer_enabled(3, !is_layer_enabled(3))
 
 func mine(coords: Vector2):
+	
+	var resource: TileData = get_cell_tile_data(1, coords)
+	if is_instance_valid(resource):
+		var atlas_coords = get_cell_atlas_coords(1, coords)
+		var res: int
+		match atlas_coords:
+			Vector2i(10,1):
+				res = Statics.Materials.IRON
+			_:
+				res = -1
+		Game.get_player_instance(multiplayer.get_unique_id()).mine_resource(res)
+		return
+	
 	var tile: TileData = get_cell_tile_data(0, coords)
 	if is_instance_valid(tile):
 		if tile.get_custom_data("minable") != 0:
@@ -54,6 +67,6 @@ func generate_resource(ore: String, cell_position: Vector2i):
 			return
 	
 	set_cell(1, cell_position, 0, ore_atlas_coordinates)
-	#var tile: TileData = get_cell_tile_data(0, cell_position)
-	#tile.set_custom_data("minable", 0)
+	var atlas_pos = get_cell_atlas_coords(0, cell_position)
+	set_cell(0, cell_position, 0, atlas_pos, 1)
 

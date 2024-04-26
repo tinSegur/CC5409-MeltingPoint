@@ -52,7 +52,7 @@ var build_scene: String
 var build_preview: StaticBody2D
 var building = false
 
-var inventory: Node2D
+var inventory: Node
 
 func _ready():
 	machine_container = get_tree().current_scene.get_node("%Machines")
@@ -89,22 +89,20 @@ func _input(event: InputEvent) -> void:
 		
 		if event.is_action_pressed("build"):
 			mining = false
-			building = !building
-			if building:
-				build_menu.visible = true
-				#build_scene = "res://scenes/machines/miner.tscn"
-				#spawn_machine.rpc_id(1, build_scene)
-			else:
-				build_menu.visible = false
-				cancel_build.rpc_id(1, build_preview.name)
-				build_preview = null
+			build_menu.visible = !build_menu.visible
+			if build_menu.visible:
+				if is_instance_valid(build_preview):
+					cancel_build.rpc_id(1, build_preview.name)
+					build_preview = null
 		
 		if event.is_action_pressed("cancel"):
 			if building:
-				build_menu.visible = false
-				cancel_build.rpc_id(1, build_preview.name)
 				building = false
-				build_preview = null
+				if is_instance_valid(build_preview):
+					cancel_build.rpc_id(1, build_preview.name)
+					build_preview = null
+			if build_menu.visible:
+				build_menu.visible = false
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -149,13 +147,6 @@ func _physics_process(delta: float) -> void:
 				tilemap.breaking(mining_coords, 0)
 				mining_progress = 0
 				mine_timer.stop()
-				
-	#if building:
-		#if is_instance_valid(build_preview):
-			#var mouse_pos = Vector2i(get_global_mouse_position())
-			#var build_pos = Vector2i(mouse_pos.x - mouse_pos.x%18 + 9 * sign(mouse_pos.x), 
-									 #mouse_pos.y - mouse_pos.y%18 + 2)
-			#build_preview.global_position = build_pos
 
 func setup(player_data: Statics.PlayerData):
 	name = str(player_data.id)
@@ -201,6 +192,7 @@ func send_data(pos : Vector2, vel : Vector2, pivot_scale: int):
 
 func on_machine_selected():
 	spawn_machine.rpc_id(1, build_scene)
+	building = true
 
 @rpc("call_local", "reliable")
 func spawn_machine(machine_scene: String):
@@ -234,3 +226,11 @@ func place_success():
 func cancel_build(m_name: String):
 	var machine = machine_container.get_node(m_name)
 	machine.queue_free()
+
+func mine_resource(resource: int):
+	manual_add_resource.rpc_id(1, resource, 1)
+	mining_progress = 0
+	
+@rpc("call_local", "reliable")
+func manual_add_resource(resource: int, amount: int):
+	inventory.add_stock(resource, amount)
