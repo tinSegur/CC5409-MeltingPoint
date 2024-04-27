@@ -45,12 +45,15 @@ var mining = false
 var mining_radius = 60
 var mining_coords : Vector2 = Vector2.ZERO
 var mining_progress = 0
+var tilemap: TileMap
 
 @onready var build_menu = $CanvasLayer/BuildMenu
 var machine_container: Node2D
 var build_scene: String
 var build_preview: StaticBody2D
 var building = false
+var tile_selected = false
+var building_tile = false
 
 var inventory: Node
 
@@ -59,14 +62,20 @@ func _ready():
 	inventory = get_tree().current_scene.get_node("Inventory")
 	mine_timer.connect("timeout", _on_mine_timer_timeout)
 	build_menu.machine_selected.connect(on_machine_selected)
+	build_menu.tile_selected.connect(on_tile_selected)
+	tilemap = get_tree().current_scene.get_node("TileMap")
 
 func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
 		if event.is_action_pressed("mine"):
+			if tile_selected:
+				building_tile = true
+				#tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position()))
+				return
 			if !building:
 				mining = true
 				if mining_raycast.is_colliding():
-					var tilemap = mining_raycast.get_collider()
+					#var tilemap = mining_raycast.get_collider()
 					var collision_point = mining_raycast.get_collision_point()
 					var dir = Vector2.ZERO.direction_to(mining_raycast.target_position)
 					mining_coords = tilemap.get_tile_coords(collision_point + dir)
@@ -77,11 +86,12 @@ func _input(event: InputEvent) -> void:
 					try_place_machine.rpc_id(1, build_preview.name)
 				
 		if event.is_action_released("mine"):
+			building_tile = false
 			if !building:
 				mining = false
 				mining_progress = 0
 				if mining_raycast.is_colliding():
-					var tilemap = mining_raycast.get_collider()
+					#var tilemap = mining_raycast.get_collider()
 					tilemap.breaking(mining_coords, 0)
 		
 		if event.is_action_pressed("test"):
@@ -91,8 +101,12 @@ func _input(event: InputEvent) -> void:
 			mining = false
 			build_menu.visible = !build_menu.visible
 			if build_menu.visible:
+				building_tile = false
+				tile_selected = false
+				tilemap.clear_previews()
 				if is_instance_valid(build_preview):
 					cancel_build.rpc_id(1, build_preview.name)
+					building = false
 					build_preview = null
 		
 		if event.is_action_pressed("cancel"):
@@ -101,6 +115,9 @@ func _input(event: InputEvent) -> void:
 				if is_instance_valid(build_preview):
 					cancel_build.rpc_id(1, build_preview.name)
 					build_preview = null
+			building_tile = false
+			tile_selected = false
+			tilemap.clear_previews()
 			if build_menu.visible:
 				build_menu.visible = false
 
@@ -128,7 +145,7 @@ func _physics_process(delta: float) -> void:
 	
 	if mining:
 		if mining_raycast.is_colliding():
-			var tilemap = mining_raycast.get_collider()
+			#var tilemap = mining_raycast.get_collider()
 			var collision_point = mining_raycast.get_collision_point()
 			var dir = Vector2.ZERO.direction_to(mining_raycast.target_position)
 			var tile_coords = tilemap.get_tile_coords(collision_point + dir)
@@ -143,10 +160,18 @@ func _physics_process(delta: float) -> void:
 				mine_timer.start(mine_time)
 		else:
 			if mining_progress > 0:
-				var tilemap = get_tree().current_scene.find_child("TileMap")
+				#var tilemap = get_tree().current_scene.find_child("TileMap")
 				tilemap.breaking(mining_coords, 0)
 				mining_progress = 0
 				mine_timer.stop()
+	
+	if tile_selected:
+		tilemap.show_preview(tilemap.get_tile_coords(get_global_mouse_position()))
+	
+	if building_tile:
+		if inventory.check_stock(Statics.Materials.IRON, 1):
+			if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position())):
+				inventory.remove_stock(Statics.Materials.IRON, 1)
 
 func setup(player_data: Statics.PlayerData):
 	name = str(player_data.id)
@@ -171,6 +196,7 @@ func setup(player_data: Statics.PlayerData):
 	
 	if is_multiplayer_authority():
 		camera.enabled = true
+		tilemap.player = self
 
 func _on_mine_timer_timeout():
 	if mining:
@@ -178,7 +204,7 @@ func _on_mine_timer_timeout():
 		mine_timer.start(0.5)
 
 func test():
-	var tilemap = get_tree().current_scene.find_child("TileMap")
+	#var tilemap = get_tree().current_scene.find_child("TileMap")
 	var tile_coords = tilemap.get_tile_coords(global_position)
 	var tile: TileData = tilemap.get_cell_tile_data(3, tile_coords)
 	if is_instance_valid(tile):
@@ -193,6 +219,9 @@ func send_data(pos : Vector2, vel : Vector2, pivot_scale: int):
 func on_machine_selected():
 	spawn_machine.rpc_id(1, build_scene)
 	building = true
+
+func on_tile_selected():
+	tile_selected = true
 
 @rpc("call_local", "reliable")
 func spawn_machine(machine_scene: String):
@@ -228,8 +257,8 @@ func cancel_build(m_name: String):
 	machine.queue_free()
 
 func mine_resource(resource: int):
-	manual_add_resource.rpc_id(1, resource, 1)
 	mining_progress = 0
+	manual_add_resource.rpc_id(1, resource, 1)
 	
 @rpc("call_local", "reliable")
 func manual_add_resource(resource: int, amount: int):

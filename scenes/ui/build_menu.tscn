@@ -65,7 +65,7 @@ texture_pressed = ExtResource("2_e2605")
 texture_hover = ExtResource("3_nu03j")
 stretch_mode = 3
 
-[node name="TextureButton4" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
+[node name="PlatformButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture_normal = ExtResource("5_m4nd5")
