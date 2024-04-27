@@ -32,7 +32,8 @@ func set_stock(id : Statics.Materials, amount : int):
 		return
 	stocks[id].set_amount(amount)
 	Debug.sprint(stocks[id].quantity)
-	emit_signal("stock_change", id, amount)
+	update_stock.rpc(id, amount)
+
 
 func add_stock(id : Statics.Materials, amount : int = 1):
 	set_stock(id, stocks[id].quantity + amount)
@@ -51,4 +52,3 @@ func update_stock(id, amount):
 func add_resource(id : Statics.Materials, amount = 1):
 	if is_multiplayer_authority():
 		add_stock(id, amount)
-		update_stock.rpc(id, stocks[id].quantity)
