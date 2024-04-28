@@ -32,7 +32,8 @@ func set_stock(id : Statics.Materials, amount : int):
 		return
 	stocks[id].set_amount(amount)
 	Debug.sprint(stocks[id].quantity)
-	update_stock.rpc(id, stocks[id].quantity)
+	if multiplayer.is_server():
+		update_stock.rpc(id, stocks[id].quantity)
 
 func add_stock(id : Statics.Materials, amount : int = 1):
 	set_stock(id, stocks[id].quantity + amount)

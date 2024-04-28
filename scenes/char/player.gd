@@ -171,7 +171,7 @@ func _physics_process(delta: float) -> void:
 	if building_tile:
 		if inventory.check_stock(Statics.Materials.IRON, 1):
 			if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position())):
-				inventory.remove_stock(Statics.Materials.IRON, 1)
+				manual_remove_resource.rpc_id(1, Statics.Materials.IRON, 1)
 
 func setup(player_data: Statics.PlayerData):
 	name = str(player_data.id)
@@ -263,3 +263,7 @@ func mine_resource(resource: int):
 @rpc("call_local", "reliable")
 func manual_add_resource(resource: int, amount: int):
 	inventory.add_stock(resource, amount)
+
+@rpc("call_local", "reliable")
+func manual_remove_resource(resource: int, amount: int):
+	inventory.remove_stock(resource, amount)
