@@ -1,4 +1,8 @@
 extends Machine
+@onready var animated_sprite_2d = $AnimatedSprite2D
+
+func _ready():
+	animated_sprite_2d.stop()
 
 @onready var resource_detector = $ResourceDetector
 
@@ -8,6 +12,7 @@ func place():
 	placed = true
 	modulate = Color(1.0, 1.0, 1.0, 1.0)
 	output.output_scene = load("res://scenes/bullet.tscn")
+	animated_sprite_2d.play()
 	timer.start()
 
 func is_valid_place() -> bool:
