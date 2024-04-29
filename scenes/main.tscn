@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b5hufqs7sbm01"]
+[gd_scene load_steps=17 format=3 uid="uid://b5hufqs7sbm01"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_ysfbh"]
 [ext_resource type="PackedScene" uid="uid://8d3ys4aw51lk" path="res://scenes/char/player.tscn" id="2_jyiyy"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bxt1srl2oy4yp" path="res://assets/tilemaps/ore_tilemap.png" id="6_rctyi"]
 [ext_resource type="Texture2D" uid="uid://b1jtc6diajig3" path="res://assets/tilemaps/rock.png" id="7_iy3lg"]
 [ext_resource type="PackedScene" uid="uid://cuig2335qo1ln" path="res://scenes/inventory.tscn" id="7_v3a7n"]
+[ext_resource type="PackedScene" uid="uid://c8yc16m21f7p6" path="res://scenes/machines/hub.tscn" id="10_bvumi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6da87"]
 texture = ExtResource("3_jasfh")
@@ -386,3 +387,6 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="Inventory" parent="." instance=ExtResource("7_v3a7n")]
+
+[node name="Hub" parent="." instance=ExtResource("10_bvumi")]
+position = Vector2(234, 113)
