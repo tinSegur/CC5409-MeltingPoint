@@ -54,6 +54,7 @@ var build_preview: StaticBody2D
 var building = false
 var tile_selected = false
 var building_tile = false
+var tile_index = -1
 
 var inventory: Node
 
@@ -70,12 +71,10 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("mine"):
 			if tile_selected:
 				building_tile = true
-				#tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position()))
 				return
 			if !building:
 				mining = true
 				if mining_raycast.is_colliding():
-					#var tilemap = mining_raycast.get_collider()
 					var collision_point = mining_raycast.get_collision_point()
 					var dir = Vector2.ZERO.direction_to(mining_raycast.target_position)
 					mining_coords = tilemap.get_tile_coords(collision_point + dir)
@@ -91,7 +90,6 @@ func _input(event: InputEvent) -> void:
 				mining = false
 				mining_progress = 0
 				if mining_raycast.is_colliding():
-					#var tilemap = mining_raycast.get_collider()
 					tilemap.breaking(mining_coords, 0)
 		
 		if event.is_action_pressed("test"):
@@ -103,6 +101,7 @@ func _input(event: InputEvent) -> void:
 			if build_menu.visible:
 				building_tile = false
 				tile_selected = false
+				tile_index = -1
 				tilemap.clear_previews()
 				if is_instance_valid(build_preview):
 					cancel_build.rpc_id(1, build_preview.name)
@@ -117,9 +116,18 @@ func _input(event: InputEvent) -> void:
 					build_preview = null
 			building_tile = false
 			tile_selected = false
+			tile_index = -1
 			tilemap.clear_previews()
 			if build_menu.visible:
 				build_menu.visible = false
+		
+		if event.is_action_pressed("next_tile"):
+			if(tile_index >= 1):
+				tile_index = tile_index%6 + 1
+		
+		if event.is_action_pressed("prev_tile"):
+			if(tile_index >= 1):
+				tile_index = (6 if tile_index == 1 else tile_index - 1)
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -145,7 +153,6 @@ func _physics_process(delta: float) -> void:
 	
 	if mining:
 		if mining_raycast.is_colliding():
-			#var tilemap = mining_raycast.get_collider()
 			var collision_point = mining_raycast.get_collision_point()
 			var dir = Vector2.ZERO.direction_to(mining_raycast.target_position)
 			var tile_coords = tilemap.get_tile_coords(collision_point + dir)
@@ -160,18 +167,22 @@ func _physics_process(delta: float) -> void:
 				mine_timer.start(mine_time)
 		else:
 			if mining_progress > 0:
-				#var tilemap = get_tree().current_scene.find_child("TileMap")
 				tilemap.breaking(mining_coords, 0)
 				mining_progress = 0
 				mine_timer.stop()
 	
 	if tile_selected:
-		tilemap.show_preview(tilemap.get_tile_coords(get_global_mouse_position()))
+		tilemap.show_preview(tilemap.get_tile_coords(get_global_mouse_position()), tile_index)
 	
 	if building_tile:
-		if inventory.check_stock(Statics.Materials.IRON, 1):
-			if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position())):
-				manual_remove_resource.rpc_id(1, Statics.Materials.IRON, 1)
+		if tile_index == 0:
+			if inventory.check_stock(Statics.Materials.IRON, 1):
+				if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position()), tile_index):
+					manual_remove_resource.rpc_id(1, Statics.Materials.IRON, 1)
+		else:
+			if inventory.check_stock(Statics.Materials.IRON, 1):
+				if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position()), tile_index):
+					manual_remove_resource.rpc_id(1, Statics.Materials.IRON, 1)
 
 func setup(player_data: Statics.PlayerData):
 	name = str(player_data.id)
@@ -204,7 +215,6 @@ func _on_mine_timer_timeout():
 		mine_timer.start(0.5)
 
 func test():
-	#var tilemap = get_tree().current_scene.find_child("TileMap")
 	var tile_coords = tilemap.get_tile_coords(global_position)
 	var tile: TileData = tilemap.get_cell_tile_data(3, tile_coords)
 	if is_instance_valid(tile):
