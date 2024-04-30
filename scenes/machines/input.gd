@@ -13,3 +13,9 @@ func receive_item(item : MPMaterial):
 		retcodes.ACCEPT:
 			pass
 
+
+
+func _on_hitbox_area_entered(area : Area2D):
+	if (area.is_in_group("material")):
+		pass
+		
