@@ -1,18 +1,27 @@
 extends Node2D
 
-@export var melting_point : int = 2
-@export var breaking_delta : float = 2.0 
-@export var can_break : bool = false
-@export var can_melt : bool = true
-@export var type : Statics.Materials
-@export var melt_icon : Texture2D
-@export var solid_icon : Texture2D
+var melting_point : int = 2
+var breaking_delta : float = 2.0 
+var can_break : bool = false
+var can_melt : bool = true
+var type : Statics.Materials
+var melt_icon : Texture2D
+var solid_icon : Texture2D
 var sprite : Sprite2D
 var inner_temp : int = 5 
 var delta_temp : float = 0
 var tilemap : TileMap
+var mat_data : MPMaterial
 
 func ready():
+	melting_point = mat_data.melting_point
+	breaking_delta = mat_data.breaking_delta
+	can_break = mat_data.can_break
+	can_melt = mat_data.can_melt
+	type = mat_data.type
+	melt_icon = mat_data.melt_icon
+	solid_icon = mat_data.solid_icon
+	
 	sprite=$Sprite2D
 	tilemap = get_tree().current_scene.get_node("TileMap")
 	var tile_coords = tilemap.get_tile_coords(global_position)
