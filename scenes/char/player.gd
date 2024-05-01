@@ -123,11 +123,11 @@ func _input(event: InputEvent) -> void:
 		
 		if event.is_action_pressed("next_tile"):
 			if(tile_index >= 1):
-				tile_index = tile_index%6 + 1
+				tile_index = tile_index%12 + 1
 		
 		if event.is_action_pressed("prev_tile"):
 			if(tile_index >= 1):
-				tile_index = (6 if tile_index == 1 else tile_index - 1)
+				tile_index = (12 if tile_index == 1 else tile_index - 1)
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():

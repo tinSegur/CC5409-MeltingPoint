@@ -4,10 +4,12 @@ extends Node2D
 #@export var possible_outputs: Array[PackedScene]
 var output_scene: PackedScene
 var item_container: Node2D
+var tilemap: TileMap
 #var outputs_amount: int = 0
 @onready var timer = $Timer
 
 func _ready():
+	tilemap = get_tree().current_scene.get_node("TileMap")
 	item_container = get_tree().current_scene.get_node("%Items")
 
 func generate(index: int, amount: int):
@@ -15,6 +17,8 @@ func generate(index: int, amount: int):
 	while amount > 0:
 		var item = output_scene.instantiate()
 		item.global_position = global_position
+		item.tilemap = tilemap
+		item.pipe_coords = tilemap.get_tile_coords(global_position)
 		item_container.add_child(item, true)
 		if is_multiplayer_authority():
 			var inventory = get_tree().current_scene.get_node("Inventory")

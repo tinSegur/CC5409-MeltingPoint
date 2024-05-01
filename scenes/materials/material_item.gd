@@ -12,9 +12,10 @@ var inner_temp : int = 5
 var delta_temp : float = 0
 var tilemap : TileMap
 
+var pipe_coords: Vector2
+
 func ready():
 	sprite=$Sprite2D
-	tilemap = get_tree().current_scene.get_node("TileMap")
 	var tile_coords = tilemap.get_tile_coords(global_position)
 	var tile : TileData = tilemap.get_cell_tile_data(3, tile_coords)
 	if is_instance_valid(tile):
@@ -24,10 +25,13 @@ func ready():
 				sprite.set_texture(melt_icon)
 			else :
 				sprite.set_texture(solid_icon)
+	var pipe = tilemap.get_cell_tile_data(0, tile_coords)
+	if is_instance_valid(pipe):
+		tilemap.set_cell(0, tile_coords, 5, tilemap.get_cell_atlas_coords(0, tile_coords),1)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	tilemap = get_tree().current_scene.get_node("TileMap")
+	#tilemap = get_tree().current_scene.get_node("TileMap")
 	var tile_coords = tilemap.get_tile_coords(global_position)
 	var tile: TileData= tilemap.get_cell_tile_data(3, tile_coords)
 	if is_instance_valid(tile):
@@ -51,4 +55,35 @@ func change_temp(new_temp : int):
 		return
 
 func _physics_process(delta: float) -> void:
-	position.y+=1
+	
+	var pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
+	if is_instance_valid(pipe):
+		var dir = Vector2(pipe.get_custom_data("direction"))
+		var new_coords = tilemap.get_tile_coords(global_position)
+		var speed = pipe.get_custom_data("pipe_speed")
+		
+		if dir.y == 0:
+			if int(global_position.y)%18 < 9:
+				global_position.y += speed
+			elif int(global_position.y)%18 > 9:
+				global_position.y -= speed
+			else:
+				var next_pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position + dir*18))
+				if is_instance_valid(next_pipe):
+					if (!next_pipe.get_custom_data("occupied")):
+						global_position += dir*speed
+		else:
+			if int(global_position.x)%18 < 9:
+				global_position.x += speed
+			elif int(global_position.x)%18 > 9:
+				global_position.x -= speed
+			else:
+				var next_pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position + dir*18))
+				if is_instance_valid(next_pipe):
+					if (!next_pipe.get_custom_data("occupied")):
+						global_position += dir*speed
+					
+		if new_coords != pipe_coords:
+			tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),0)
+			tilemap.set_cell(0, new_coords, 5, tilemap.get_cell_atlas_coords(0, new_coords),1)
+			pipe_coords = new_coords
