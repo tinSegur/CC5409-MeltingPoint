@@ -1,4 +1,4 @@
-extends Node2D
+extends Area2D
 
 @export var melting_point : int = 2
 @export var breaking_delta : float = 2.0 
@@ -25,9 +25,6 @@ func ready():
 				sprite.set_texture(melt_icon)
 			else :
 				sprite.set_texture(solid_icon)
-	var pipe = tilemap.get_cell_tile_data(0, tile_coords)
-	if is_instance_valid(pipe):
-		tilemap.set_cell(0, tile_coords, 5, tilemap.get_cell_atlas_coords(0, tile_coords),1)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -62,15 +59,20 @@ func _physics_process(delta: float) -> void:
 		var new_coords = tilemap.get_tile_coords(global_position)
 		var speed = pipe.get_custom_data("pipe_speed")
 		
+		# speed == 0 => not a pipe
+		if speed == 0:
+			return
+		
 		if dir.y == 0:
 			if int(global_position.y)%18 < 9:
 				global_position.y += speed
 			elif int(global_position.y)%18 > 9:
 				global_position.y -= speed
 			else:
-				var next_pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position + dir*18))
+				var next_pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position + dir*6))
 				if is_instance_valid(next_pipe):
-					if (!next_pipe.get_custom_data("occupied")):
+					var next_coords = tilemap.get_tile_coords(global_position + dir*6)
+					if ((!next_pipe.get_custom_data("occupied") and next_pipe.get_custom_data("pipe_speed")!= 0) or next_coords == pipe_coords):
 						global_position += dir*speed
 		else:
 			if int(global_position.x)%18 < 9:
@@ -78,12 +80,15 @@ func _physics_process(delta: float) -> void:
 			elif int(global_position.x)%18 > 9:
 				global_position.x -= speed
 			else:
-				var next_pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position + dir*18))
+				var next_pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position + dir*6))
 				if is_instance_valid(next_pipe):
-					if (!next_pipe.get_custom_data("occupied")):
+					var next_coords = tilemap.get_tile_coords(global_position + dir*6)
+					if ((!next_pipe.get_custom_data("occupied") and next_pipe.get_custom_data("pipe_speed")!= 0) or next_coords == pipe_coords):
 						global_position += dir*speed
 					
 		if new_coords != pipe_coords:
 			tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),0)
 			tilemap.set_cell(0, new_coords, 5, tilemap.get_cell_atlas_coords(0, new_coords),1)
 			pipe_coords = new_coords
+		else:
+			tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),1)
