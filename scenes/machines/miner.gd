@@ -16,8 +16,12 @@ func place():
 	timer.timeout.connect(spawn_resource)
 	placed = true
 	modulate = Color(1.0, 1.0, 1.0, 1.0)
-	output.output_scene = load("res://scenes/materials/material_item.tscn")#"res://scenes/bullet.tscn")
+
 	output.output_type = output_type
+
+	#output.output_scene = load("res://scenes/bullet.tscn")
+	output.output_scene = load("res://scenes/materials/material_item.tscn")
+
 	animated_sprite_2d.play()
 	timer.start()
 
@@ -60,5 +64,5 @@ func send_pos(pos: Vector2):
 	global_position = pos
 
 func spawn_resource():
-	output.generate(0, 2)
+	output.generate(0, 1)
 	

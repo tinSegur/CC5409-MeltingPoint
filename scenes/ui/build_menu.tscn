@@ -1,12 +1,18 @@
-[gd_scene load_steps=10 format=3 uid="uid://c0xu2cniynmx2"]
+[gd_scene load_steps=16 format=3 uid="uid://c0xu2cniynmx2"]
 
 [ext_resource type="Script" path="res://scenes/ui/build_menu.gd" id="1_71fyl"]
 [ext_resource type="Texture2D" uid="uid://3mk6t3y2y3qc" path="res://assets/machines/basic_miner_button_base.png" id="1_qo6ks"]
 [ext_resource type="Texture2D" uid="uid://d4ft1pxnx1wei" path="res://assets/machines/basic_miner_button_pressed.png" id="2_e2605"]
 [ext_resource type="Texture2D" uid="uid://2uusjfglcfyo" path="res://assets/machines/basic_miner_button_hover.png" id="3_nu03j"]
+[ext_resource type="Texture2D" uid="uid://cyuqcf3g4rgu0" path="res://assets/machines/platform/platform_button.png" id="5_5rygq"]
 [ext_resource type="Texture2D" uid="uid://2yhb0hlermap" path="res://assets/players/base_player.png" id="5_m4nd5"]
+[ext_resource type="Texture2D" uid="uid://37rd17k3oc0v" path="res://assets/machines/platform/platform_button_pressed.png" id="6_4q2ys"]
 [ext_resource type="Texture2D" uid="uid://cmdtm55y11r6a" path="res://assets/machines/basic_miner.png" id="6_mxquf"]
+[ext_resource type="Texture2D" uid="uid://dqaiq2as1goqv" path="res://assets/machines/platform/platform_button_hover.png" id="7_m0k2m"]
 [ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="7_v6cqe"]
+[ext_resource type="Texture2D" uid="uid://c7lxsel7g0ff1" path="res://assets/machines/pipes/pipe_button.png" id="8_wlnk2"]
+[ext_resource type="Texture2D" uid="uid://cvt5v1fal7lf7" path="res://assets/machines/pipes/pipe_button_pressed.png" id="9_ni04f"]
+[ext_resource type="Texture2D" uid="uid://c0xfanjai2hk1" path="res://assets/machines/pipes/pipe_button_hover.png" id="10_1sese"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfceq"]
 bg_color = Color(0.313726, 0.313726, 0.313726, 1)
@@ -68,13 +74,17 @@ stretch_mode = 3
 [node name="PlatformButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture_normal = ExtResource("5_m4nd5")
+texture_normal = ExtResource("5_5rygq")
+texture_pressed = ExtResource("6_4q2ys")
+texture_hover = ExtResource("7_m0k2m")
 stretch_mode = 3
 
-[node name="TextureButton3" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
+[node name="PipeButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture_normal = ExtResource("5_m4nd5")
+texture_normal = ExtResource("8_wlnk2")
+texture_pressed = ExtResource("9_ni04f")
+texture_hover = ExtResource("10_1sese")
 stretch_mode = 3
 
 [node name="TextureButton2" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]

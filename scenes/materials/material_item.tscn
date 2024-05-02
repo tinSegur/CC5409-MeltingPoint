@@ -1,10 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://ba5sappftiwro"]
+[gd_scene load_steps=5 format=3 uid="uid://ba5sappftiwro"]
 
 [ext_resource type="Script" path="res://scenes/materials/material_item.gd" id="1_3bbn0"]
 [ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="2_f20j6"]
+[ext_resource type="Texture2D" uid="uid://hxepxbkj7gv8" path="res://assets/items/liquid_iron.png" id="2_tiku1"]
 
-[node name="Node2D" type="Node2D"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d2t0m"]
+size = Vector2(16, 16)
+
+[node name="Item" type="Area2D"]
+scale = Vector2(0.5, 0.5)
+collision_layer = 16
+collision_mask = 0
 script = ExtResource("1_3bbn0")
+
+melt_icon = ExtResource("2_tiku1")
+solid_icon = ExtResource("2_f20j6")
+
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_f20j6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_d2t0m")

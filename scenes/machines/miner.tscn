@@ -198,4 +198,4 @@ replication_config = SubResource("SceneReplicationConfig_ba351")
 wait_time = 3.0
 
 [node name="Output" parent="." instance=ExtResource("3_ca5a8")]
-position = Vector2(0, -18)
+position = Vector2(0, -22)

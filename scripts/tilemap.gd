@@ -72,21 +72,27 @@ func generate_resource(ore: String, cell_position: Vector2i):
 	var atlas_pos = get_cell_atlas_coords(0, cell_position)
 	set_cell(0, cell_position, 0, atlas_pos, 1)
 
-func place_tile(coords: Vector2i):
+func place_tile(coords: Vector2i, index: int):
 	if !is_instance_valid(get_cell_tile_data(0, coords)):
-		place.rpc(coords)
+		place.rpc(coords, index)
 		return true
 	return false
 
 @rpc("call_local", "reliable", "any_peer")
-func place(coords: Vector2i):
-	set_cell(0, coords, 4, Vector2i(0,2))
-	
-func show_preview(coords: Vector2i):
+func place(coords: Vector2i, index: int):
+	if index == 0:
+		set_cell(0, coords, 4, Vector2i(0,2))
+	else:
+		set_cell(0, coords, 5, Vector2i(index - 1, 0))
+
+func show_preview(coords: Vector2i, index: int):
+	clear_previews()
 	if !is_instance_valid(get_cell_tile_data(0, coords)):
-		clear_previews()
-		set_cell(4, coords, 4, Vector2i(0,2), 1)
-		
+		if index == 0:
+			set_cell(4, coords, 4, Vector2i(0,2), 1)
+		else:
+			set_cell(4, coords, 5, Vector2i(index - 1, 0))
+
 func clear_previews():
 	var previews = get_used_cells(4)
 	for coords in previews:
