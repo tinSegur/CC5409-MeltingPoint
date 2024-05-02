@@ -1,7 +1,7 @@
 extends Node2D
 
 var melting_point : int = 2
-var breaking_delta : float = 2.0 
+var breaking_delta : float = 100.0
 var can_break : bool = false
 var can_melt : bool = true
 var type : Statics.Materials

@@ -1,6 +1,8 @@
 class_name Machine
 extends StaticBody2D
 
+@export var output_type : MPMaterial
+
 var placed = false
 @export var builder_id: int = 0
 @onready var hitbox = $Hitbox

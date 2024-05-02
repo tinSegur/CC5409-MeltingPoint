@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://bgvcs0ee1pr6"]
+[gd_scene load_steps=28 format=3 uid="uid://bgvcs0ee1pr6"]
 
 [ext_resource type="Script" path="res://scenes/machines/miner.gd" id="1_85407"]
+[ext_resource type="Resource" uid="uid://f004kgvtcc22" path="res://scenes/materials/iron.tres" id="2_rj8l1"]
 [ext_resource type="PackedScene" uid="uid://cbmugsoctody6" path="res://scenes/machines/output.tscn" id="3_ca5a8"]
 [ext_resource type="Texture2D" uid="uid://uy0eobs62wcc" path="res://assets/machines/basic_miner-sheet.png" id="4_rbjil"]
 
@@ -164,7 +165,7 @@ z_index = -1
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_85407")
-builder_id = null
+output_type = ExtResource("2_rj8l1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
