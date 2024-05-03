@@ -58,6 +58,8 @@ var tile_index = -1
 
 var inventory: Node
 
+@onready var playback = $AnimationTree["parameters/playback"]
+
 func _ready():
 	machine_container = get_tree().current_scene.get_node("%Machines")
 	inventory = get_tree().current_scene.get_node("Inventory")
@@ -65,6 +67,7 @@ func _ready():
 	build_menu.machine_selected.connect(on_machine_selected)
 	build_menu.tile_selected.connect(on_tile_selected)
 	tilemap = get_tree().current_scene.get_node("TileMap")
+	$AnimationTree.active = true
 
 func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
@@ -130,6 +133,9 @@ func _input(event: InputEvent) -> void:
 				tile_index = (12 if tile_index == 1 else tile_index - 1)
 
 func _physics_process(delta: float) -> void:
+	
+	# Movement logic
+	
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		
@@ -151,6 +157,8 @@ func _physics_process(delta: float) -> void:
 		
 	move_and_slide()
 	
+	# Mining logic
+	
 	if mining:
 		if mining_raycast.is_colliding():
 			var collision_point = mining_raycast.get_collision_point()
@@ -171,6 +179,8 @@ func _physics_process(delta: float) -> void:
 				mining_progress = 0
 				mine_timer.stop()
 	
+	# Building logic
+	
 	if tile_selected:
 		tilemap.show_preview(tilemap.get_tile_coords(get_global_mouse_position()), tile_index)
 	
@@ -183,6 +193,13 @@ func _physics_process(delta: float) -> void:
 			if inventory.check_stock(Statics.Materials.IRON, 1):
 				if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position()), tile_index):
 					manual_remove_resource.rpc_id(1, Statics.Materials.IRON, 1)
+					
+	# Animation logic
+	
+	if (abs(velocity.x) > 0):
+		playback.travel("walk")
+	else:
+		playback.travel("idle")
 
 func setup(player_data: Statics.PlayerData):
 	name = str(player_data.id)
