@@ -5,21 +5,22 @@
 [ext_resource type="PackedScene" uid="uid://cgtrga7080al8" path="res://scenes/machines/input.tscn" id="3_3puih"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pyptc"]
-size = Vector2(65, 65)
+size = Vector2(64, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jnega"]
-size = Vector2(65, 65)
+size = Vector2(64, 64)
 
 [node name="Hub" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 10
 script = ExtResource("1_u8kk4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, -1.5)
 shape = SubResource("RectangleShape2D_pyptc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(1, -2)
-scale = Vector2(0.507813, 0.515625)
+position = Vector2(0.249985, -1.40071e-06)
+scale = Vector2(0.496094, 0.5)
 texture = ExtResource("2_gcdr4")
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -27,11 +28,10 @@ collision_layer = 0
 collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(1, -2)
 shape = SubResource("RectangleShape2D_jnega")
 
 [node name="Input" parent="." instance=ExtResource("3_3puih")]
-position = Vector2(43, -1)
+position = Vector2(40, -16)
 
 [node name="Input2" parent="." instance=ExtResource("3_3puih")]
-position = Vector2(-41, -1)
+position = Vector2(-40, -16)

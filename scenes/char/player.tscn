@@ -209,5 +209,8 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 active = false
+libraries = {
+"": SubResource("AnimationLibrary_pr5bg")
+}
 tree_root = SubResource("AnimationNodeStateMachine_qfhim")
 anim_player = NodePath("../AnimationPlayer")

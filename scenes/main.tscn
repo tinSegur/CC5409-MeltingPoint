@@ -546,4 +546,4 @@ spawn_path = NodePath("../Machines")
 [node name="Inventory" parent="." instance=ExtResource("7_v3a7n")]
 
 [node name="Hub" parent="." instance=ExtResource("10_bvumi")]
-position = Vector2(234, 113)
+position = Vector2(234, 112)

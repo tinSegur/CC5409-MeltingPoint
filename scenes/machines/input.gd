@@ -17,4 +17,4 @@ func receive_item(item : MPMaterial):
 
 func _on_hitbox_area_entered(area : Area2D):
 	receive_item(area.mat_data)
-	area.queue_free()
+	area.destroy()
