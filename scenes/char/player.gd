@@ -196,7 +196,7 @@ func _physics_process(delta: float) -> void:
 					
 	# Animation logic
 	
-	if (abs(velocity.x) > 0):
+	if (abs(velocity.x) > 0.1):
 		playback.travel("walk")
 	else:
 		playback.travel("idle")
