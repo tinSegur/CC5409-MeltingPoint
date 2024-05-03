@@ -31,4 +31,7 @@ position = Vector2(1, -2)
 shape = SubResource("RectangleShape2D_jnega")
 
 [node name="Input" parent="." instance=ExtResource("3_3puih")]
-position = Vector2(34, 21)
+position = Vector2(43, -1)
+
+[node name="Input2" parent="." instance=ExtResource("3_3puih")]
+position = Vector2(-41, -1)

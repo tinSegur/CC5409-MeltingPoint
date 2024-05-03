@@ -16,6 +16,5 @@ func receive_item(item : MPMaterial):
 
 
 func _on_hitbox_area_entered(area : Area2D):
-	if (area.is_in_group("material")):
-		pass
-		
+	receive_item(area.mat_data)
+	area.queue_free()
