@@ -22,6 +22,11 @@ enum Materials {
 	CRYSTALS
 }
 
+enum INPUT_CODES {
+	ACCEPT,
+	NOTACCEPT
+}
+
 
 class PlayerData:
 	var id: int

@@ -1,10 +1,18 @@
-[gd_resource type="Resource" script_class="MPMaterial" load_steps=3 format=3 uid="uid://f004kgvtcc22"]
+[gd_resource type="Resource" script_class="MPMaterial" load_steps=5 format=3 uid="uid://f004kgvtcc22"]
 
 [ext_resource type="Texture2D" uid="uid://d2g0t28sabg2b" path="res://assets/tilemaps/marble.png" id="1_ij4nv"]
 [ext_resource type="Script" path="res://scenes/materials/material.gd" id="1_rhokj"]
+[ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="2_3xwfe"]
+[ext_resource type="Texture2D" uid="uid://bxt1srl2oy4yp" path="res://assets/tilemaps/ore_tilemap.png" id="4_7jato"]
 
 [resource]
 script = ExtResource("1_rhokj")
 inventory_sprite = ExtResource("1_ij4nv")
-melting_point = 5
 type = 0
+melting_point = 5
+breaking_delta = 2.0
+can_break = false
+can_melt = true
+melt_icon = ExtResource("2_3xwfe")
+solid_icon = ExtResource("4_7jato")
+default_temp = 5

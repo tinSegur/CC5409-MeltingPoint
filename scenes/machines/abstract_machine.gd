@@ -1,13 +1,13 @@
 class_name Machine
 extends StaticBody2D
 
+@export var output_type : MPMaterial
+
 var placed = false
 @export var builder_id: int = 0
 @onready var hitbox = $Hitbox
-@onready var resource_detector = $ResourceDetector
 @onready var timer = $Timer
 @onready var output = $Output
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -36,7 +36,10 @@ func place():
 func is_valid_place() -> bool:
 	var bodies: Array = hitbox.get_overlapping_bodies()
 	return ((bodies.size()-1) == 0)
-	
+
+func input_resource(item : MPMaterial) -> Statics.INPUT_CODES:
+	return Statics.INPUT_CODES.NOTACCEPT
+
 
 func try_place() -> bool:
 	if is_valid_place():
@@ -50,3 +53,4 @@ func cancel_build():
 @rpc("call_local", "any_peer")
 func send_pos(pos: Vector2):
 	global_position = pos
+

@@ -1,16 +1,27 @@
 extends Machine
+
+
+
 @onready var animated_sprite_2d = $AnimatedSprite2D
 
 func _ready():
 	animated_sprite_2d.stop()
+
+@onready var resource_detector = $ResourceDetector
+
+
 
 @rpc("call_local", "any_peer")
 func place():
 	timer.timeout.connect(spawn_resource)
 	placed = true
 	modulate = Color(1.0, 1.0, 1.0, 1.0)
+
+	output.output_type = output_type
+
 	#output.output_scene = load("res://scenes/bullet.tscn")
 	output.output_scene = load("res://scenes/materials/material_item.tscn")
+
 	animated_sprite_2d.play()
 	timer.start()
 

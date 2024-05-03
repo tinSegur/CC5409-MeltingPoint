@@ -1,20 +1,30 @@
 extends Area2D
 
-@export var melting_point : int = 2
-@export var breaking_delta : float = 2.0 
-@export var can_break : bool = false
-@export var can_melt : bool = true
-@export var type : Statics.Materials
-@export var melt_icon : Texture2D
-@export var solid_icon : Texture2D
+var melting_point : int = 2
+var breaking_delta : float = 100.0
+var can_break : bool = false
+var can_melt : bool = true
+var type : Statics.Materials
+var melt_icon : Texture2D
+var solid_icon : Texture2D
 var sprite : Sprite2D
 var inner_temp : int = 5 
 var delta_temp : float = 0
 var tilemap : TileMap
+var mat_data : MPMaterial
+var broken = false
 
 var pipe_coords: Vector2
 
 func ready():
+	melting_point = mat_data.melting_point
+	breaking_delta = mat_data.breaking_delta
+	can_break = mat_data.can_break
+	can_melt = mat_data.can_melt
+	type = mat_data.type
+	melt_icon = mat_data.melt_icon
+	solid_icon = mat_data.solid_icon
+	
 	sprite=$Sprite2D
 	var tile_coords = tilemap.get_tile_coords(global_position)
 	var tile : TileData = tilemap.get_cell_tile_data(3, tile_coords)
@@ -47,16 +57,24 @@ func change_temp(new_temp : int):
 			sprite.set_texture(solid_icon)
 			return
 	if can_break and delta_temp >= breaking_delta:
-		queue_free()
+		destroy()
 		return
 
 func _physics_process(delta: float) -> void:
 	
 	var pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
 	if is_instance_valid(pipe):
+		
+
+		
 		var dir = Vector2(pipe.get_custom_data("direction"))
 		var new_coords = tilemap.get_tile_coords(global_position)
 		var speed = pipe.get_custom_data("pipe_speed")
+		
+		if broken:
+			tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),0)
+			queue_free()
+			return
 		
 		# speed == 0 => not a pipe
 		if speed == 0:
@@ -94,3 +112,7 @@ func _physics_process(delta: float) -> void:
 			pipe_coords = new_coords
 		else:
 			tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),1)
+
+
+func destroy():
+	broken = true
