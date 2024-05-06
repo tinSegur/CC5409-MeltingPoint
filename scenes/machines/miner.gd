@@ -18,8 +18,6 @@ func place():
 	modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 	output.output_type = output_type
-
-	#output.output_scene = load("res://scenes/bullet.tscn")
 	output.output_scene = load("res://scenes/materials/material_item.tscn")
 
 	animated_sprite_2d.play()
