@@ -74,6 +74,17 @@ func generate_resource(ore: String, cell_position: Vector2i):
 
 func place_tile(coords: Vector2i, index: int):
 	if !is_instance_valid(get_cell_tile_data(0, coords)):
+		if (index > 0):
+			var dir = Vector2i.ZERO
+			match index:
+				1:
+					dir = Vector2i(0,-1)
+				2:
+					dir = Vector2i(0,1)
+				3:
+					dir = Vector2i(1,0)
+				4:
+					dir = Vector2i(-1,0)
 		place.rpc(coords, index)
 		return true
 	return false
