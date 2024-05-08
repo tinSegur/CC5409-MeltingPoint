@@ -14,7 +14,7 @@ var pipes_index = {
 	"128": 1,
 	"129": 10,
 	"130": 11,
-	"131": 21, #Falta un tile
+	"131": 25,
 	"132": 1,
 	"133": 13,
 	"134": 14,
@@ -24,7 +24,7 @@ var pipes_index = {
 	"64": 2,
 	"65": 6,
 	"66": 7,
-	"67": 22, #Falta un tile 
+	"67": 26,
 	"72": 2,
 	"73": 15,
 	"74": 16,
@@ -37,7 +37,7 @@ var pipes_index = {
 	"37": 19,
 	"40": 12,
 	"41": 20,
-	"44": 24, #Falta un tile
+	"44": 28, #Falta un tile
 	"45": 24,
 	
 	# Pipes hacia la derecha
@@ -47,7 +47,7 @@ var pipes_index = {
 	"22": 17,
 	"24": 9,
 	"26": 18,
-	"28": 23, #Falta un tile
+	"28": 27, #Falta un tile
 	"30": 23
 }
 
@@ -197,8 +197,10 @@ func place(coords: Vector2i, index: int):
 		set_cell(0, coords, 4, Vector2i(0,2))
 	elif index <= 12:
 		set_cell(0, coords, 5, Vector2i(index - 1, 0))
-	else:
+	elif index <= 24:
 		set_cell(0, coords, 5, Vector2i(index - 13, 1))
+	else:
+		set_cell(0, coords, 5, Vector2i(index - 25, 2))
 
 func show_preview(coords: Vector2i, index: int):
 	clear_previews()
