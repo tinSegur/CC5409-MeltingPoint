@@ -33,6 +33,7 @@ var stat_dict = {
 @onready var camera = $Camera2D
 @export var bullet_scene: PackedScene
 @onready var pivot = $Pivot
+@onready var mouse_area: Area2D = $MouseArea
 
 @export var score = 1 :
 	set(value):
@@ -55,6 +56,7 @@ var building = false
 var tile_selected = false
 var building_tile = false
 var tile_index = -1
+var deleting = false
 
 var inventory: Node
 
@@ -73,8 +75,14 @@ func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
 		if event.is_action_pressed("mine"):
 			if tile_selected:
+				mouse_area.disabled = false
 				building_tile = true
 				return
+			if deleting:
+				var tile_coords = tilemap.get_tile_coords(get_global_mouse_position())
+				if is_instance_valid(tilemap.get_cell_tile_data(0, tile_coords)):
+					if tilemap.get_cell_source_id(0, tile_coords) > 3:
+						tilemap.mine_tile.rpc(0, tilemap.get_tile_coords(get_global_mouse_position()))
 			if !building:
 				mining = true
 				if mining_raycast.is_colliding():
@@ -89,6 +97,7 @@ func _input(event: InputEvent) -> void:
 				
 		if event.is_action_released("mine"):
 			building_tile = false
+			mouse_area.disabled = true
 			if !building:
 				mining = false
 				mining_progress = 0
@@ -104,6 +113,8 @@ func _input(event: InputEvent) -> void:
 			if build_menu.visible:
 				building_tile = false
 				tile_selected = false
+				deleting = false
+				mouse_area.disabled = true
 				tile_index = -1
 				tilemap.clear_previews()
 				if is_instance_valid(build_preview):
@@ -117,8 +128,10 @@ func _input(event: InputEvent) -> void:
 				if is_instance_valid(build_preview):
 					cancel_build.rpc_id(1, build_preview.name)
 					build_preview = null
+			mouse_area.disabled = true
 			building_tile = false
 			tile_selected = false
+			deleting = false
 			tile_index = -1
 			tilemap.clear_previews()
 			if build_menu.visible:
@@ -131,6 +144,16 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("prev_tile"):
 			if(tile_index >= 1):
 				tile_index = (4 if tile_index == 1 else tile_index - 1)
+				
+		if event.is_action_pressed("delete"):
+			deleting = !deleting
+			if deleting:
+				mouse_area.disabled = false
+				building = false
+				building_tile = false
+				tile_selected = false
+				tile_index = -1
+				tilemap.clear_previews()
 
 func _physics_process(delta: float) -> void:
 	
@@ -193,7 +216,7 @@ func _physics_process(delta: float) -> void:
 			if inventory.check_stock(Statics.Materials.IRON, 1):
 				if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position()), tile_index):
 					manual_remove_resource.rpc_id(1, Statics.Materials.IRON, 1)
-					
+	
 	# Animation logic
 	
 	if (abs(velocity.x) > 0.1):

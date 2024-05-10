@@ -38,7 +38,6 @@ func resource_generation():
 			var x = Vector2(-1,-1)
 			while used_positions.has(x):
 				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits[0],y_limits[1]))
-#				x = Vector2(rng.randi_range(-4,28),rng.randi_range(8,9))
 			used_positions.append(x)
 			tile_map.generate_resource.rpc("Iron",x)
 			N_resources-=1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://8d3ys4aw51lk"]
+[gd_scene load_steps=18 format=3 uid="uid://8d3ys4aw51lk"]
 
 [ext_resource type="Script" path="res://scenes/char/player.gd" id="1_7q1sy"]
 [ext_resource type="PackedScene" uid="uid://dskjy6yd4quog" path="res://scenes/bullet.tscn" id="2_pyqhq"]
@@ -163,6 +163,9 @@ states/walk/position = Vector2(683, 100)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_nfhog"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_i1v56"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_qkroj")]
 graph_offset = Vector2(-3, -64)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_j6huy"]
+radius = 7.0
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 8
 script = ExtResource("1_7q1sy")
@@ -209,5 +212,16 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 active = false
+libraries = {
+"": SubResource("AnimationLibrary_pr5bg")
+}
 tree_root = SubResource("AnimationNodeStateMachine_qfhim")
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="MouseArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseArea"]
+shape = SubResource("CircleShape2D_j6huy")
+disabled = true
