@@ -21,6 +21,7 @@ func _ready() -> void:
 func _input(event):
 	if event.is_action_pressed("test"):
 		inventory.add_resource.rpc(Statics.Materials.IRON, 1)
+		inventory.add_resource.rpc(Statics.Materials.GOLD, 1)
 
 
 @rpc("call_local", "any_peer")

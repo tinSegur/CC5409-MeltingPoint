@@ -294,3 +294,5 @@ func manual_add_resource(resource: int, amount: int):
 @rpc("call_local", "reliable")
 func manual_remove_resource(resource: int, amount: int):
 	inventory.remove_stock(resource, amount)
+
+

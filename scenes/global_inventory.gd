@@ -21,11 +21,11 @@ signal stock_change(mat_id : Statics.Materials, amount)
 @export var materials : Array[MPMaterial]
 var stocks : Dictionary
 
+@onready var timer : Timer = $Timer
+
 func _ready():
 	for mat in materials:
 		stocks[mat.type] = InternalStock.new(mat)
-
-
 
 func set_stock(id : Statics.Materials, amount : int):
 	if amount < 0:
@@ -52,4 +52,8 @@ func update_stock(id, amount):
 func add_resource(id : Statics.Materials, amount = 1):
 	if is_multiplayer_authority():
 		add_stock(id, amount)
-		
+
+
+func _on_timer_timeout():
+	for st in stocks:
+		stock_change.emit(stocks[st].material.type, stocks[st].quantity)
