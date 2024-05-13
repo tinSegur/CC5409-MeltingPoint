@@ -75,7 +75,7 @@ func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
 		if event.is_action_pressed("mine"):
 			if tile_selected:
-				mouse_area.disabled = false
+				mouse_area.monitoring = true
 				building_tile = true
 				return
 			if deleting:
@@ -83,6 +83,8 @@ func _input(event: InputEvent) -> void:
 				if is_instance_valid(tilemap.get_cell_tile_data(0, tile_coords)):
 					if tilemap.get_cell_source_id(0, tile_coords) > 3:
 						tilemap.mine_tile.rpc(0, tilemap.get_tile_coords(get_global_mouse_position()))
+				else:
+					try_delete()
 			if !building:
 				mining = true
 				if mining_raycast.is_colliding():
@@ -96,8 +98,9 @@ func _input(event: InputEvent) -> void:
 					try_place_machine.rpc_id(1, build_preview.name)
 				
 		if event.is_action_released("mine"):
+			if building_tile:
+				mouse_area.monitoring = false
 			building_tile = false
-			mouse_area.disabled = true
 			if !building:
 				mining = false
 				mining_progress = 0
@@ -114,7 +117,7 @@ func _input(event: InputEvent) -> void:
 				building_tile = false
 				tile_selected = false
 				deleting = false
-				mouse_area.disabled = true
+				mouse_area.monitoring = false
 				tile_index = -1
 				tilemap.clear_previews()
 				if is_instance_valid(build_preview):
@@ -128,7 +131,7 @@ func _input(event: InputEvent) -> void:
 				if is_instance_valid(build_preview):
 					cancel_build.rpc_id(1, build_preview.name)
 					build_preview = null
-			mouse_area.disabled = true
+			mouse_area.monitoring = false
 			building_tile = false
 			tile_selected = false
 			deleting = false
@@ -148,7 +151,7 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("delete"):
 			deleting = !deleting
 			if deleting:
-				mouse_area.disabled = false
+				mouse_area.monitoring = true
 				building = false
 				building_tile = false
 				tile_selected = false
@@ -177,6 +180,9 @@ func _physics_process(delta: float) -> void:
 
 		var mouse_dir = to_local(get_global_mouse_position())
 		mining_raycast.target_position = mining_radius * Vector2.ZERO.direction_to(mouse_dir)
+		
+		if mouse_area.monitoring:
+			mouse_area.global_position = get_global_mouse_position()
 		
 	move_and_slide()
 	
@@ -317,3 +323,14 @@ func manual_add_resource(resource: int, amount: int):
 @rpc("call_local", "reliable")
 func manual_remove_resource(resource: int, amount: int):
 	inventory.remove_stock(resource, amount)
+	
+func try_delete():
+	#if mouse_area.has_overlapping_bodies():
+		#Debug.sprint("Has bodies")
+	#Debug.sprint(mouse_area.monitoring)
+	var bodies = mouse_area.get_overlapping_bodies()
+	Debug.sprint(bodies.size())
+	for body in bodies:
+		if body.is_class("Maquina"):
+			cancel_build.rpc(body.name)
+			return
