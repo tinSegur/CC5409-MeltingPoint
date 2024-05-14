@@ -1,4 +1,5 @@
 extends Area2D
+class_name Item
 
 var melting_point : int = 2
 var breaking_delta : float = 100.0

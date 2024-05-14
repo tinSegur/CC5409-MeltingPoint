@@ -83,8 +83,9 @@ func _input(event: InputEvent) -> void:
 				if is_instance_valid(tilemap.get_cell_tile_data(0, tile_coords)):
 					if tilemap.get_cell_source_id(0, tile_coords) > 3:
 						tilemap.mine_tile.rpc(0, tilemap.get_tile_coords(get_global_mouse_position()))
+						try_delete_items()
 				else:
-					try_delete()
+					try_delete_machine()
 			if !building:
 				mining = true
 				if mining_raycast.is_colliding():
@@ -330,10 +331,18 @@ func manual_add_resource(resource: int, amount: int):
 func manual_remove_resource(resource: int, amount: int):
 	inventory.remove_stock(resource, amount)
 	
-func try_delete():
+func try_delete_machine():
 	var bodies = mouse_area.get_overlapping_bodies()
 	for body in bodies:
 		var m = body as Machine
 		if m:
-			destroy_machine.rpc(m.name)
+			if m.name != "Hub":
+				destroy_machine.rpc(m.name)
 			return
+
+func try_delete_items():
+	var areas = mouse_area.get_overlapping_areas()
+	for area in areas:
+		var i = area as Item
+		if i:
+			i.queue_free()
