@@ -135,7 +135,7 @@ func place_tile(coords: Vector2i, index: int):
 					dir = Vector2i(-1,0)
 			var pipe = get_cell_tile_data(0, coords + dir)
 			if is_instance_valid(pipe):
-				if pipe.get_custom_data("direction") != dir*-1 :
+				if pipe.get_custom_data("direction") != dir*-1 and pipe.get_custom_data("direction") != Vector2i.ZERO:
 					update_pipe(coords + dir)
 			pipe = get_cell_tile_data(0, coords + Vector2i(0,-1))
 			if is_instance_valid(pipe):
