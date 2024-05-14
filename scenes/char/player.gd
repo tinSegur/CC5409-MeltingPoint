@@ -311,6 +311,12 @@ func place_success():
 func cancel_build(m_name: String):
 	var machine = machine_container.get_node(m_name)
 	machine.queue_free()
+	
+@rpc("call_local", "reliable")
+func destroy_machine(m_name: String):
+	var machine = machine_container.get_node(m_name)
+	if machine.placed:
+		machine.queue_free()
 
 func mine_resource(resource: int):
 	mining_progress = 0
@@ -325,12 +331,9 @@ func manual_remove_resource(resource: int, amount: int):
 	inventory.remove_stock(resource, amount)
 	
 func try_delete():
-	#if mouse_area.has_overlapping_bodies():
-		#Debug.sprint("Has bodies")
-	#Debug.sprint(mouse_area.monitoring)
 	var bodies = mouse_area.get_overlapping_bodies()
-	Debug.sprint(bodies.size())
 	for body in bodies:
-		if body.is_class("Maquina"):
-			cancel_build.rpc(body.name)
+		var m = body as Machine
+		if m:
+			destroy_machine.rpc(m.name)
 			return

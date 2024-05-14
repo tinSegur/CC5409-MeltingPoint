@@ -167,7 +167,7 @@ graph_offset = Vector2(-3, -64)
 radius = 7.0
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 8
+collision_mask = 12
 script = ExtResource("1_7q1sy")
 bullet_scene = ExtResource("2_pyqhq")
 
@@ -212,9 +212,6 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 active = false
-libraries = {
-"": SubResource("AnimationLibrary_pr5bg")
-}
 tree_root = SubResource("AnimationNodeStateMachine_qfhim")
 anim_player = NodePath("../AnimationPlayer")
 
@@ -222,7 +219,6 @@ anim_player = NodePath("../AnimationPlayer")
 collision_layer = 0
 collision_mask = 3
 monitoring = false
-monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MouseArea"]
 shape = SubResource("CircleShape2D_j6huy")
