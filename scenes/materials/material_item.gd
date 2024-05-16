@@ -63,19 +63,22 @@ func change_temp(new_temp : int):
 
 func _physics_process(delta: float) -> void:
 	
+	if broken:
+		queue_free()
+		return
+	
 	var pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
 	if is_instance_valid(pipe):
-		
-
 		
 		var dir = Vector2(pipe.get_custom_data("direction"))
 		var new_coords = tilemap.get_tile_coords(global_position)
 		var speed = pipe.get_custom_data("pipe_speed")
 		
-		if broken:
-			tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),0)
-			queue_free()
-			return
+		#if broken:
+			#Debug.sprint("Broken item")
+			#tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),0)
+			#queue_free()
+			#return
 		
 		# speed == 0 => not a pipe
 		if speed == 0:
@@ -114,6 +117,9 @@ func _physics_process(delta: float) -> void:
 		else:
 			tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),1)
 
-
+@rpc("any_peer","call_local","reliable")
 func destroy():
 	broken = true
+	var pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
+	if is_instance_valid(pipe):
+		tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),0)

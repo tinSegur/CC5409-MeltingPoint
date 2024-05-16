@@ -34,6 +34,7 @@ var stat_dict = {
 @export var bullet_scene: PackedScene
 @onready var pivot = $Pivot
 @onready var mouse_area: Area2D = $MouseArea
+@onready var mouse_area_col = $MouseArea/CollisionShape2D
 
 @export var score = 1 :
 	set(value):
@@ -76,6 +77,7 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("mine"):
 			if tile_selected:
 				mouse_area.monitoring = true
+				mouse_area_col.shape.radius = 12
 				building_tile = true
 				return
 			if deleting:
@@ -101,6 +103,7 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_released("mine"):
 			if building_tile:
 				mouse_area.monitoring = false
+				mouse_area_col.shape.radius = 7
 			building_tile = false
 			if !building:
 				mining = false
@@ -119,6 +122,7 @@ func _input(event: InputEvent) -> void:
 				tile_selected = false
 				deleting = false
 				mouse_area.monitoring = false
+				mouse_area_col.shape.radius = 7
 				tile_index = -1
 				tilemap.clear_previews()
 				if is_instance_valid(build_preview):
@@ -133,6 +137,7 @@ func _input(event: InputEvent) -> void:
 					cancel_build.rpc_id(1, build_preview.name)
 					build_preview = null
 			mouse_area.monitoring = false
+			mouse_area_col.shape.radius = 7
 			building_tile = false
 			tile_selected = false
 			deleting = false
@@ -153,6 +158,7 @@ func _input(event: InputEvent) -> void:
 			deleting = !deleting
 			if deleting:
 				mouse_area.monitoring = true
+				mouse_area_col.shape.radius = 7
 				building = false
 				building_tile = false
 				tile_selected = false
@@ -216,7 +222,7 @@ func _physics_process(delta: float) -> void:
 	
 	if building_tile:
 		if tile_index == 0:
-			if inventory.check_stock(Statics.Materials.IRON, 1):
+			if (mouse_area.get_overlapping_bodies().size() == 0 and inventory.check_stock(Statics.Materials.IRON, 1)):
 				if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position()), tile_index):
 					manual_remove_resource.rpc_id(1, Statics.Materials.IRON, 1)
 		else:
@@ -337,7 +343,7 @@ func try_delete_machine():
 		var m = body as Machine
 		if m:
 			if m.name != "Hub":
-				destroy_machine.rpc(m.name)
+				destroy_machine.rpc_id(1,m.name)
 			return
 
 func try_delete_items():
@@ -345,4 +351,4 @@ func try_delete_items():
 	for area in areas:
 		var i = area as Item
 		if i:
-			i.queue_free()
+			i.destroy.rpc()
