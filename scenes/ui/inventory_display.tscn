@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://48wa7sf15027"]
+
+[ext_resource type="Script" path="res://scenes/ui/inventory_display.gd" id="1_w86xp"]
+[ext_resource type="PackedScene" uid="uid://bc625t5vytiby" path="res://scenes/ui/ui_inventory_item.tscn" id="2_4q7r6"]
+
+[node name="InventoryDisplay" type="HBoxContainer"]
+alignment = 1
+script = ExtResource("1_w86xp")
+display_item = ExtResource("2_4q7r6")
