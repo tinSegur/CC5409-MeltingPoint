@@ -48,9 +48,19 @@ func _ready():
 
 func change_temp(new_temp : int):
 	sprite = $Sprite2D
-	inner_temp = move_toward(inner_temp, new_temp, (new_temp - inner_temp)*0.02)
+	inner_temp = move_toward(inner_temp, new_temp, max((new_temp - inner_temp)*0.02, 0.01))
 	delta_temp=new_temp-inner_temp
 	if can_melt :
+		
+		# Color logic
+		if inner_temp > (melting_point-1) and !liquid:
+			modulate = Color(1,0.6,0.6)
+		elif inner_temp < (melting_point+1) and liquid:
+			modulate = Color(0.6,0.6,1)
+		else:
+			modulate = Color(1,1,1)
+		
+		# Sprite and state logic
 		if inner_temp < (melting_point-1) and liquid:
 			#inner_temp=new_temp
 			liquid = false
