@@ -8,12 +8,13 @@
 [resource]
 script = ExtResource("1_rhokj")
 inventory_sprite = ExtResource("1_ij4nv")
-type = 0
+type = null
 melting_point = 5
-breaking_delta = 100.0
-can_break = false
-can_melt = true
+breaking_delta = null
+can_break = null
+can_melt = null
 melt_icon = ExtResource("2_fe7a0")
 solid_icon = ExtResource("2_3xwfe")
-default_temp = 5
+default_temp = null
 states = Array[int]([0, 1])
+state_sprites = null
