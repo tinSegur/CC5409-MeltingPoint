@@ -55,13 +55,13 @@ func change_temp(new_temp : int):
 		# Color logic
 		if inner_temp > (melting_point-1) and !liquid:
 			modulate = Color(1,0.6,0.6)
-		elif inner_temp < (melting_point+1) and liquid:
+		elif inner_temp < (melting_point) and liquid:
 			modulate = Color(0.6,0.6,1)
 		else:
 			modulate = Color(1,1,1)
 		
 		# Sprite and state logic
-		if inner_temp < (melting_point-1) and liquid:
+		if inner_temp <= (melting_point-1) and liquid:
 			#inner_temp=new_temp
 			liquid = false
 			sprite.set_texture(solid_icon)
