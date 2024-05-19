@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dr86ptle1v1h3"]
+
+[ext_resource type="Script" path="res://scenes/char/scout_ability.gd" id="1_58ewa"]
+[ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="1_k1au4"]
+
+[node name="ScoutAbility" type="Node2D"]
+script = ExtResource("1_58ewa")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_k1au4")
+
+[node name="Timer" type="Timer" parent="."]

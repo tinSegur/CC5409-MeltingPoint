@@ -9,7 +9,7 @@ extends Node2D
 @onready var tile_map = $TileMap
 @onready var inventory = $Inventory
 var players_ready = 0
-
+var used_positions
 func _ready() -> void:
 	for player_data in Game.players:
 		var player = player_scene.instantiate()
@@ -33,7 +33,7 @@ func resource_generation():
 	if is_multiplayer_authority():
 		var rng = RandomNumberGenerator.new()
 		var N_resources = 5
-		var used_positions = [Vector2(-1,-1)]
+		used_positions = [Vector2(-1,-1)]
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
 			while used_positions.has(x):

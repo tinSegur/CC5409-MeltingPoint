@@ -16,7 +16,7 @@ var broken = false
 
 var pipe_coords: Vector2
 
-func ready():
+func _ready():
 	melting_point = mat_data.melting_point
 	breaking_delta = mat_data.breaking_delta
 	can_break = mat_data.can_break
