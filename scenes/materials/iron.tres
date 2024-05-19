@@ -6,10 +6,10 @@
 
 [ext_resource type="Texture2D" uid="uid://hxepxbkj7gv8" path="res://assets/items/liquid_iron.png" id="2_j2xag"]
 
-
 [resource]
 script = ExtResource("1_rhokj")
 inventory_sprite = ExtResource("1_ij4nv")
+
 type = 0
 
 melting_point = 3
@@ -19,4 +19,6 @@ can_melt = true
 melt_icon = ExtResource("2_j2xag")
 
 solid_icon = ExtResource("2_3xwfe")
-default_temp = 5
+default_temp = null
+states = Array[int]([0, 1])
+state_sprites = null

@@ -336,7 +336,7 @@ func manual_add_resource(resource: int, amount: int):
 @rpc("call_local", "reliable")
 func manual_remove_resource(resource: int, amount: int):
 	inventory.remove_stock(resource, amount)
-	
+
 func try_delete_machine():
 	var bodies = mouse_area.get_overlapping_bodies()
 	for body in bodies:
@@ -352,3 +352,4 @@ func try_delete_items():
 		var i = area as Item
 		if i:
 			i.destroy.rpc()
+
