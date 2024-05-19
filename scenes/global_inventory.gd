@@ -36,7 +36,6 @@ func _ready():
 		stocks[mat.type] = InternalStock.new(mat)
 
 func set_stock(id : Statics.Materials, amount : int, state : Statics.Material_states = Statics.Material_states.SOLID):
-	Debug.sprint(str(id) + " " + str(amount) + " " + str(state))
 	if amount < 0:
 		return
 	stocks[id].set_amount(amount, state)
