@@ -9,7 +9,6 @@ var type : Statics.Materials
 var melt_icon : Texture2D
 var solid_icon : Texture2D
 
-var sprite : Sprite2D
 var inner_temp : float = 0 
 
 var delta_temp : float = 0
@@ -21,7 +20,6 @@ var liquid = false
 var pipe_coords: Vector2
 
 @onready var sprite : Sprite2D = $Sprite2D
-
 
 func _ready():
 	melting_point = mat_data.melting_point
@@ -125,7 +123,7 @@ func _physics_process(delta: float) -> void:
 				var next_pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position + dir*6))
 				if is_instance_valid(next_pipe):
 					var next_coords = tilemap.get_tile_coords(global_position + dir*6)
-          
+		  
 					if ((!next_pipe.get_custom_data("occupied") and next_pipe.get_custom_data("pipe_speed")!= 0 and Vector2(next_pipe.get_custom_data("direction"))!= -1*dir) or next_coords == pipe_coords):
 						global_position += dir*speed
 					
