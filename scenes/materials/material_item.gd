@@ -1,4 +1,5 @@
 extends Area2D
+class_name Item
 
 var melting_point : int = 2
 var breaking_delta : float = 100.0
@@ -7,15 +8,20 @@ var can_melt : bool = true
 var type : Statics.Materials
 var melt_icon : Texture2D
 var solid_icon : Texture2D
-var inner_temp : int = 5 
+
+var sprite : Sprite2D
+var inner_temp : float = 0 
+
 var delta_temp : float = 0
 var tilemap : TileMap
 var mat_data : MPMaterial
 var broken = false
+var liquid = false
 
 var pipe_coords: Vector2
 
 @onready var sprite : Sprite2D = $Sprite2D
+
 
 func _ready():
 	melting_point = mat_data.melting_point
@@ -39,30 +45,54 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	visible = true
-	var tile_coords = tilemap.get_tile_coords(global_position)
-	var tile: TileData= tilemap.get_cell_tile_data(3, tile_coords)
-	if is_instance_valid(tile):
-		var new_temp=tile.get_custom_data("temperature")
-		change_temp(new_temp)
+
+#func _process(delta):
+	#var tile_coords = tilemap.get_tile_coords(global_position)
+	#var tile: TileData= tilemap.get_cell_tile_data(3, tile_coords)
+	#if is_instance_valid(tile):
+		#var new_temp=tile.get_custom_data("temperature")
+		#change_temp(new_temp)
 
 func change_temp(new_temp : int):
+	sprite = $Sprite2D
+	inner_temp = move_toward(inner_temp, new_temp, max((new_temp - inner_temp)*0.02, 0.01))
+
 	delta_temp=new_temp-inner_temp
 	if can_melt :
-		if inner_temp < melting_point and new_temp >= melting_point:
-			inner_temp=new_temp
-			sprite.set_texture(melt_icon)
-			return
-		if inner_temp >= melting_point and new_temp < melting_point:
-			inner_temp=new_temp
+		
+		# Color logic
+		if inner_temp > (melting_point-1) and !liquid:
+			modulate = Color(1,0.6,0.6)
+		elif inner_temp < (melting_point) and liquid:
+			modulate = Color(0.6,0.6,1)
+		else:
+			modulate = Color(1,1,1)
+		
+		# Sprite and state logic
+		if inner_temp <= (melting_point-1) and liquid:
+			#inner_temp=new_temp
+			liquid = false
 			sprite.set_texture(solid_icon)
+			return
+		if inner_temp >= melting_point and !liquid:
+			#inner_temp=new_temp
+			liquid = true
+			sprite.set_texture(melt_icon)
 			return
 	if can_break and delta_temp >= breaking_delta:
 		destroy()
 		return
 
 func _physics_process(delta: float) -> void:
+	var tile_coords = tilemap.get_tile_coords(global_position)
+	var tile: TileData= tilemap.get_cell_tile_data(3, tile_coords)
+	if is_instance_valid(tile):
+		var new_temp=tile.get_custom_data("temperature")
+		change_temp(new_temp)
+	
+	if broken:
+		queue_free()
+		return
 	
 	var pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
 	if is_instance_valid(pipe):
@@ -70,17 +100,9 @@ func _physics_process(delta: float) -> void:
 		var new_coords = tilemap.get_tile_coords(global_position)
 		var speed = pipe.get_custom_data("pipe_speed")
 		
-		if broken:
-			tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),0)
-			queue_free()
-			return
-		
 		# speed == 0 => not a pipe
 		if speed == 0:
 			return
-		
-		#var build_pos = Vector2i(mouse_pos.x - mouse_pos.x%18 + 9 * (1 if (sign(mouse_pos.x) == 0) else sign(mouse_pos.x)), 
-			 					#mouse_pos.y - mouse_pos.y%18 + 2)
 		
 		if dir.y == 0:
 			if abs(int(global_position.y)%18) < 9:
@@ -91,7 +113,8 @@ func _physics_process(delta: float) -> void:
 				var next_pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position + dir*6))
 				if is_instance_valid(next_pipe):
 					var next_coords = tilemap.get_tile_coords(global_position + dir*6)
-					if ((!next_pipe.get_custom_data("occupied") and next_pipe.get_custom_data("pipe_speed")!= 0 and Vector2(next_pipe.get_custom_data("direction")) != dir*-1) or next_coords == pipe_coords):
+
+					if ((!next_pipe.get_custom_data("occupied") and next_pipe.get_custom_data("pipe_speed")!= 0 and Vector2(next_pipe.get_custom_data("direction"))!= -1*dir) or next_coords == pipe_coords):
 						global_position += dir*speed
 		else:
 			if int(abs(global_position.x))%18 < 9:
@@ -102,7 +125,8 @@ func _physics_process(delta: float) -> void:
 				var next_pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position + dir*6))
 				if is_instance_valid(next_pipe):
 					var next_coords = tilemap.get_tile_coords(global_position + dir*6)
-					if ((!next_pipe.get_custom_data("occupied") and next_pipe.get_custom_data("pipe_speed")!= 0 and Vector2(next_pipe.get_custom_data("direction")) != dir*-1) or next_coords == pipe_coords):
+          
+					if ((!next_pipe.get_custom_data("occupied") and next_pipe.get_custom_data("pipe_speed")!= 0 and Vector2(next_pipe.get_custom_data("direction"))!= -1*dir) or next_coords == pipe_coords):
 						global_position += dir*speed
 					
 		if new_coords != pipe_coords:
@@ -112,6 +136,9 @@ func _physics_process(delta: float) -> void:
 
 			
 
-
+@rpc("any_peer","call_local","reliable")
 func destroy():
 	broken = true
+	var pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
+	if is_instance_valid(pipe):
+		tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),0)

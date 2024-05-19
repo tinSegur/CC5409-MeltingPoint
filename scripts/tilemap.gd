@@ -4,6 +4,53 @@ var progress = 0
 
 var player: Player
 
+var pipes_index = {
+	# Codificacion binaria: dddd iiii
+	# dddd = direccion
+	# iiii = inputs
+	# xxxx = arriba, abajo, izquierda, derecha
+	
+	# Pipes hacia arriba
+	"128": 1,
+	"129": 10,
+	"130": 11,
+	"131": 25,
+	"132": 1,
+	"133": 13,
+	"134": 14,
+	"135": 21,
+	
+	# Pipes hacia abajo
+	"64": 2,
+	"65": 6,
+	"66": 7,
+	"67": 26,
+	"72": 2,
+	"73": 15,
+	"74": 16,
+	"75": 22,
+	
+	# Pipes hacia la izquierda
+	"32": 4,
+	"33": 4,
+	"36": 8,
+	"37": 19,
+	"40": 12,
+	"41": 20,
+	"44": 28, #Falta un tile
+	"45": 24,
+	
+	# Pipes hacia la derecha
+	"16": 3,
+	"18": 3,
+	"20": 5,
+	"22": 17,
+	"24": 9,
+	"26": 18,
+	"28": 27, #Falta un tile
+	"30": 23
+}
+
 func _input(event):
 	if event.is_action_pressed("show_temp"):
 		set_layer_enabled(3, !is_layer_enabled(3))
@@ -75,15 +122,85 @@ func generate_resource(ore: String, cell_position: Vector2i):
 func place_tile(coords: Vector2i, index: int):
 	if !is_instance_valid(get_cell_tile_data(0, coords)):
 		place.rpc(coords, index)
+		if (index > 0):
+			var dir = Vector2i.ZERO
+			match index:
+				1:
+					dir = Vector2i(0,-1)
+				2:
+					dir = Vector2i(0,1)
+				3:
+					dir = Vector2i(1,0)
+				4:
+					dir = Vector2i(-1,0)
+			var pipe = get_cell_tile_data(0, coords + dir)
+			if is_instance_valid(pipe):
+				if pipe.get_custom_data("direction") != dir*-1 and pipe.get_custom_data("direction") != Vector2i.ZERO:
+					update_pipe(coords + dir)
+			pipe = get_cell_tile_data(0, coords + Vector2i(0,-1))
+			if is_instance_valid(pipe):
+				if pipe.get_custom_data("direction") == Vector2i(0,1):
+					update_pipe(coords + Vector2i(0,-1))
+			pipe = get_cell_tile_data(0, coords + Vector2i(0,1))
+			if is_instance_valid(pipe):
+				if pipe.get_custom_data("direction") == Vector2i(0,-1):
+					update_pipe(coords + Vector2i(0,1))
+			pipe = get_cell_tile_data(0, coords + Vector2i(-1,0))
+			if is_instance_valid(pipe):
+				if pipe.get_custom_data("direction") == Vector2i(1,0):
+					update_pipe(coords + Vector2i(-1,0))
+			pipe = get_cell_tile_data(0, coords + Vector2i(1,0))
+			if is_instance_valid(pipe):
+				if pipe.get_custom_data("direction") == Vector2i(-1,0):
+					update_pipe(coords + Vector2i(1,0))
+			update_pipe(coords)
 		return true
 	return false
+
+func update_pipe(coords: Vector2i):
+	var pipe = get_cell_tile_data(0, coords)
+	var dir = pipe.get_custom_data("direction")
+	var other: TileData
+	var key = 0
+	
+	match dir:
+		Vector2i(0,-1):
+			key = 128
+		Vector2i(0,1):
+			key = 64
+		Vector2i(-1,0):
+			key = 32
+		Vector2i(1,0):
+			key = 16
+	
+	other = get_cell_tile_data(0, coords + Vector2i(-1,0))
+	if is_instance_valid(other) and dir !=  Vector2i(-1,0):
+		if other.get_custom_data("direction") == Vector2i(1,0):
+			key += 2
+	other = get_cell_tile_data(0, coords + Vector2i(1,0))
+	if is_instance_valid(other) and dir !=  Vector2i(1,0):
+		if other.get_custom_data("direction") == Vector2i(-1,0):
+			key += 1
+	other = get_cell_tile_data(0, coords + Vector2i(0,-1))
+	if is_instance_valid(other) and dir !=  Vector2i(0,-1):
+		if other.get_custom_data("direction") == Vector2i(0,1):
+			key += 8
+	other = get_cell_tile_data(0, coords + Vector2i(0,1))
+	if is_instance_valid(other) and dir !=  Vector2i(0,1):
+		if other.get_custom_data("direction") == Vector2i(0,-1):
+			key += 4
+	place.rpc(coords, pipes_index[str(key)])
 
 @rpc("call_local", "reliable", "any_peer")
 func place(coords: Vector2i, index: int):
 	if index == 0:
 		set_cell(0, coords, 4, Vector2i(0,2))
-	else:
+	elif index <= 12:
 		set_cell(0, coords, 5, Vector2i(index - 1, 0))
+	elif index <= 24:
+		set_cell(0, coords, 5, Vector2i(index - 13, 1))
+	else:
+		set_cell(0, coords, 5, Vector2i(index - 25, 2))
 
 func show_preview(coords: Vector2i, index: int):
 	clear_previews()
