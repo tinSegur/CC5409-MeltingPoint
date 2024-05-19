@@ -66,5 +66,4 @@ func add_resource(id : Statics.Materials, amount = 1, state : Statics.Material_s
 func _on_timer_timeout():
 	for st in stocks:
 		for state in stocks[st].material.states:
-			Debug.sprint(st)
 			stock_change.emit(stocks[st].material.type, stocks[st].get_amount(state), state)
