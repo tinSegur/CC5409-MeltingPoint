@@ -1,37 +1,37 @@
 [gd_scene load_steps=6 format=3 uid="uid://c8yc16m21f7p6"]
 
 [ext_resource type="Script" path="res://scenes/machines/hub.gd" id="1_u8kk4"]
-[ext_resource type="Texture2D" uid="uid://tw8t38ns0seh" path="res://icon.svg" id="2_gcdr4"]
+[ext_resource type="Texture2D" uid="uid://b364jaaon1l0" path="res://assets/machines/hub.png" id="2_xfxmu"]
 [ext_resource type="PackedScene" uid="uid://cgtrga7080al8" path="res://scenes/machines/input.tscn" id="3_3puih"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pyptc"]
-size = Vector2(64, 64)
+size = Vector2(72, 73)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jnega"]
-size = Vector2(64, 64)
+size = Vector2(45, 36)
 
 [node name="Hub" type="StaticBody2D"]
+z_index = 2
 collision_layer = 2
 collision_mask = 10
 script = ExtResource("1_u8kk4")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_xfxmu")
+hframes = 9
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_pyptc")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0.249985, -1.40071e-06)
-scale = Vector2(0.496094, 0.5)
-texture = ExtResource("2_gcdr4")
-
 [node name="Hitbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_jnega")
 
 [node name="Input" parent="." instance=ExtResource("3_3puih")]
-position = Vector2(40, -16)
-
-[node name="Input2" parent="." instance=ExtResource("3_3puih")]
-position = Vector2(-40, -16)
+scale = Vector2(4.75, 4.75)

@@ -28,18 +28,11 @@ var stat_dict = {
 }
 
 
-@onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
-@onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var camera = $Camera2D
 @export var bullet_scene: PackedScene
 @onready var pivot = $Pivot
 @onready var mouse_area: Area2D = $MouseArea
 @onready var mouse_area_col = $MouseArea/CollisionShape2D
-
-@export var score = 1 :
-	set(value):
-		score = value
-		Debug.sprint("Player %s score %d" % [name, score])
 
 @onready var mining_raycast: RayCast2D = $MiningRaycast
 @onready var mine_timer = $MineTimer
@@ -240,8 +233,6 @@ func _physics_process(delta: float) -> void:
 func setup(player_data: Statics.PlayerData):
 	name = str(player_data.id)
 	set_multiplayer_authority(player_data.id)
-	multiplayer_spawner.set_multiplayer_authority(player_data.id)
-	multiplayer_synchronizer.set_multiplayer_authority(player_data.id)
 	
 	class_node = class_scene_dict[player_data.role].instantiate()
 	add_child(class_node)
@@ -352,4 +343,3 @@ func try_delete_items():
 		var i = area as Item
 		if i:
 			i.destroy.rpc()
-

@@ -25,12 +25,8 @@ func generate(index: int, amount: int):
 				item.tilemap = tilemap
 				item.pipe_coords = tilemap.get_tile_coords(global_position)
 				item_container.add_child(item, true)
-				if is_multiplayer_authority():
-					#var inventory = get_tree().current_scene.get_node("Inventory")
-					#inventory.add_resource.rpc_id(1, Statics.Materials.IRON, 1)
-					pass
-		else:
-			Debug.sprint("invalid pipe")
+		#else:
+			#Debug.sprint("invalid pipe")
 
 		timer.start()
 		amount -= 1
