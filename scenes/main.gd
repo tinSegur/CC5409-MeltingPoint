@@ -13,7 +13,7 @@ var players_ready = 0
 func _ready() -> void:
 	for player_data in Game.players:
 		var player = player_scene.instantiate()
-		
+		player.global_position = Vector2(1350, 614)
 		players.add_child(player)
 		player.setup(player_data)
 	player_ready.rpc_id(1)
@@ -35,12 +35,14 @@ func player_ready():
 func resource_generation():
 	if is_multiplayer_authority():
 		var rng = RandomNumberGenerator.new()
-		var N_resources = 5
+		var N_resources = rng.randi_range(30, 40)
 		var used_positions = [Vector2(-1,-1)]
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
 			while used_positions.has(x):
 				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits[0],y_limits[1]))
+			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
+				continue
 			used_positions.append(x)
 			tile_map.generate_resource.rpc("Iron",x)
 			N_resources-=1
