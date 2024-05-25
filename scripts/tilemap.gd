@@ -103,6 +103,9 @@ func mine_tile(layer: int, coords: Vector2):
 	
 @rpc("authority", "call_local", "reliable")
 func generate_resource(ore: String, cell_position: Vector2i):
+	if !is_instance_valid(get_cell_tile_data(0, cell_position)):
+		return
+	
 	var ore_atlas_coordinates : Vector2
 	
 	match ore:

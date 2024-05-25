@@ -10,6 +10,13 @@ extends Node2D
 @onready var inventory = $Inventory
 var players_ready = 0
 
+var ore_forms = [[Vector2(0,0),Vector2(-1,0),Vector2(1,0),Vector2(1,1)],
+				 [Vector2(0,0),Vector2(-1,0),Vector2(-1,-1),Vector2(1,0),Vector2(0,1)],
+				 [Vector2(-1,-1),Vector2(0,0),Vector2(1,-1)],
+				 [Vector2(0,0),Vector2(-1,0),Vector2(1,0),Vector2(0,-1)],
+				 [Vector2(0,0),Vector2(-1,0),Vector2(-1,-1),Vector2(0,-1)],
+				]
+
 func _ready() -> void:
 	for player_data in Game.players:
 		var player = player_scene.instantiate()
@@ -35,7 +42,7 @@ func player_ready():
 func resource_generation():
 	if is_multiplayer_authority():
 		var rng = RandomNumberGenerator.new()
-		var N_resources = rng.randi_range(30, 40)
+		var N_resources = rng.randi_range(10, 15)
 		var used_positions = [Vector2(-1,-1)]
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
@@ -44,5 +51,7 @@ func resource_generation():
 			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
 				continue
 			used_positions.append(x)
-			tile_map.generate_resource.rpc("Iron",x)
+			var form = ore_forms[rng.randi_range(0, ore_forms.size()-1)]
+			for pos in form:
+				tile_map.generate_resource.rpc("Iron",x + pos)
 			N_resources-=1
