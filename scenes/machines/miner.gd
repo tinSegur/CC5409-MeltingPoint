@@ -31,11 +31,13 @@ func is_valid_place() -> bool:
 	if resource_detector.has_overlapping_bodies():
 		var tilemap: TileMap = tiles[0]
 		if is_instance_valid(tilemap):
-			var tile = tilemap.get_cell_tile_data(1, tilemap.get_tile_coords(global_position + Vector2(0, 20).rotated(rotation)))
+			var tile_coords = tilemap.get_tile_coords(global_position + Vector2(0, 20).rotated(rotation))
+			var tile = tilemap.get_cell_tile_data(1, tile_coords)
 			if is_instance_valid(tile):
-				resource = true
-	Debug.sprint(str((bodies.size() - 1) == 0) + "," + str(resource))
-	Debug.sprint(offset_vec)
+				if tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(0,0):
+					resource = true
+	#Debug.sprint(str((bodies.size() - 1) == 0) + "," + str(resource))
+	#Debug.sprint(offset_vec)
 	return ((bodies.size()-1) == 0) and resource
 
 func try_place() -> bool:

@@ -64,6 +64,8 @@ func mine(coords: Vector2):
 		match atlas_coords:
 			Vector2i(0,0):
 				res = Statics.Materials.IRON
+			Vector2i(1,0):
+				res = Statics.Materials.GOLD
 			_:
 				res = -1
 		player.mine_resource(res)
@@ -112,7 +114,7 @@ func generate_resource(ore: String, cell_position: Vector2i):
 		"Iron":
 			ore_atlas_coordinates = Vector2(0,0)
 		"Gold":
-			ore_atlas_coordinates = Vector2(10,0)
+			ore_atlas_coordinates = Vector2(1,0)
 		"Unstable_Ore":
 			ore_atlas_coordinates = Vector2(8,1)
 		_:

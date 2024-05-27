@@ -2,7 +2,7 @@ class_name Machine
 extends StaticBody2D
 
 @export var output_type : MPMaterial
-@export var offset_vec : Vector2 = Vector2(9, 1)
+@export var offset_vec : Vector2 = Vector2(9, 2)
 
 var placed = false
 @export var rotable = true

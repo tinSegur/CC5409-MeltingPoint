@@ -296,6 +296,7 @@ func try_place_machine(m_name: String):
 	
 	# Costo placeholder
 	if inventory.check_stock(Statics.Materials.IRON, 5):
+		Debug.sprint(machine.try_place())
 		if machine.try_place():
 			inventory.remove_stock(Statics.Materials.IRON, 5)
 			place_success.rpc_id(multiplayer.get_remote_sender_id())

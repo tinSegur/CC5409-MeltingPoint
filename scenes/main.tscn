@@ -331,6 +331,12 @@ texture_region_size = Vector2i(18, 18)
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/animation_columns = 2
+1:0/animation_frame_0/duration = 1.0
+1:0/animation_frame_1/duration = 1.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_76b72"]
 texture = ExtResource("7_iy3lg")
@@ -860,7 +866,8 @@ size = Vector2(2832, 64)
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ysfbh")
 x_limits = Vector2(0, 149)
-y_limits = Vector2(9, 50)
+y_limits_iron = Vector2(9, 70)
+y_limits_gold = Vector2(60, 110)
 player_scene = ExtResource("2_jyiyy")
 
 [node name="Machines" type="Node2D" parent="."]

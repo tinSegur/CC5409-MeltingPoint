@@ -4,7 +4,7 @@ var player: Player
 @onready var miner_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/MinerButton
 @onready var platform_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/PlatformButton
 @onready var pipe_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/PipeButton
-@onready var ext_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/TextureButton2
+@onready var ext_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/OutputButton
 
 signal machine_selected
 signal tile_selected
