@@ -14,6 +14,13 @@ func _ready():
 	tilemap = get_tree().current_scene.get_node("TileMap")
 	item_container = get_tree().current_scene.get_node("%Items")
 
+func valid_pipe():
+	var pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
+	if is_instance_valid(pipe):
+		if !pipe.get_custom_data("occupied"):
+			return true
+	return false
+
 func generate(index: int, amount: int, state : int = Statics.Material_states.SOLID):
 	while amount > 0:
 		var pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
