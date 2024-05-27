@@ -6,8 +6,8 @@ extends StaticBody2D
 var placed = false
 @export var builder_id: int = 0
 @onready var hitbox = $Hitbox
-@onready var timer = $Timer
-@onready var output = $Output
+@onready var timer : Timer = $Timer
+@onready var output : Output = $Output
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

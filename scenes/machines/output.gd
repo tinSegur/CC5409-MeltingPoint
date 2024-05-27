@@ -1,3 +1,4 @@
+class_name Output
 extends Node2D
 @onready var marker_2d = $Marker2D
 
@@ -13,9 +14,8 @@ func _ready():
 	tilemap = get_tree().current_scene.get_node("TileMap")
 	item_container = get_tree().current_scene.get_node("%Items")
 
-func generate(index: int, amount: int):
+func generate(index: int, amount: int, state : int = Statics.Material_states.SOLID):
 	while amount > 0:
-
 		var pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
 		if is_instance_valid(pipe):
 			if !pipe.get_custom_data("occupied"):
@@ -24,6 +24,8 @@ func generate(index: int, amount: int):
 				item.global_position = global_position
 				item.tilemap = tilemap
 				item.pipe_coords = tilemap.get_tile_coords(global_position)
+				if state != Statics.Material_states.SOLID:
+					item.inner_temp = item.melting_point + 1
 				item_container.add_child(item, true)
 		#else:
 			#Debug.sprint("invalid pipe")
