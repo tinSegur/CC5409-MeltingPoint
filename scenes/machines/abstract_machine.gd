@@ -34,9 +34,9 @@ func _physics_process(delta):
 
 func _input(event):
 	if !placed:
-		if event.is_action("next_tile"):
+		if event.is_action("next_tile") && rotable:
 			mouse_rotate.rpc(true)
-		elif event.is_action("prev_tile"):
+		elif event.is_action("prev_tile") && rotable:
 			mouse_rotate.rpc(false)
 
 
