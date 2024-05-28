@@ -49,7 +49,7 @@ func set_stock(id : Statics.Materials, amount : int, state : Statics.Material_st
 	
 	stocks[id].set_amount(amount, state)
 	if multiplayer.is_server():
-		update_stock.rpc(id, stocks[id].get_amount(state))
+		update_stock.rpc(id, stocks[id].get_amount(state), state)
 
 func add_stock(id : Statics.Materials, amount : int = 1, state : Statics.Material_states = Statics.Material_states.SOLID):
 	if stocks[id].get_amount(state) + amount < 0:

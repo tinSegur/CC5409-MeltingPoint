@@ -33,9 +33,9 @@ func generate(index: int, amount: int, state : int = Statics.Material_states.SOL
 				item.global_position = global_position
 				item.tilemap = tilemap
 				item.pipe_coords = tilemap.get_tile_coords(global_position)
+				item_container.add_child(item, true)
 				if state != Statics.Material_states.SOLID:
 					item.inner_temp = item.melting_point + 1
-				item_container.add_child(item, true)
 		#else:
 			#Debug.sprint("invalid pipe")
 

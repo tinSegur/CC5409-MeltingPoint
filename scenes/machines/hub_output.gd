@@ -57,5 +57,7 @@ func update_index():
 	ind = (ind+1)%(2*hub_mats.size())
 	if ind%2 == 0:
 		sprite.set_texture(hub_mats[floor(ind/2)].solid_icon)
+		output.output_type = hub_mats[floor(ind/2)]
 	else:
 		sprite.set_texture(hub_mats[floor(ind/2)].melt_icon)
+		output.output_type = hub_mats[floor(ind/2)]
