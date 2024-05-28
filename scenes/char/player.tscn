@@ -11,6 +11,14 @@
 radius = 6.0
 height = 26.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i2170"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.784314, 0.117647, 0, 1)
+
 [sub_resource type="Animation" id="Animation_aucjd"]
 length = 0.001
 tracks/0/type = "value"
@@ -203,6 +211,25 @@ vframes = 2
 visible = false
 
 [node name="InventoryDisplay" parent="CanvasLayer" instance=ExtResource("5_56sa5")]
+
+[node name="DeletingOverlay" type="PanelContainer" parent="CanvasLayer"]
+visible = false
+layout_direction = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_i2170")
+
+[node name="Label" type="Label" parent="CanvasLayer/DeletingOverlay"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.784314, 0.117647, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "Deleting
+"
+uppercase = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

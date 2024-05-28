@@ -51,6 +51,7 @@ var tile_selected = false
 var building_tile = false
 var tile_index = -1
 var deleting = false
+@onready var deleting_overlay = $CanvasLayer/DeletingOverlay
 
 var inventory: Node
 
@@ -115,6 +116,7 @@ func _input(event: InputEvent) -> void:
 				building_tile = false
 				tile_selected = false
 				deleting = false
+				deleting_overlay.visible = false
 				mouse_area.monitoring = false
 				mouse_area_col.shape.radius = 7
 				tile_index = -1
@@ -135,6 +137,7 @@ func _input(event: InputEvent) -> void:
 			building_tile = false
 			tile_selected = false
 			deleting = false
+			deleting_overlay.visible = false
 			tile_index = -1
 			tilemap.clear_previews()
 			if build_menu.visible:
@@ -157,13 +160,16 @@ func _input(event: InputEvent) -> void:
 			if deleting:
 				mouse_area.monitoring = true
 				mouse_area_col.shape.radius = 7
+				deleting_overlay.visible = true
 				building = false
 				building_tile = false
 				tile_selected = false
 				tile_index = -1
 				tilemap.clear_previews()
-			
-
+			else:
+				deleting_overlay.visible = false
+				mouse_area.monitoring = false
+				mouse_area_col.shape.radius = 7
 
 func _physics_process(delta: float) -> void:
 	
