@@ -1,7 +1,6 @@
 class_name Player
 extends CharacterBody2D
 
-
 var gravity = 200
 var jump_speed = 135
 var speed = 85
@@ -28,18 +27,11 @@ var stat_dict = {
 }
 
 
-@onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
-@onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var camera = $Camera2D
 @export var bullet_scene: PackedScene
 @onready var pivot = $Pivot
 @onready var mouse_area: Area2D = $MouseArea
 @onready var mouse_area_col = $MouseArea/CollisionShape2D
-
-@export var score = 1 :
-	set(value):
-		score = value
-		Debug.sprint("Player %s score %d" % [name, score])
 
 @onready var mining_raycast: RayCast2D = $MiningRaycast
 @onready var mine_timer = $MineTimer
@@ -50,6 +42,7 @@ var mining_progress = 0
 var tilemap: TileMap
 
 @onready var build_menu = $CanvasLayer/BuildMenu
+@onready var victory_screen = $CanvasLayer/VictoryScreen
 var machine_container: Node2D
 var build_scene: String
 var build_preview: StaticBody2D
@@ -58,6 +51,7 @@ var tile_selected = false
 var building_tile = false
 var tile_index = -1
 var deleting = false
+@onready var deleting_overlay = $CanvasLayer/DeletingOverlay
 
 var inventory: Node
 
@@ -71,6 +65,7 @@ func _ready():
 	build_menu.tile_selected.connect(on_tile_selected)
 	tilemap = get_tree().current_scene.get_node("TileMap")
 	$AnimationTree.active = true
+	victory_screen.hide()
 
 func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
@@ -121,6 +116,7 @@ func _input(event: InputEvent) -> void:
 				building_tile = false
 				tile_selected = false
 				deleting = false
+				deleting_overlay.visible = false
 				mouse_area.monitoring = false
 				mouse_area_col.shape.radius = 7
 				tile_index = -1
@@ -141,10 +137,15 @@ func _input(event: InputEvent) -> void:
 			building_tile = false
 			tile_selected = false
 			deleting = false
+			deleting_overlay.visible = false
 			tile_index = -1
 			tilemap.clear_previews()
 			if build_menu.visible:
 				build_menu.visible = false
+				
+			
+			if victory_screen.visible:
+				victory_screen.hide()
 		
 		if event.is_action_pressed("next_tile"):
 			if(tile_index >= 1):
@@ -159,11 +160,16 @@ func _input(event: InputEvent) -> void:
 			if deleting:
 				mouse_area.monitoring = true
 				mouse_area_col.shape.radius = 7
+				deleting_overlay.visible = true
 				building = false
 				building_tile = false
 				tile_selected = false
 				tile_index = -1
 				tilemap.clear_previews()
+			else:
+				deleting_overlay.visible = false
+				mouse_area.monitoring = false
+				mouse_area_col.shape.radius = 7
 
 func _physics_process(delta: float) -> void:
 	
@@ -237,11 +243,13 @@ func _physics_process(delta: float) -> void:
 	else:
 		playback.travel("idle")
 
+func victory():
+	if is_multiplayer_authority():
+		victory_screen.show()
+
 func setup(player_data: Statics.PlayerData):
 	name = str(player_data.id)
 	set_multiplayer_authority(player_data.id)
-	multiplayer_spawner.set_multiplayer_authority(player_data.id)
-	multiplayer_synchronizer.set_multiplayer_authority(player_data.id)
 	
 	class_node = class_scene_dict[player_data.role].instantiate()
 	add_child(class_node)
@@ -305,6 +313,7 @@ func try_place_machine(m_name: String):
 	
 	# Costo placeholder
 	if inventory.check_stock(Statics.Materials.IRON, 5):
+		Debug.sprint(machine.try_place())
 		if machine.try_place():
 			inventory.remove_stock(Statics.Materials.IRON, 5)
 			place_success.rpc_id(multiplayer.get_remote_sender_id())
@@ -352,4 +361,3 @@ func try_delete_items():
 		var i = area as Item
 		if i:
 			i.destroy.rpc()
-

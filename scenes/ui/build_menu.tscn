@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c0xu2cniynmx2"]
+[gd_scene load_steps=19 format=3 uid="uid://c0xu2cniynmx2"]
 
 [ext_resource type="Script" path="res://scenes/ui/build_menu.gd" id="1_71fyl"]
 [ext_resource type="Texture2D" uid="uid://3mk6t3y2y3qc" path="res://assets/machines/basic_miner_button_base.png" id="1_qo6ks"]
@@ -13,6 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://c7lxsel7g0ff1" path="res://assets/machines/pipes/pipe_button.png" id="8_wlnk2"]
 [ext_resource type="Texture2D" uid="uid://cvt5v1fal7lf7" path="res://assets/machines/pipes/pipe_button_pressed.png" id="9_ni04f"]
 [ext_resource type="Texture2D" uid="uid://c0xfanjai2hk1" path="res://assets/machines/pipes/pipe_button_hover.png" id="10_1sese"]
+[ext_resource type="Texture2D" uid="uid://b8hrx5lepjioq" path="res://assets/machines/hub_output/hub_output_button_base.png" id="11_3qkwx"]
+[ext_resource type="Texture2D" uid="uid://g3f3rsruf5kn" path="res://assets/machines/hub_output/hub_output_button_pressed.png" id="12_xufyi"]
+[ext_resource type="Texture2D" uid="uid://o04wmgbcge84" path="res://assets/machines/hub_output/hub_output_button_hover.png" id="13_64hhh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfceq"]
 bg_color = Color(0.313726, 0.313726, 0.313726, 1)
@@ -87,10 +90,12 @@ texture_pressed = ExtResource("9_ni04f")
 texture_hover = ExtResource("10_1sese")
 stretch_mode = 3
 
-[node name="TextureButton2" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
+[node name="OutputButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture_normal = ExtResource("5_m4nd5")
+texture_normal = ExtResource("11_3qkwx")
+texture_pressed = ExtResource("12_xufyi")
+texture_hover = ExtResource("13_64hhh")
 stretch_mode = 3
 
 [node name="TextureButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]

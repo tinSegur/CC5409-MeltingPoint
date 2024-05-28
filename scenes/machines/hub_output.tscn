@@ -1,0 +1,79 @@
+[gd_scene load_steps=10 format=3 uid="uid://id31wfw2ha4h"]
+
+[ext_resource type="Script" path="res://scenes/machines/hub_output.gd" id="1_jbe22"]
+[ext_resource type="Resource" uid="uid://f004kgvtcc22" path="res://scenes/materials/iron.tres" id="2_h1r66"]
+[ext_resource type="Texture2D" uid="uid://cvemh746v6sv6" path="res://assets/machines/hub_output/hub_output.png" id="3_8u3n2"]
+[ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="3_s8uvl"]
+[ext_resource type="PackedScene" uid="uid://cbmugsoctody6" path="res://scenes/machines/output.tscn" id="5_ljnue"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g3vur"]
+size = Vector2(16, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3dgb7"]
+size = Vector2(14, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h8oqu"]
+size = Vector2(6, 14)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1phad"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:modulate")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:builder_id")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:offset_vec")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
+[node name="HubOutput" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 0
+input_pickable = true
+script = ExtResource("1_jbe22")
+output_type = ExtResource("2_h1r66")
+offset_vec = Vector2(9, 10)
+
+[node name="baseSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_8u3n2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_s8uvl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_g3vur")
+
+[node name="Output" parent="." instance=ExtResource("5_ljnue")]
+position = Vector2(10, 0)
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_3dgb7")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="HubDetector" type="Area2D" parent="."]
+position = Vector2(-10, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HubDetector"]
+position = Vector2(-3, 0)
+shape = SubResource("RectangleShape2D_h8oqu")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_1phad")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

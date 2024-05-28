@@ -1,3 +1,4 @@
+class_name Output
 extends Node2D
 @onready var marker_2d = $Marker2D
 
@@ -13,24 +14,30 @@ func _ready():
 	tilemap = get_tree().current_scene.get_node("TileMap")
 	item_container = get_tree().current_scene.get_node("%Items")
 
-func generate(index: int, amount: int):
-	while amount > 0:
+func valid_pipe():
+	var pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
+	if is_instance_valid(pipe):
+		if !pipe.get_custom_data("occupied"):
+			return true
+	return false
 
+func generate(index: int, amount: int, state : int = Statics.Material_states.SOLID):
+	while amount > 0:
 		var pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
 		if is_instance_valid(pipe):
+			if pipe.get_custom_data("pipe_speed") == 0:
+				return
 			if !pipe.get_custom_data("occupied"):
 				var item = output_scene.instantiate()
 				item.mat_data = output_type
 				item.global_position = global_position
 				item.tilemap = tilemap
 				item.pipe_coords = tilemap.get_tile_coords(global_position)
+				if state != Statics.Material_states.SOLID:
+					item.inner_temp = item.melting_point + 1
 				item_container.add_child(item, true)
-				if is_multiplayer_authority():
-					#var inventory = get_tree().current_scene.get_node("Inventory")
-					#inventory.add_resource.rpc_id(1, Statics.Materials.IRON, 1)
-					pass
-		else:
-			Debug.sprint("invalid pipe")
+		#else:
+			#Debug.sprint("invalid pipe")
 
 		timer.start()
 		amount -= 1

@@ -25,6 +25,8 @@ class InternalStock:
 signal stock_change(mat_id : Statics.Materials, amount, 
 	state : Statics.Material_states)
 
+signal stock_variety(d : bool)
+
 
 @export var materials : Array[MPMaterial]
 var stocks : Dictionary
@@ -38,6 +40,13 @@ func _ready():
 func set_stock(id : Statics.Materials, amount : int, state : Statics.Material_states = Statics.Material_states.SOLID):
 	if amount < 0:
 		return
+	var cur = stocks[id].get_amount(state)
+	
+	if amount == 0 and cur > 0:
+		stock_variety.emit(false)
+	elif cur == 0 and amount > 0:
+		stock_variety.emit(true)
+	
 	stocks[id].set_amount(amount, state)
 	if multiplayer.is_server():
 		update_stock.rpc(id, stocks[id].get_amount(state))
