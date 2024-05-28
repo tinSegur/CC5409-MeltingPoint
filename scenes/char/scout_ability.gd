@@ -8,7 +8,7 @@ func _ready():
 	sprite = $Sprite2D
 	timer = $Timer
 	timer.start()
-	timer.timeout.connect(timer_ended())
+	timer.timeout.connect(timer_ended)
 
 func timer_ended():
 	self.queue_free()

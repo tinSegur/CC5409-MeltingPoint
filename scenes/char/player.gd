@@ -131,6 +131,9 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("prev_tile"):
 			if(tile_index >= 1):
 				tile_index = (12 if tile_index == 1 else tile_index - 1)
+		
+		if event.is_action("Ability"):
+			class_node.ability()
 
 func _physics_process(delta: float) -> void:
 	
@@ -236,6 +239,9 @@ func test():
 	var tile: TileData = tilemap.get_cell_tile_data(3, tile_coords)
 	if is_instance_valid(tile):
 		Debug.sprint(tile.get_custom_data("temperature"))
+
+func get_player_tile_position():
+	return tilemap.get_tile_coords(global_position)
 
 @rpc
 func send_data(pos : Vector2, vel : Vector2, pivot_scale: int):
