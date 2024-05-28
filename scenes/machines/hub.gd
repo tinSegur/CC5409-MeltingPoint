@@ -17,9 +17,9 @@ func _ready():
 func input_resource(item : MPMaterial, liquid: bool) -> Statics.INPUT_CODES:
 	if multiplayer.is_server():
 		if liquid:
-			inventory.add_resource.rpc(item.type, Statics.Material_states.LIQUID)
+			inventory.add_resource.rpc(item.type, 1, Statics.Material_states.LIQUID)
 		else:
-			inventory.add_resource.rpc(item.type, Statics.Material_states.SOLID)
+			inventory.add_resource.rpc(item.type, 1, Statics.Material_states.SOLID)
 	return Statics.INPUT_CODES.ACCEPT
 
 
