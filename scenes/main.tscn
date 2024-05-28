@@ -923,3 +923,5 @@ shape = SubResource("RectangleShape2D_oc6q8")
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="MapWalls"]
 position = Vector2(1352, 2912)
 shape = SubResource("RectangleShape2D_7e5cs")
+
+[connection signal="stock_variety" from="Inventory" to="." method="_on_inventory_stock_variety"]

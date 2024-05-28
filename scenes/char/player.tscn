@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://8d3ys4aw51lk"]
+[gd_scene load_steps=19 format=3 uid="uid://8d3ys4aw51lk"]
 
 [ext_resource type="Script" path="res://scenes/char/player.gd" id="1_7q1sy"]
 [ext_resource type="PackedScene" uid="uid://dskjy6yd4quog" path="res://scenes/bullet.tscn" id="2_pyqhq"]
 [ext_resource type="Texture2D" uid="uid://2yhb0hlermap" path="res://assets/players/base_player.png" id="3_odam7"]
 [ext_resource type="PackedScene" uid="uid://c0xu2cniynmx2" path="res://scenes/ui/build_menu.tscn" id="4_sewft"]
+[ext_resource type="PackedScene" uid="uid://c58mc210m3nti" path="res://scenes/ui/victory_screen.tscn" id="4_ysssu"]
 [ext_resource type="PackedScene" uid="uid://48wa7sf15027" path="res://scenes/ui/inventory_display.tscn" id="5_56sa5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mash1"]
@@ -195,6 +196,8 @@ hframes = 2
 vframes = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VictoryScreen" parent="CanvasLayer" instance=ExtResource("4_ysssu")]
 
 [node name="BuildMenu" parent="CanvasLayer" instance=ExtResource("4_sewft")]
 visible = false

@@ -10,6 +10,7 @@ extends Node2D
 @onready var tile_map = $TileMap
 @onready var inventory = $Inventory
 var players_ready = 0
+var variety = 0
 
 var ore_forms = [[Vector2(0,0),Vector2(-1,0),Vector2(1,0),Vector2(1,1)],
 				 [Vector2(0,0),Vector2(-1,0),Vector2(-1,-1),Vector2(1,0),Vector2(0,1)],
@@ -70,3 +71,16 @@ func resource_generation():
 			for pos in form:
 				tile_map.generate_resource.rpc("Gold",x + pos)
 			N_resources-=1
+
+
+
+
+func _on_inventory_stock_variety(d):
+	if d:
+		variety += 1
+	else:
+		variety -= 1
+	
+	if variety == 2:
+		for player in players.get_children():
+			player.victory()

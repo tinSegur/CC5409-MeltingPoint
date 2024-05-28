@@ -1,7 +1,6 @@
 class_name Player
 extends CharacterBody2D
 
-
 var gravity = 200
 var jump_speed = 135
 var speed = 85
@@ -43,6 +42,7 @@ var mining_progress = 0
 var tilemap: TileMap
 
 @onready var build_menu = $CanvasLayer/BuildMenu
+@onready var victory_screen = $CanvasLayer/VictoryScreen
 var machine_container: Node2D
 var build_scene: String
 var build_preview: StaticBody2D
@@ -64,6 +64,7 @@ func _ready():
 	build_menu.tile_selected.connect(on_tile_selected)
 	tilemap = get_tree().current_scene.get_node("TileMap")
 	$AnimationTree.active = true
+	victory_screen.hide()
 
 func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
@@ -138,6 +139,10 @@ func _input(event: InputEvent) -> void:
 			tilemap.clear_previews()
 			if build_menu.visible:
 				build_menu.visible = false
+				
+			
+			if victory_screen.visible:
+				victory_screen.hide()
 		
 		if event.is_action_pressed("next_tile"):
 			if(tile_index >= 1):
@@ -157,6 +162,8 @@ func _input(event: InputEvent) -> void:
 				tile_selected = false
 				tile_index = -1
 				tilemap.clear_previews()
+			
+
 
 func _physics_process(delta: float) -> void:
 	
@@ -229,6 +236,10 @@ func _physics_process(delta: float) -> void:
 		playback.travel("walk")
 	else:
 		playback.travel("idle")
+
+func victory():
+	if is_multiplayer_authority():
+		victory_screen.show()
 
 func setup(player_data: Statics.PlayerData):
 	name = str(player_data.id)
