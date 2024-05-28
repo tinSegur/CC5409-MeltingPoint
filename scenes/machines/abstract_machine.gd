@@ -33,7 +33,7 @@ func _physics_process(delta):
 			modulate = Color(1,0.1,0.1,0.8)
 
 func _input(event):
-	if !placed:
+	if !placed and builder_id == multiplayer.get_unique_id():
 		if event.is_action("next_tile") && rotable:
 			mouse_rotate.rpc(true)
 		elif event.is_action("prev_tile") && rotable:
@@ -50,7 +50,7 @@ func is_valid_place() -> bool:
 	var bodies: Array = hitbox.get_overlapping_bodies()
 	return ((bodies.size()-1) == 0)
 
-func input_resource(item : MPMaterial) -> Statics.INPUT_CODES:
+func input_resource(item : MPMaterial, liquid: bool) -> Statics.INPUT_CODES:
 	return Statics.INPUT_CODES.NOTACCEPT
 
 

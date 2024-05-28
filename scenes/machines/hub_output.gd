@@ -50,10 +50,12 @@ func is_valid_place() -> bool:
 
 func _on_input_event(viewport, event, shape_idx):
 	if event.is_action_pressed("mine") && placed:
-		ind = (ind+1)%hub_mats.size()
-		
-		if ind%2 == 0:
-			sprite.set_texture(hub_mats[floor(ind/2)].solid_icon)
-		else:
-			sprite.set_texture(hub_mats[floor(ind/2)].melt_icon)
+		update_index.rpc()
 
+@rpc("any_peer","call_local","reliable")
+func update_index():
+	ind = (ind+1)%(2*hub_mats.size())
+	if ind%2 == 0:
+		sprite.set_texture(hub_mats[floor(ind/2)].solid_icon)
+	else:
+		sprite.set_texture(hub_mats[floor(ind/2)].melt_icon)

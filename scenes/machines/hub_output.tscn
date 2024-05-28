@@ -10,7 +10,7 @@
 size = Vector2(16, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3dgb7"]
-size = Vector2(14, 14)
+size = Vector2(13, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h8oqu"]
 size = Vector2(6, 14)
@@ -59,7 +59,7 @@ collision_layer = 0
 collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(-1, 0)
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_3dgb7")
 
 [node name="Timer" type="Timer" parent="."]
