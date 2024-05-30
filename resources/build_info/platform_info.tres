@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=6 format=3 uid="uid://du57cjks7rilg"]
+
+[ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="1_3a2cc"]
+[ext_resource type="Script" path="res://resources/build_info/build_info.gd" id="1_q16br"]
+[ext_resource type="Script" path="res://resources/build_info/cost_info.gd" id="2_slc4r"]
+[ext_resource type="Texture2D" uid="uid://dp44lgra15kcy" path="res://assets/machines/platform/platform_icon.png" id="3_l7evm"]
+
+[sub_resource type="Resource" id="Resource_lwplj"]
+script = ExtResource("2_slc4r")
+material = 0
+state = 0
+amount = 2
+icon = ExtResource("1_3a2cc")
+
+[resource]
+script = ExtResource("1_q16br")
+name = "Platforms"
+icon = ExtResource("3_l7evm")
+description = "Blocks used to build structures."
+costs = Array[ExtResource("2_slc4r")]([SubResource("Resource_lwplj")])
