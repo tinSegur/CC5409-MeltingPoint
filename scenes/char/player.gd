@@ -72,7 +72,7 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("mine"):
 			if tile_selected:
 				mouse_area.monitoring = true
-				mouse_area_col.shape.radius = 12
+				mouse_area_col.shape.radius = 16
 				building_tile = true
 				return
 			if deleting:
@@ -252,9 +252,9 @@ func _physics_process(delta: float) -> void:
 	
 	if building_tile:
 		if tile_index >= 28:
-			if (mouse_area.get_overlapping_bodies().size() == 0 and inventory.check_stock(Statics.Materials.IRON, 1)):
+			if (mouse_area.get_overlapping_bodies().size() == 0 and inventory.check_stock(Statics.Materials.IRON, 2)):
 				if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position()), tile_index):
-					manual_remove_resource.rpc_id(1, Statics.Materials.IRON, 1)
+					manual_remove_resource.rpc_id(1, Statics.Materials.IRON, 2)
 		else:
 			if inventory.check_stock(Statics.Materials.IRON, 1):
 				if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position()), tile_index):
@@ -335,10 +335,15 @@ func recieve_machine_name(m_name: String):
 func try_place_machine(m_name: String):
 	var machine = machine_container.get_node(m_name)
 	
-	# Costo placeholder
-	if inventory.check_stock(Statics.Materials.IRON, 5):
+	var costs = machine.info.costs
+	var affordable = true
+	for cost in costs:
+		affordable = (affordable && inventory.check_stock(cost.material, cost.amount, cost.state))
+	
+	if affordable:
 		if machine.try_place():
-			inventory.remove_stock(Statics.Materials.IRON, 5)
+			for cost in costs:
+				inventory.remove_stock(cost.material, cost.amount, cost.state)
 			place_success.rpc_id(multiplayer.get_remote_sender_id())
 
 @rpc("call_local", "any_peer", "reliable")

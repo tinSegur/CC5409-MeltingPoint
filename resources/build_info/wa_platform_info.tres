@@ -9,7 +9,7 @@
 script = ExtResource("2_21j0v")
 material = 0
 state = 0
-amount = 1
+amount = 2
 icon = ExtResource("1_vl3sj")
 
 [resource]
