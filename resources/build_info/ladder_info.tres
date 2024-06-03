@@ -9,7 +9,7 @@
 script = ExtResource("2_2pkek")
 material = 0
 state = 0
-amount = 2
+amount = 1
 icon = ExtResource("1_oxqlm")
 
 [resource]

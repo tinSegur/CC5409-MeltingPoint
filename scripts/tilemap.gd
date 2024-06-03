@@ -11,44 +11,44 @@ var pipes_index = {
 	# xxxx = arriba, abajo, izquierda, derecha
 	
 	# Pipes hacia arriba
-	"128": 1,
-	"129": 10,
-	"130": 11,
-	"131": 25,
-	"132": 1,
-	"133": 13,
-	"134": 14,
-	"135": 21,
+	"128": 0,
+	"129": 9,
+	"130": 10,
+	"131": 24,
+	"132": 0,
+	"133": 12,
+	"134": 13,
+	"135": 20,
 	
 	# Pipes hacia abajo
-	"64": 2,
-	"65": 6,
-	"66": 7,
-	"67": 26,
-	"72": 2,
-	"73": 15,
-	"74": 16,
-	"75": 22,
+	"64": 1,
+	"65": 5,
+	"66": 6,
+	"67": 25,
+	"72": 1,
+	"73": 14,
+	"74": 15,
+	"75": 21,
 	
 	# Pipes hacia la izquierda
-	"32": 4,
-	"33": 4,
-	"36": 8,
-	"37": 19,
-	"40": 12,
-	"41": 20,
-	"44": 28, #Falta un tile
-	"45": 24,
+	"32": 3,
+	"33": 3,
+	"36": 7,
+	"37": 18,
+	"40": 11,
+	"41": 19,
+	"44": 27,
+	"45": 23,
 	
 	# Pipes hacia la derecha
-	"16": 3,
-	"18": 3,
-	"20": 5,
-	"22": 17,
-	"24": 9,
-	"26": 18,
-	"28": 27, #Falta un tile
-	"30": 23
+	"16": 2,
+	"18": 2,
+	"20": 4,
+	"22": 16,
+	"24": 8,
+	"26": 17,
+	"28": 26,
+	"30": 22
 }
 
 func _input(event):
@@ -127,16 +127,16 @@ func generate_resource(ore: String, cell_position: Vector2i):
 func place_tile(coords: Vector2i, index: int):
 	if !is_instance_valid(get_cell_tile_data(0, coords)):
 		place.rpc(coords, index)
-		if (index > 0):
+		if (index < 28):
 			var dir = Vector2i.ZERO
 			match index:
-				1:
+				0:
 					dir = Vector2i(0,-1)
-				2:
+				1:
 					dir = Vector2i(0,1)
-				3:
+				2:
 					dir = Vector2i(1,0)
-				4:
+				3:
 					dir = Vector2i(-1,0)
 			var pipe = get_cell_tile_data(0, coords + dir)
 			if is_instance_valid(pipe):
@@ -159,10 +159,16 @@ func place_tile(coords: Vector2i, index: int):
 				if pipe.get_custom_data("direction") == Vector2i(-1,0):
 					update_pipe(coords + Vector2i(1,0))
 			update_pipe(coords)
+		elif (index == 35):
+			var ladder = get_cell_tile_data(0, coords + Vector2i(0,1))
+			if is_instance_valid(ladder):
+				if get_cell_source_id(0, coords + Vector2i(0,1)) == 4 and get_cell_atlas_coords(0, coords + Vector2i(0,1)) == Vector2i(0,2):
+					place.rpc(coords + Vector2i(0,1), 36)
 		return true
 	return false
 
 func update_pipe(coords: Vector2i):
+	#Debug.sprint(coords)
 	var pipe = get_cell_tile_data(0, coords)
 	var dir = pipe.get_custom_data("direction")
 	var other: TileData
@@ -198,22 +204,34 @@ func update_pipe(coords: Vector2i):
 
 @rpc("call_local", "reliable", "any_peer")
 func place(coords: Vector2i, index: int):
-	if index == 0:
-		set_cell(0, coords, 4, Vector2i(0,2))
-	elif index <= 12:
-		set_cell(0, coords, 5, Vector2i(index - 1, 0))
-	elif index <= 24:
-		set_cell(0, coords, 5, Vector2i(index - 13, 1))
+	if index >= 37:
+		set_cell(0, coords, 4, Vector2i(index - 37, 3))
+	elif index >= 35:
+		set_cell(0, coords, 4, Vector2i(index - 35, 2))
+	elif index >= 33:
+		set_cell(0, coords, 4, Vector2i(index - 33, 1))
+	elif index >= 28:
+		set_cell(0, coords, 4, Vector2i(index - 28, 0))
+	elif index <= 11:
+		set_cell(0, coords, 5, Vector2i(index, 0))
+	elif index <= 23:
+		set_cell(0, coords, 5, Vector2i(index - 12, 1))
 	else:
-		set_cell(0, coords, 5, Vector2i(index - 25, 2))
+		set_cell(0, coords, 5, Vector2i(index - 24, 2))
 
 func show_preview(coords: Vector2i, index: int):
 	clear_previews()
 	if !is_instance_valid(get_cell_tile_data(0, coords)):
-		if index == 0:
-			set_cell(4, coords, 4, Vector2i(0,2), 1)
+		if index >= 37:
+			set_cell(4, coords, 4, Vector2i(index - 37, 3), 1)
+		elif index >= 35:
+			set_cell(4, coords, 4, Vector2i(index - 35, 2))
+		elif index >= 33:
+			set_cell(4, coords, 4, Vector2i(index - 33, 1), 1)
+		elif index >= 28:
+			set_cell(4, coords, 4, Vector2i(index - 28, 0), 1)
 		else:
-			set_cell(4, coords, 5, Vector2i(index - 1, 0))
+			set_cell(4, coords, 5, Vector2i(index, 0))
 
 func clear_previews():
 	var previews = get_used_cells(4)

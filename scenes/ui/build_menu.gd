@@ -80,7 +80,7 @@ func _platform_hover():
 	build_info.render_info(machine_preview)
 
 func _platform_selected():
-	player.tile_index = 0
+	player.tile_index = 28
 	tile_selected.emit()
 	visible = false
 
@@ -89,7 +89,7 @@ func _pipe_hover():
 	build_info.render_info(machine_preview)
 
 func _pipe_selected():
-	player.tile_index = 1
+	player.tile_index = 0
 	tile_selected.emit()
 	visible = false
 
@@ -147,27 +147,24 @@ func _ramp_hover():
 	build_info.render_info(machine_preview)
 
 func _ramp_selected():
-	#player.tile_index = 0
-	#tile_selected.emit()
-	#visible = false
-	pass
+	player.tile_index = 33
+	tile_selected.emit()
+	visible = false
 
 func _ladder_hover():
 	build_info = load("res://resources/build_info/ladder_info.tres")
 	build_info.render_info(machine_preview)
 
 func _ladder_selected():
-	#player.tile_index = 0
-	#tile_selected.emit()
-	#visible = false
-	pass
+	player.tile_index = 35
+	tile_selected.emit()
+	visible = false
 
 func _wa_platform_hover():
 	build_info = load("res://resources/build_info/wa_platform_info.tres")
 	build_info.render_info(machine_preview)
 
 func _wa_platform_selected():
-	#player.tile_index = 0
-	#tile_selected.emit()
-	#visible = false
-	pass
+	player.tile_index = 37
+	tile_selected.emit()
+	visible = false

@@ -148,13 +148,29 @@ func _input(event: InputEvent) -> void:
 				victory_screen.hide()
 		
 		if event.is_action_pressed("next_tile"):
-			if(tile_index >= 1):
-				tile_index = tile_index%4 + 1
+			if(tile_index <= 3):
+				tile_index = (tile_index+1)%4
+			elif (tile_index <= 32):
+				tile_index = (28 if tile_index == 32 else tile_index + 1)
+			elif (tile_index <= 34):
+				tile_index = tile_index%2 + 33
+			elif (tile_index <= 36):
+				pass
+			else:
+				tile_index = (37 if tile_index == 41 else tile_index + 1)
 		
 		if event.is_action_pressed("prev_tile"):
-			if(tile_index >= 1):
-				tile_index = (4 if tile_index == 1 else tile_index - 1)
-				
+			if(tile_index <= 3):
+				tile_index = (3 if tile_index == 0 else tile_index - 1)
+			elif (tile_index <= 32):
+				tile_index = (32 if tile_index == 28 else tile_index - 1)
+			elif (tile_index <= 34):
+				tile_index = (34 if tile_index == 33 else tile_index - 1)
+			elif (tile_index <= 36):
+				pass
+			else:
+				tile_index = (41 if tile_index == 37 else tile_index - 1)
+			
 		if event.is_action_pressed("delete"):
 			deleting = !deleting
 			if deleting:
@@ -227,7 +243,7 @@ func _physics_process(delta: float) -> void:
 		tilemap.show_preview(tilemap.get_tile_coords(get_global_mouse_position()), tile_index)
 	
 	if building_tile:
-		if tile_index == 0:
+		if tile_index >= 28:
 			if (mouse_area.get_overlapping_bodies().size() == 0 and inventory.check_stock(Statics.Materials.IRON, 1)):
 				if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position()), tile_index):
 					manual_remove_resource.rpc_id(1, Statics.Materials.IRON, 1)
