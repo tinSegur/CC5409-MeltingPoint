@@ -164,6 +164,10 @@ func place_tile(coords: Vector2i, index: int):
 			if is_instance_valid(ladder):
 				if get_cell_source_id(0, coords + Vector2i(0,1)) == 4 and get_cell_atlas_coords(0, coords + Vector2i(0,1)) == Vector2i(0,2):
 					place.rpc(coords + Vector2i(0,1), 36)
+			ladder = get_cell_tile_data(0, coords + Vector2i(0,-1))
+			if is_instance_valid(ladder):
+				if get_cell_source_id(0, coords + Vector2i(0,1)) == 4 and (get_cell_atlas_coords(0, coords + Vector2i(0,1)) == Vector2i(0,2) or get_cell_atlas_coords(0, coords + Vector2i(0,1)) == Vector2i(1,2)):
+					place.rpc(coords, 36)
 		return true
 	return false
 

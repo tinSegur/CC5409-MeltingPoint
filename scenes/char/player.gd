@@ -195,8 +195,16 @@ func _physics_process(delta: float) -> void:
 		velocity.y += gravity * delta
 		
 	if is_multiplayer_authority():
-		if Input.is_action_just_pressed("jump") && is_on_floor():
+		if Input.is_action_just_pressed("jump") && is_on_floor:
 			velocity.y = -jump_speed
+			
+		var ladder = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
+		if is_instance_valid(ladder):
+			if ladder.get_custom_data("climbable"):
+				if Input.is_action_pressed("jump"):
+					velocity.y = -75
+				else:
+					velocity.y = 75
 		
 		var move_input = Input.get_axis("move_left", "move_right")
 
