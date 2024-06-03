@@ -16,5 +16,5 @@ icon = ExtResource("1_3a2cc")
 script = ExtResource("1_q16br")
 name = "Platforms"
 icon = ExtResource("3_l7evm")
-description = "Blocks used to build structures."
+description = "Blocks used to build structures. There are 5 variations."
 costs = Array[ExtResource("2_slc4r")]([SubResource("Resource_lwplj")])

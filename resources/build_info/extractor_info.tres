@@ -16,5 +16,5 @@ icon = ExtResource("1_effyi")
 script = ExtResource("1_3cpv1")
 name = "Hub extractor"
 icon = ExtResource("3_0pwmo")
-description = "Can extract items from the hub to an adyacent pipe."
+description = "Can extract items from the hub to an adyacent pipe. Can be rotated."
 costs = Array[ExtResource("2_kpafs")]([SubResource("Resource_bwx5w")])

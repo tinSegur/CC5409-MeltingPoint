@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=8 format=3 uid="uid://plc5ncpomxft"]
+
+[ext_resource type="Texture2D" uid="uid://hxepxbkj7gv8" path="res://assets/items/liquid_iron.png" id="1_563k5"]
+[ext_resource type="Script" path="res://resources/build_info/build_info.gd" id="1_m5mi4"]
+[ext_resource type="Script" path="res://resources/build_info/cost_info.gd" id="2_ypfgk"]
+[ext_resource type="Texture2D" uid="uid://bo8x2axxpero7" path="res://assets/items/gold_wire.png" id="3_tmlsr"]
+[ext_resource type="Texture2D" uid="uid://taf3h68ctkia" path="res://assets/machines/advanced_miner/advanced_miner_icon.png" id="4_xd2x1"]
+
+[sub_resource type="Resource" id="Resource_jqmas"]
+script = ExtResource("2_ypfgk")
+material = 0
+state = 1
+amount = 100
+icon = ExtResource("1_563k5")
+
+[sub_resource type="Resource" id="Resource_sdkpu"]
+script = ExtResource("2_ypfgk")
+material = 3
+state = 1
+amount = 80
+icon = ExtResource("3_tmlsr")
+
+[resource]
+script = ExtResource("1_m5mi4")
+name = "Advanced Miner"
+icon = ExtResource("4_xd2x1")
+description = "Upgraded version of the miner. Can be placed in iron or crystal deposits."
+costs = Array[ExtResource("2_ypfgk")]([SubResource("Resource_jqmas"), SubResource("Resource_sdkpu")])

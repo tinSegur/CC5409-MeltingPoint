@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://c0xu2cniynmx2"]
+[gd_scene load_steps=37 format=3 uid="uid://c0xu2cniynmx2"]
 
 [ext_resource type="Script" path="res://scenes/ui/build_menu.gd" id="1_71fyl"]
 [ext_resource type="Texture2D" uid="uid://3mk6t3y2y3qc" path="res://assets/machines/basic_miner_button_base.png" id="1_qo6ks"]
 [ext_resource type="Texture2D" uid="uid://d4ft1pxnx1wei" path="res://assets/machines/basic_miner_button_pressed.png" id="2_e2605"]
 [ext_resource type="Texture2D" uid="uid://2uusjfglcfyo" path="res://assets/machines/basic_miner_button_hover.png" id="3_nu03j"]
 [ext_resource type="Texture2D" uid="uid://cyuqcf3g4rgu0" path="res://assets/machines/platform/platform_button.png" id="5_5rygq"]
-[ext_resource type="Texture2D" uid="uid://2yhb0hlermap" path="res://assets/players/base_player.png" id="5_m4nd5"]
 [ext_resource type="Texture2D" uid="uid://37rd17k3oc0v" path="res://assets/machines/platform/platform_button_pressed.png" id="6_4q2ys"]
 [ext_resource type="Texture2D" uid="uid://dqaiq2as1goqv" path="res://assets/machines/platform/platform_button_hover.png" id="7_m0k2m"]
 [ext_resource type="Texture2D" uid="uid://c7lxsel7g0ff1" path="res://assets/machines/pipes/pipe_button.png" id="8_wlnk2"]
@@ -14,6 +13,27 @@
 [ext_resource type="Texture2D" uid="uid://b8hrx5lepjioq" path="res://assets/machines/hub_output/hub_output_button_base.png" id="11_3qkwx"]
 [ext_resource type="Texture2D" uid="uid://g3f3rsruf5kn" path="res://assets/machines/hub_output/hub_output_button_pressed.png" id="12_xufyi"]
 [ext_resource type="Texture2D" uid="uid://o04wmgbcge84" path="res://assets/machines/hub_output/hub_output_button_hover.png" id="13_64hhh"]
+[ext_resource type="Texture2D" uid="uid://q1m6s5ppshoo" path="res://assets/machines/pump/pump_button_base.png" id="14_d7nip"]
+[ext_resource type="Texture2D" uid="uid://vxleuehmcxcq" path="res://assets/machines/pump/pump_button_pressed.png" id="15_qy5x2"]
+[ext_resource type="Texture2D" uid="uid://cyw2y3vse8f20" path="res://assets/machines/pump/pump_button_hover.png" id="16_vvgfm"]
+[ext_resource type="Texture2D" uid="uid://dft02a4fud41q" path="res://assets/machines/cutter/cutter_button_base.png" id="17_x6551"]
+[ext_resource type="Texture2D" uid="uid://cxmfbbaqj46c7" path="res://assets/machines/cutter/cutter_button_pressed.png" id="18_wq1ue"]
+[ext_resource type="Texture2D" uid="uid://bpysvkl2lrogx" path="res://assets/machines/cutter/cutter_button_hover.png" id="19_fwvm4"]
+[ext_resource type="Texture2D" uid="uid://cqrhrkr583ek5" path="res://assets/machines/advanced_miner/advanced_miner_button_base.png" id="20_7am7f"]
+[ext_resource type="Texture2D" uid="uid://bld8p6s1op50i" path="res://assets/machines/advanced_miner/advanced_miner_button_pressed.png" id="21_oc1k1"]
+[ext_resource type="Texture2D" uid="uid://r30k0dor1lxn" path="res://assets/machines/advanced_miner/advanced_miner_button_hover.png" id="22_ndin1"]
+[ext_resource type="Texture2D" uid="uid://o04qwualu4rr" path="res://assets/machines/stabilizer/stabilizer_button_base.png" id="23_n8ci5"]
+[ext_resource type="Texture2D" uid="uid://bdm4aaqf0o7ec" path="res://assets/machines/stabilizer/stabilizer_button_pressed.png" id="24_iwkf7"]
+[ext_resource type="Texture2D" uid="uid://b2nda3318a77g" path="res://assets/machines/stabilizer/stabilizer_button_hover.png" id="25_ibdjy"]
+[ext_resource type="Texture2D" uid="uid://dlj31glbrq12f" path="res://assets/machines/platform/ramp_button_base.png" id="26_7sk0g"]
+[ext_resource type="Texture2D" uid="uid://caonnl7lj25lw" path="res://assets/machines/platform/ramp_button_pressed.png" id="27_3vx7n"]
+[ext_resource type="Texture2D" uid="uid://dlyd4j63ftbrk" path="res://assets/machines/platform/ramp_button_hover.png" id="28_5gdpd"]
+[ext_resource type="Texture2D" uid="uid://bvgg8fr8d5uic" path="res://assets/machines/platform/ladder_button_base.png" id="29_hkeha"]
+[ext_resource type="Texture2D" uid="uid://b26x762x57a6f" path="res://assets/machines/platform/ladder_button_pressed.png" id="30_n8icq"]
+[ext_resource type="Texture2D" uid="uid://ds83g5a3pmo6j" path="res://assets/machines/platform/ladder_button_hover.png" id="31_qc6ve"]
+[ext_resource type="Texture2D" uid="uid://cwdneau2avgxc" path="res://assets/machines/platform/warning_platform_button_base.png" id="32_m12gb"]
+[ext_resource type="Texture2D" uid="uid://sd04lroqvdvs" path="res://assets/machines/platform/warning_platform_button_pressed.png" id="33_v25yn"]
+[ext_resource type="Texture2D" uid="uid://do3bc533wwr8m" path="res://assets/machines/platform/warning_platform_button_hover.png" id="34_inhne"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfceq"]
 bg_color = Color(0.313726, 0.313726, 0.313726, 1)
@@ -96,11 +116,51 @@ texture_pressed = ExtResource("12_xufyi")
 texture_hover = ExtResource("13_64hhh")
 stretch_mode = 3
 
-[node name="TextureButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
+[node name="PumpButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture_normal = ExtResource("5_m4nd5")
+texture_normal = ExtResource("14_d7nip")
+texture_pressed = ExtResource("15_qy5x2")
+texture_hover = ExtResource("16_vvgfm")
 stretch_mode = 3
+
+[node name="CutterButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture_normal = ExtResource("17_x6551")
+texture_pressed = ExtResource("18_wq1ue")
+texture_hover = ExtResource("19_fwvm4")
+stretch_mode = 3
+
+[node name="AdMinerButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("20_7am7f")
+texture_pressed = ExtResource("21_oc1k1")
+texture_hover = ExtResource("22_ndin1")
+
+[node name="StabilizerButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("23_n8ci5")
+texture_pressed = ExtResource("24_iwkf7")
+texture_hover = ExtResource("25_ibdjy")
+
+[node name="RampButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("26_7sk0g")
+texture_pressed = ExtResource("27_3vx7n")
+texture_hover = ExtResource("28_5gdpd")
+
+[node name="LadderButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("29_hkeha")
+texture_pressed = ExtResource("30_n8icq")
+texture_hover = ExtResource("31_qc6ve")
+
+[node name="WaPlatformButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("32_m12gb")
+texture_pressed = ExtResource("33_v25yn")
+texture_hover = ExtResource("34_inhne")
 
 [node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2

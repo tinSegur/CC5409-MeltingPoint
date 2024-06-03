@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=6 format=3 uid="uid://lg164y7wu5es"]
+
+[ext_resource type="Script" path="res://resources/build_info/build_info.gd" id="1_jtoxk"]
+[ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="1_oxqlm"]
+[ext_resource type="Script" path="res://resources/build_info/cost_info.gd" id="2_2pkek"]
+[ext_resource type="Texture2D" uid="uid://bfaqfld65jgev" path="res://assets/machines/platform/ladder_icon.png" id="3_q0ipi"]
+
+[sub_resource type="Resource" id="Resource_lyvcd"]
+script = ExtResource("2_2pkek")
+material = 0
+state = 0
+amount = 2
+icon = ExtResource("1_oxqlm")
+
+[resource]
+script = ExtResource("1_jtoxk")
+name = "Ladder"
+icon = ExtResource("3_q0ipi")
+description = "Allows players to move vertically."
+costs = Array[ExtResource("2_2pkek")]([SubResource("Resource_lyvcd")])

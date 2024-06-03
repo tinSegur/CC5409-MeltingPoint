@@ -19,7 +19,8 @@ enum Role {
 enum Materials {
 	IRON,
 	GOLD,
-	CRYSTALS
+	CRYSTALS,
+	ADVANCED
 }
 
 enum Material_states {
