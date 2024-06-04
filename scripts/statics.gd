@@ -51,3 +51,25 @@ class PlayerData:
 			"name": name,
 			"role": role
 		}
+
+
+class InternalStock:
+	var material : MPMaterial
+	var quantity : int = 0
+	var quantDict : Dictionary = {}
+	
+	func _init(mat : MPMaterial, quant = 0):
+		material = mat
+		quantity = quant
+		
+		for s in mat.states:
+			quantDict[s] = quant
+	
+	func add_amount(n : int, state : Statics.Material_states = Statics.Material_states.SOLID):
+		quantDict[state] += n
+	
+	func set_amount(n : int, state : Statics.Material_states = Statics.Material_states.SOLID):
+		quantDict[state] = n
+	
+	func get_amount(state : Statics.Material_states = Statics.Material_states.SOLID):
+		return quantDict[state]
