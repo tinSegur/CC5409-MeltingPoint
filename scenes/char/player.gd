@@ -345,12 +345,23 @@ func try_place_machine(m_name: String):
 			for cost in costs:
 				inventory.remove_stock(cost.material, cost.amount, cost.state)
 			place_success.rpc_id(multiplayer.get_remote_sender_id())
+		else:
+			place_error.rpc_id(multiplayer.get_remote_sender_id(), "Invalid placement", machine.global_position)
+	else:
+		place_error.rpc_id(multiplayer.get_remote_sender_id(), "Missing materials", machine.global_position)
 
 @rpc("call_local", "any_peer", "reliable")
 func place_success():
 	building = false
 	build_preview = null
-	
+
+@rpc("call_local", "any_peer", "reliable")
+func place_error(msg: String, pos: Vector2):
+	var error = load("res://scenes/ui/notification.tscn").instantiate()
+	error.text = msg
+	error.global_position = pos
+	machine_container.add_child(error)
+
 @rpc("call_local", "reliable")
 func cancel_build(m_name: String):
 	var machine = machine_container.get_node(m_name)
