@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://dg8ydccl1bkca"]
+
+[ext_resource type="Script" path="res://scenes/machines/cutter.gd" id="1_rwmvh"]
+[ext_resource type="Script" path="res://scenes/machines/internal_inventory.gd" id="2_jh5n5"]
+[ext_resource type="PackedScene" uid="uid://cgtrga7080al8" path="res://scenes/machines/input.tscn" id="3_eq1x2"]
+[ext_resource type="PackedScene" uid="uid://cbmugsoctody6" path="res://scenes/machines/output.tscn" id="4_1gvx4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tt0om"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ny24q"]
+
+[node name="Cutter" type="StaticBody2D"]
+script = ExtResource("1_rwmvh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_tt0om")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ny24q")
+
+[node name="InternalInventory" type="Node" parent="."]
+script = ExtResource("2_jh5n5")
+
+[node name="Input" parent="." instance=ExtResource("3_eq1x2")]
+
+[node name="Output" parent="." instance=ExtResource("4_1gvx4")]
