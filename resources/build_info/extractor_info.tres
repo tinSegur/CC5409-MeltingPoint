@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=6 format=3 uid="uid://d0ntbd4skon4y"]
+
+[ext_resource type="Script" path="res://resources/build_info/build_info.gd" id="1_3cpv1"]
+[ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="1_effyi"]
+[ext_resource type="Script" path="res://resources/build_info/cost_info.gd" id="2_kpafs"]
+[ext_resource type="Texture2D" uid="uid://cvemh746v6sv6" path="res://assets/machines/hub_output/hub_output.png" id="3_0pwmo"]
+
+[sub_resource type="Resource" id="Resource_bwx5w"]
+script = ExtResource("2_kpafs")
+material = 0
+state = 0
+amount = 5
+icon = ExtResource("1_effyi")
+
+[resource]
+script = ExtResource("1_3cpv1")
+name = "Hub extractor"
+icon = ExtResource("3_0pwmo")
+description = "Can extract items from the hub to an adyacent pipe. Can be rotated."
+costs = Array[ExtResource("2_kpafs")]([SubResource("Resource_bwx5w")])
