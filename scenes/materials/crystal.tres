@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MPMaterial" load_steps=4 format=3 uid="uid://ddet442k06thk"]
+
+[ext_resource type="Script" path="res://scenes/materials/material.gd" id="1_6rl0r"]
+[ext_resource type="Texture2D" uid="uid://bpu5yolsrkxyf" path="res://assets/items/stable_crystal.png" id="1_n7t5a"]
+[ext_resource type="Texture2D" uid="uid://borc0susc0fft" path="res://assets/items/unstable_crystal.png" id="3_iu144"]
+
+[resource]
+script = ExtResource("1_6rl0r")
+type = 2
+melting_point = 2
+breaking_delta = 2.0
+can_break = true
+can_melt = false
+melt_icon = ExtResource("1_n7t5a")
+solid_icon = ExtResource("3_iu144")
+default_temp = 5
+states = null
+state_sprites = null

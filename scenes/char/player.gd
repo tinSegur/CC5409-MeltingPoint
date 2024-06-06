@@ -195,7 +195,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y += gravity * delta
 		
 	if is_multiplayer_authority():
-		if Input.is_action_just_pressed("jump") && is_on_floor:
+		if Input.is_action_just_pressed("jump") && is_on_floor():
 			velocity.y = -jump_speed
 			
 		var ladder = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
@@ -375,7 +375,8 @@ func destroy_machine(m_name: String):
 
 func mine_resource(resource: int):
 	mining_progress = 0
-	manual_add_resource.rpc_id(1, resource, 1)
+	if resource == Statics.Materials.IRON:
+		manual_add_resource.rpc_id(1, resource, 1)
 	
 @rpc("call_local", "reliable")
 func manual_add_resource(resource: int, amount: int):
