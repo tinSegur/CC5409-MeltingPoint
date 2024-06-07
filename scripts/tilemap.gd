@@ -106,7 +106,7 @@ func mine_tile(layer: int, coords: Vector2):
 	erase_cell(layer, coords)
 	
 @rpc("authority", "call_local", "reliable")
-func generate_resource(ore: String, cell_position: Vector2i):
+func generate_resource(ore: String, cell_position: Vector2i, pure: bool):
 	if !is_instance_valid(get_cell_tile_data(0, cell_position)):
 		return
 	
@@ -121,6 +121,9 @@ func generate_resource(ore: String, cell_position: Vector2i):
 			ore_atlas_coordinates = Vector2(3,0)
 		_:
 			return
+	
+	if !pure:
+		ore_atlas_coordinates.y = 1
 	
 	set_cell(1, cell_position, 3, ore_atlas_coordinates)
 	var atlas_pos = get_cell_atlas_coords(0, cell_position)

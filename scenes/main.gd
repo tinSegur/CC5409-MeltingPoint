@@ -50,6 +50,7 @@ func resource_generation():
 		var used_positions = [Vector2(-1,-1)]
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
+			var pure_prob: float = 1.0
 			while used_positions.has(x):
 				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits_iron[0],y_limits_iron[1]))
 			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
@@ -57,12 +58,14 @@ func resource_generation():
 			used_positions.append(x)
 			var form = ore_forms[rng.randi_range(0, ore_forms.size()-1)]
 			for pos in form:
-				tile_map.generate_resource.rpc("Iron",x + pos)
+				tile_map.generate_resource.rpc("Iron", x + pos, rng.randf() <= pure_prob)
+				pure_prob *= 0.7
 			N_resources-=1
 		# Gold
 		N_resources = rng.randi_range(8, 12)
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
+			var pure_prob: float = 1.0
 			while used_positions.has(x):
 				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits_gold[0],y_limits_gold[1]))
 			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
@@ -70,12 +73,14 @@ func resource_generation():
 			used_positions.append(x)
 			var form = ore_forms[rng.randi_range(0, ore_forms.size()-1)]
 			for pos in form:
-				tile_map.generate_resource.rpc("Gold",x + pos)
+				tile_map.generate_resource.rpc("Gold",x + pos, rng.randf() <= pure_prob)
+				pure_prob *= 0.7
 			N_resources-=1
 		# Crystal
 		N_resources = rng.randi_range(8, 12)
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
+			var pure_prob: float = 1.0
 			while used_positions.has(x):
 				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits_crystal[0],y_limits_crystal[1]))
 			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
@@ -83,7 +88,8 @@ func resource_generation():
 			used_positions.append(x)
 			var form = ore_forms[rng.randi_range(0, ore_forms.size()-1)]
 			for pos in form:
-				tile_map.generate_resource.rpc("Crystal",x + pos)
+				tile_map.generate_resource.rpc("Crystal",x + pos, rng.randf() <= pure_prob)
+				pure_prob *= 0.7
 			N_resources-=1
 
 
