@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=8 format=3 uid="uid://bgmjvyug8ehhy"]
+[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=11 format=3 uid="uid://bgmjvyug8ehhy"]
 
+[ext_resource type="Texture2D" uid="uid://cyw2y3vse8f20" path="res://assets/machines/pump/pump_button_hover.png" id="1_50nlo"]
 [ext_resource type="Script" path="res://resources/build_info/build_info.gd" id="1_bw5vb"]
 [ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="1_fqbgl"]
 [ext_resource type="Script" path="res://resources/build_info/cost_info.gd" id="2_21wim"]
+[ext_resource type="Texture2D" uid="uid://vxleuehmcxcq" path="res://assets/machines/pump/pump_button_pressed.png" id="2_y0mib"]
+[ext_resource type="Texture2D" uid="uid://q1m6s5ppshoo" path="res://assets/machines/pump/pump_button_base.png" id="3_0h0xj"]
 [ext_resource type="Texture2D" uid="uid://hxepxbkj7gv8" path="res://assets/items/liquid_iron.png" id="3_nxgot"]
 [ext_resource type="Texture2D" uid="uid://o5d35qcnkoid" path="res://assets/machines/pump/pump_icon.png" id="4_1r30j"]
 
@@ -24,5 +27,9 @@ icon = ExtResource("3_nxgot")
 script = ExtResource("1_bw5vb")
 name = "Pump"
 icon = ExtResource("4_1r30j")
+button = ExtResource("3_0h0xj")
+b_pressed = ExtResource("2_y0mib")
+b_hover = ExtResource("1_50nlo")
 description = "Extracts liquid gold from underground deposits. Outputs items from the top. Can be rotated."
 costs = Array[ExtResource("2_21wim")]([SubResource("Resource_njvsx"), SubResource("Resource_4mrqx")])
+machine_scene = "res://scenes/machines/pump.tscn"

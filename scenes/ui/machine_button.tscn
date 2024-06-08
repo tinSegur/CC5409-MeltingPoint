@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cv4ic6augq1or"]
+
+[ext_resource type="Script" path="res://scenes/ui/machine_button.gd" id="1_075fq"]
+
+[node name="MachineButton" type="TextureButton"]
+script = ExtResource("1_075fq")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

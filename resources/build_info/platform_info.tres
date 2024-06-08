@@ -18,3 +18,4 @@ name = "Platforms"
 icon = ExtResource("3_l7evm")
 description = "Blocks used to build structures. There are 5 variations."
 costs = Array[ExtResource("2_slc4r")]([SubResource("Resource_lwplj")])
+machine_scene = null

@@ -1,17 +1,22 @@
 extends Machine
 
 @onready var resource_detector : Area2D = $ResourceDetector
+@onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
+
+func _ready():
+	Debug.sprint("build pump")
+	animated_sprite.stop()
 
 @rpc("call_local", "any_peer")
 func place():
-	#timer.timeout.connect(spawn_resource)
+	timer.timeout.connect(spawn_resource)
 	placed = true
 	modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 	output.output_type = output_type
 	output.output_scene = load("res://scenes/materials/material_item.tscn")
 
-	#animated_sprite_2d.play()
+	animated_sprite.play()
 	timer.start()
 
 func is_valid_place() -> bool:
@@ -26,8 +31,6 @@ func is_valid_place() -> bool:
 			if is_instance_valid(tile):
 				if tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(1, 0):
 					resource = true
-	#Debug.sprint(str((bodies.size() - 1) == 0) + "," + str(resource))
-	#Debug.sprint(offset_vec)
 	return ((bodies.size()-1) == 0) and resource
 
 func try_place() -> bool:

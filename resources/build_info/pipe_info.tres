@@ -18,3 +18,4 @@ name = "Pipe"
 icon = ExtResource("3_muo5f")
 description = "Moves items in the direction of the arrow. Can input items into machines. Can be rotated."
 costs = Array[ExtResource("2_yosjp")]([SubResource("Resource_mn7bt")])
+machine_scene = null

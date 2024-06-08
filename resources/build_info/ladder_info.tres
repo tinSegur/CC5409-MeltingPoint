@@ -18,3 +18,4 @@ name = "Ladder"
 icon = ExtResource("3_q0ipi")
 description = "Allows players to move vertically."
 costs = Array[ExtResource("2_2pkek")]([SubResource("Resource_lyvcd")])
+machine_scene = null

@@ -3,8 +3,13 @@ extends Resource
 
 @export var name : String
 @export var icon: Texture2D
+@export var button : Texture2D
+@export var b_pressed : Texture2D
+@export var b_hover : Texture2D
 @export var description : String
 @export var costs : Array[MPCost]
+@export_file var machine_scene
+ 
 
 func render_info(parent_node: VBoxContainer):
 	var name_label : Label = Label.new()

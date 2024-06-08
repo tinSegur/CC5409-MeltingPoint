@@ -1,9 +1,12 @@
-[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=8 format=3 uid="uid://spy6rrsf8grq"]
+[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=11 format=3 uid="uid://spy6rrsf8grq"]
 
 [ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="1_2cduo"]
 [ext_resource type="Script" path="res://resources/build_info/build_info.gd" id="1_3gg1f"]
 [ext_resource type="Script" path="res://resources/build_info/cost_info.gd" id="1_7g4uj"]
 [ext_resource type="Texture2D" uid="uid://cmdtm55y11r6a" path="res://assets/machines/basic_miner.png" id="1_8i6dx"]
+[ext_resource type="Texture2D" uid="uid://2uusjfglcfyo" path="res://assets/machines/basic_miner_button_hover.png" id="1_343hd"]
+[ext_resource type="Texture2D" uid="uid://d4ft1pxnx1wei" path="res://assets/machines/basic_miner_button_pressed.png" id="2_bj3ho"]
+[ext_resource type="Texture2D" uid="uid://3mk6t3y2y3qc" path="res://assets/machines/basic_miner_button_base.png" id="3_ed8g3"]
 [ext_resource type="Texture2D" uid="uid://hxepxbkj7gv8" path="res://assets/items/liquid_iron.png" id="4_m76xs"]
 
 [sub_resource type="Resource" id="Resource_ggyid"]
@@ -24,5 +27,9 @@ icon = ExtResource("4_m76xs")
 script = ExtResource("1_3gg1f")
 name = "Miner"
 icon = ExtResource("1_8i6dx")
+button = ExtResource("3_ed8g3")
+b_pressed = ExtResource("2_bj3ho")
+b_hover = ExtResource("1_343hd")
 description = "Automatically mines iron ore. Can be rotated."
 costs = Array[ExtResource("1_7g4uj")]([SubResource("Resource_ggyid"), SubResource("Resource_etp5w")])
+machine_scene = "res://scenes/machines/miner.tscn"

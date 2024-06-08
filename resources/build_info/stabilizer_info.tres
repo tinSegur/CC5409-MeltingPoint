@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=6 format=3 uid="uid://cvd8jytnrybj6"]
+[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=9 format=3 uid="uid://cvd8jytnrybj6"]
 
 [ext_resource type="Texture2D" uid="uid://bi4dg8pw6ceit" path="res://assets/items/iron_sheet.png" id="1_06hfs"]
+[ext_resource type="Texture2D" uid="uid://b2nda3318a77g" path="res://assets/machines/stabilizer/stabilizer_button_hover.png" id="1_ji8dl"]
 [ext_resource type="Script" path="res://resources/build_info/build_info.gd" id="1_vsrq6"]
+[ext_resource type="Texture2D" uid="uid://bdm4aaqf0o7ec" path="res://assets/machines/stabilizer/stabilizer_button_pressed.png" id="2_l7mn8"]
 [ext_resource type="Script" path="res://resources/build_info/cost_info.gd" id="2_rc4x5"]
+[ext_resource type="Texture2D" uid="uid://o04qwualu4rr" path="res://assets/machines/stabilizer/stabilizer_button_base.png" id="3_aay3g"]
 [ext_resource type="Texture2D" uid="uid://b7ihg3ww8mr8q" path="res://assets/machines/stabilizer/stabilizer_icon.png" id="3_om8ab"]
 
 [sub_resource type="Resource" id="Resource_yu6rd"]
@@ -16,5 +19,9 @@ icon = ExtResource("1_06hfs")
 script = ExtResource("1_vsrq6")
 name = "Stabilizer"
 icon = ExtResource("3_om8ab")
+button = ExtResource("3_aay3g")
+b_pressed = ExtResource("2_l7mn8")
+b_hover = ExtResource("1_ji8dl")
 description = "Changes the temperature of the input items to the displayed one. Can be flipped."
 costs = Array[ExtResource("2_rc4x5")]([SubResource("Resource_yu6rd")])
+machine_scene = null
