@@ -11,6 +11,7 @@ extends Node2D
 @onready var inventory = $Inventory
 var players_ready = 0
 var variety = 0
+var used_positions = [Vector2(-1,-1)]
 
 var ore_forms = [[Vector2(0,0),Vector2(-1,0),Vector2(1,0),Vector2(1,1)],
 				 [Vector2(0,0),Vector2(-1,0),Vector2(-1,-1),Vector2(1,0),Vector2(0,1)],
@@ -46,7 +47,6 @@ func resource_generation():
 		var rng = RandomNumberGenerator.new()
 		# Iron
 		var N_resources = rng.randi_range(10, 15)
-		var used_positions = [Vector2(-1,-1)]
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
 			while used_positions.has(x):
@@ -72,7 +72,8 @@ func resource_generation():
 				tile_map.generate_resource.rpc("Gold",x + pos)
 			N_resources-=1
 
-
+func get_used_positions():
+	return used_positions
 
 
 func _on_inventory_stock_variety(d):

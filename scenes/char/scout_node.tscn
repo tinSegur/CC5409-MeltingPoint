@@ -5,7 +5,6 @@
 
 [node name="ScoutNode" type="Node2D"]
 script = ExtResource("1_08mrv")
-radar_distance = 2.0
 stat_dict = {
 "acceleration": 200,
 "gravity": 200,

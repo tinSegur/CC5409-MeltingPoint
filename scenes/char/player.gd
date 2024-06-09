@@ -285,6 +285,7 @@ func test():
 		Debug.sprint(tile.get_custom_data("temperature"))
 
 func get_player_tile_position():
+	Debug.sprint(tilemap.get_tile_coords(global_position))
 	return tilemap.get_tile_coords(global_position)
 
 @rpc
