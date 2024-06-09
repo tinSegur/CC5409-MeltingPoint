@@ -19,7 +19,6 @@ func place():
 
 	output.output_type = output_type
 
-	#output.output_scene = load("res://scenes/bullet.tscn")
 	output.output_scene = load("res://scenes/materials/material_item.tscn")
 
 	animated_sprite_2d.play()
@@ -27,13 +26,18 @@ func place():
 
 func is_valid_place() -> bool:
 	var bodies: Array = hitbox.get_overlapping_bodies()
+	var tiles = resource_detector.get_overlapping_bodies()
 	var resource: bool = false
 	if resource_detector.has_overlapping_bodies():
-		var tilemap: TileMap = resource_detector.get_overlapping_bodies()[0]
+		var tilemap: TileMap = tiles[0]
 		if is_instance_valid(tilemap):
-			var tile = tilemap.get_cell_tile_data(1, tilemap.get_tile_coords(global_position + Vector2(0, 20)))
+			var tile_coords = tilemap.get_tile_coords(global_position + Vector2(0, 20).rotated(rotation))
+			var tile = tilemap.get_cell_tile_data(1, tile_coords)
 			if is_instance_valid(tile):
-				resource = true
+				if tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(0,0):
+					resource = true
+	#Debug.sprint(str((bodies.size() - 1) == 0) + "," + str(resource))
+	#Debug.sprint(offset_vec)
 	return ((bodies.size()-1) == 0) and resource
 
 func try_place() -> bool:
@@ -46,18 +50,7 @@ func cancel_build():
 	queue_free()
 
 func _physics_process(delta):
-	if !placed:
-		if builder_id == multiplayer.get_unique_id():
-			var mouse_pos = Vector2i(get_global_mouse_position())
-			var build_pos = Vector2i(mouse_pos.x - mouse_pos.x%18 + 9 * (1 if (sign(mouse_pos.x) == 0) else sign(mouse_pos.x)), 
-									 mouse_pos.y - mouse_pos.y%18 + 2)
-			send_pos.rpc_id(1, build_pos)
-			
-		if is_valid_place():
-			modulate = Color(1,1,1,0.8)
-		else:
-			modulate = Color(1,0.1,0.1,0.8)
-
+	super(delta)
 
 @rpc("call_local", "any_peer")
 func send_pos(pos: Vector2):

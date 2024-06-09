@@ -22,6 +22,13 @@ enum Materials {
 	CRYSTALS
 }
 
+enum Material_states {
+	SOLID,
+	LIQUID,
+	STABLE,
+	UNSTABLE
+}
+
 enum INPUT_CODES {
 	ACCEPT,
 	NOTACCEPT

@@ -1,18 +1,23 @@
-[gd_scene load_steps=17 format=3 uid="uid://8d3ys4aw51lk"]
+[gd_scene load_steps=20 format=3 uid="uid://8d3ys4aw51lk"]
 
 [ext_resource type="Script" path="res://scenes/char/player.gd" id="1_7q1sy"]
 [ext_resource type="PackedScene" uid="uid://dskjy6yd4quog" path="res://scenes/bullet.tscn" id="2_pyqhq"]
 [ext_resource type="Texture2D" uid="uid://2yhb0hlermap" path="res://assets/players/base_player.png" id="3_odam7"]
 [ext_resource type="PackedScene" uid="uid://c0xu2cniynmx2" path="res://scenes/ui/build_menu.tscn" id="4_sewft"]
+[ext_resource type="PackedScene" uid="uid://c58mc210m3nti" path="res://scenes/ui/victory_screen.tscn" id="4_ysssu"]
+[ext_resource type="PackedScene" uid="uid://48wa7sf15027" path="res://scenes/ui/inventory_display.tscn" id="5_56sa5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mash1"]
 radius = 6.0
 height = 26.0
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8jyo0"]
-properties/0/path = NodePath(".:score")
-properties/0/spawn = true
-properties/0/replication_mode = 2
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i2170"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.784314, 0.117647, 0, 1)
 
 [sub_resource type="Animation" id="Animation_aucjd"]
 length = 0.001
@@ -163,8 +168,12 @@ states/walk/position = Vector2(683, 100)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_nfhog"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_i1v56"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_qkroj")]
 graph_offset = Vector2(-3, -64)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_j6huy"]
+radius = 7.0
+
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 8
+z_index = 3
+collision_mask = 12
 script = ExtResource("1_7q1sy")
 bullet_scene = ExtResource("2_pyqhq")
 
@@ -172,15 +181,12 @@ bullet_scene = ExtResource("2_pyqhq")
 position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_mash1")
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/bullet.tscn")
-spawn_path = NodePath(".")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_8jyo0")
-
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false
+limit_left = 0
+limit_top = 0
+limit_right = 2700
+limit_bottom = 2880
 
 [node name="MiningRaycast" type="RayCast2D" parent="."]
 target_position = Vector2(60, 0)
@@ -199,8 +205,31 @@ vframes = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="VictoryScreen" parent="CanvasLayer" instance=ExtResource("4_ysssu")]
+
 [node name="BuildMenu" parent="CanvasLayer" instance=ExtResource("4_sewft")]
 visible = false
+
+[node name="InventoryDisplay" parent="CanvasLayer" instance=ExtResource("5_56sa5")]
+
+[node name="DeletingOverlay" type="PanelContainer" parent="CanvasLayer"]
+visible = false
+layout_direction = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_i2170")
+
+[node name="Label" type="Label" parent="CanvasLayer/DeletingOverlay"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.784314, 0.117647, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "Deleting
+"
+uppercase = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -211,3 +240,11 @@ libraries = {
 active = false
 tree_root = SubResource("AnimationNodeStateMachine_qfhim")
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="MouseArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 19
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseArea"]
+shape = SubResource("CircleShape2D_j6huy")

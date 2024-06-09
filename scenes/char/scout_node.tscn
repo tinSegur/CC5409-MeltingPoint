@@ -10,7 +10,7 @@ stat_dict = {
 "acceleration": 200,
 "gravity": 200,
 "jump_speed": 135,
-"mine_time": 0.3,
+"mine_time": 0.1,
 "mining_radius": 60,
 "speed": 85
 }
