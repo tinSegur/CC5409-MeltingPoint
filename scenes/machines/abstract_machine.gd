@@ -3,6 +3,7 @@ extends StaticBody2D
 
 @export var output_type : MPMaterial
 @export var offset_vec : Vector2 = Vector2(9, 2)
+@export var info: MPBuildInfo
 
 var placed = false
 @export var rotable = true

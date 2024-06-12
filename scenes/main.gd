@@ -5,6 +5,7 @@ extends Node2D
 @export var x_limits: Vector2
 @export var y_limits_iron: Vector2
 @export var y_limits_gold: Vector2
+@export var y_limits_crystal: Vector2
 @export var player_scene: PackedScene
 @onready var players: Node2D = $Players
 @onready var tile_map = $TileMap
@@ -49,6 +50,7 @@ func resource_generation():
 		var N_resources = rng.randi_range(10, 15)
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
+			var pure_prob: float = 1.0
 			while _used_positions.has(x):
 				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits_iron[0],y_limits_iron[1]))
 			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
@@ -56,13 +58,16 @@ func resource_generation():
 			_used_positions.append(x)
 			var form = ore_forms[rng.randi_range(0, ore_forms.size()-1)]
 			for pos in form:
-				tile_map.generate_resource.rpc("Iron",x + pos)
-			send_used_positions.rpc(x)
+				tile_map.generate_resource.rpc("Iron", x + pos, rng.randf() <= pure_prob)
+				pure_prob *= 0.7
+      send_used_positions.rpc(x)
 			N_resources-=1
 		# Gold
 		N_resources = rng.randi_range(8, 12)
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
+
+			var pure_prob: float = 1.0
 			while _used_positions.has(x):
 				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits_gold[0],y_limits_gold[1]))
 			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
@@ -70,8 +75,25 @@ func resource_generation():
 			_used_positions.append(x)
 			var form = ore_forms[rng.randi_range(0, ore_forms.size()-1)]
 			for pos in form:
-				tile_map.generate_resource.rpc("Gold",x + pos)
-			send_used_positions.rpc(x)
+				tile_map.generate_resource.rpc("Gold",x + pos, rng.randf() <= pure_prob)
+				pure_prob *= 0.7
+      send_used_positions.rpc(x)
+			N_resources-=1
+		# Crystal
+		N_resources = rng.randi_range(8, 12)
+		while N_resources!=0:
+			var x = Vector2(-1,-1)
+			var pure_prob: float = 1.0
+			while _used_positions.has(x):
+				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits_crystal[0],y_limits_crystal[1]))
+			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
+				continue
+			_used_positions.append(x)
+			var form = ore_forms[rng.randi_range(0, ore_forms.size()-1)]
+			for pos in form:
+				tile_map.generate_resource.rpc("Crystal",x + pos, rng.randf() <= pure_prob)
+				pure_prob *= 0.7
+      send_used_positions.rpc(x)
 			N_resources-=1
 			
 

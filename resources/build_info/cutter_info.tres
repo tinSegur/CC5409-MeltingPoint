@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=8 format=3 uid="uid://cqd11a67jomeq"]
+
+[ext_resource type="Texture2D" uid="uid://bod62sofbxid0" path="res://assets/items/solid_gold.png" id="1_hsjnb"]
+[ext_resource type="Script" path="res://resources/build_info/build_info.gd" id="1_q7c0m"]
+[ext_resource type="Script" path="res://resources/build_info/cost_info.gd" id="2_ld2va"]
+[ext_resource type="Texture2D" uid="uid://hxepxbkj7gv8" path="res://assets/items/liquid_iron.png" id="3_d3i7a"]
+[ext_resource type="Texture2D" uid="uid://ds1xsybnhh01y" path="res://assets/machines/cutter/cutter_icon.png" id="4_qjo71"]
+
+[sub_resource type="Resource" id="Resource_0rkxc"]
+script = ExtResource("2_ld2va")
+material = 1
+state = 0
+amount = 30
+icon = ExtResource("1_hsjnb")
+
+[sub_resource type="Resource" id="Resource_qiuxm"]
+script = ExtResource("2_ld2va")
+material = 0
+state = 1
+amount = 50
+icon = ExtResource("3_d3i7a")
+
+[resource]
+script = ExtResource("1_q7c0m")
+name = "Cutter"
+icon = ExtResource("4_qjo71")
+description = "Can refine solid iron or gold into advanced materials."
+costs = Array[ExtResource("2_ld2va")]([SubResource("Resource_0rkxc"), SubResource("Resource_qiuxm")])
