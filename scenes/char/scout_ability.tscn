@@ -7,8 +7,7 @@
 script = ExtResource("1_58ewa")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-rotation = 1.5708
 texture = ExtResource("1_k1au4")
-offset = Vector2(0, -100)
+offset = Vector2(0, -50)
 
 [node name="Timer" type="Timer" parent="."]

@@ -11,7 +11,7 @@ extends Node2D
 @onready var inventory = $Inventory
 var players_ready = 0
 var variety = 0
-var used_positions = [Vector2(-1,-1)]
+var used_positions : Array[Vector2]
 
 var ore_forms = [[Vector2(0,0),Vector2(-1,0),Vector2(1,0),Vector2(1,1)],
 				 [Vector2(0,0),Vector2(-1,0),Vector2(-1,-1),Vector2(1,0),Vector2(0,1)],
@@ -35,7 +35,6 @@ func _input(event):
 		inventory.add_resource.rpc(Statics.Materials.GOLD, 10, Statics.Material_states.SOLID)
 
 
-
 @rpc("call_local", "any_peer")
 func player_ready():
 	players_ready += 1
@@ -45,36 +44,43 @@ func player_ready():
 func resource_generation():
 	if is_multiplayer_authority():
 		var rng = RandomNumberGenerator.new()
+		var _used_positions = [Vector2(-1,-1)]
 		# Iron
 		var N_resources = rng.randi_range(10, 15)
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
-			while used_positions.has(x):
+			while _used_positions.has(x):
 				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits_iron[0],y_limits_iron[1]))
 			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
 				continue
-			used_positions.append(x)
+			_used_positions.append(x)
 			var form = ore_forms[rng.randi_range(0, ore_forms.size()-1)]
 			for pos in form:
 				tile_map.generate_resource.rpc("Iron",x + pos)
+			send_used_positions.rpc(x)
 			N_resources-=1
 		# Gold
 		N_resources = rng.randi_range(8, 12)
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
-			while used_positions.has(x):
+			while _used_positions.has(x):
 				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits_gold[0],y_limits_gold[1]))
 			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
 				continue
-			used_positions.append(x)
+			_used_positions.append(x)
 			var form = ore_forms[rng.randi_range(0, ore_forms.size()-1)]
 			for pos in form:
 				tile_map.generate_resource.rpc("Gold",x + pos)
+			send_used_positions.rpc(x)
 			N_resources-=1
+			
 
 func get_used_positions():
 	return used_positions
 
+@rpc("authority", "call_local", "reliable")
+func send_used_positions(positions: Vector2):
+	used_positions.append(positions)
 
 func _on_inventory_stock_variety(d):
 	if d:
