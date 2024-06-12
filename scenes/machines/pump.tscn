@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://1no5n47adfiw"]
+[gd_scene load_steps=16 format=3 uid="uid://1no5n47adfiw"]
 
 [ext_resource type="Script" path="res://scenes/machines/pump.gd" id="1_0x25e"]
 [ext_resource type="Script" path="res://scenes/machines/output.gd" id="2_1wj5b"]
+[ext_resource type="Resource" uid="uid://bgmjvyug8ehhy" path="res://resources/build_info/pump_info.tres" id="2_fqecg"]
 [ext_resource type="Texture2D" uid="uid://bilg3bbe5enp1" path="res://assets/machines/pump/pump.png" id="2_m8rnf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jnf32"]
@@ -84,7 +85,8 @@ properties/4/replication_mode = 2
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_0x25e")
-offset_vec = Vector2(9, 9)
+offset_vec = Vector2(9, 1)
+info = ExtResource("2_fqecg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wb7d4")

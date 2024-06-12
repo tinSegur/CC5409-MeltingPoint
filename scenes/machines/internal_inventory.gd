@@ -5,7 +5,7 @@ extends Node
 var stocks : Dictionary
 
 
-func _init():
+func _ready():
 	for mat in materials:
 		stocks[mat.type] = Statics.InternalStock.new(mat)
 

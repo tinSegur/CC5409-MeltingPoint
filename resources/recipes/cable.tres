@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=3 format=3 uid="uid://cmqbjjfdqyev4"]
+
+[ext_resource type="Script" path="res://scenes/machines/recipe.gd" id="1_exw8j"]
+[ext_resource type="Resource" uid="uid://be75tiv1pqnry" path="res://scenes/materials/advanced.tres" id="1_nhtp0"]
+
+[resource]
+script = ExtResource("1_exw8j")
+material = ExtResource("1_nhtp0")
+melt_reqs = Array[int]([0, 2, 0, 0, 0])
+solid_reqs = Array[int]([0, 0, 0, 0, 0])

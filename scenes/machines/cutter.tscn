@@ -1,10 +1,15 @@
-[gd_scene load_steps=31 format=3 uid="uid://dg8ydccl1bkca"]
+[gd_scene load_steps=37 format=3 uid="uid://dg8ydccl1bkca"]
 
 [ext_resource type="Script" path="res://scenes/machines/cutter.gd" id="1_rwmvh"]
+[ext_resource type="Resource" uid="uid://cqd11a67jomeq" path="res://resources/build_info/cutter_info.tres" id="2_e2bll"]
+[ext_resource type="Resource" uid="uid://cmqbjjfdqyev4" path="res://resources/recipes/cable.tres" id="2_fnmku"]
 [ext_resource type="Texture2D" uid="uid://b06xljxd1jthi" path="res://assets/machines/cutter/cutter.png" id="2_idb51"]
 [ext_resource type="Script" path="res://scenes/machines/internal_inventory.gd" id="2_jh5n5"]
+[ext_resource type="Resource" uid="uid://b6x2gvubsecrx" path="res://resources/recipes/plate.tres" id="3_efp70"]
 [ext_resource type="PackedScene" uid="uid://cgtrga7080al8" path="res://scenes/machines/input.tscn" id="3_eq1x2"]
 [ext_resource type="PackedScene" uid="uid://cbmugsoctody6" path="res://scenes/machines/output.tscn" id="4_1gvx4"]
+[ext_resource type="Resource" uid="uid://f004kgvtcc22" path="res://scenes/materials/iron.tres" id="7_yhe5n"]
+[ext_resource type="Resource" uid="uid://clmvr10nax25o" path="res://scenes/materials/gold.tres" id="8_1qiw2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ppr17"]
 atlas = ExtResource("2_idb51")
@@ -174,10 +179,31 @@ size = Vector2(34, 30)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ny24q"]
 size = Vector2(34, 30)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x7pdn"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:builder_id")
+properties/2/spawn = true
+properties/2/replication_mode = 0
+properties/3/path = NodePath(".:modulate")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+properties/4/path = NodePath(".:offset_vec")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
 [node name="Cutter" type="StaticBody2D"]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_rwmvh")
+cable_recipe = ExtResource("2_fnmku")
+plate_recipe = ExtResource("3_efp70")
+offset_vec = Vector2(0, 0)
+info = ExtResource("2_e2bll")
 rotable = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -198,14 +224,18 @@ shape = SubResource("RectangleShape2D_ny24q")
 
 [node name="InternalInventory" type="Node" parent="."]
 script = ExtResource("2_jh5n5")
+materials = Array[Resource("res://scenes/materials/material.gd")]([ExtResource("7_yhe5n"), ExtResource("8_1qiw2")])
 
 [node name="Input" parent="." instance=ExtResource("3_eq1x2")]
-position = Vector2(-10, 10)
+position = Vector2(-14, 9)
 
 [node name="Output" parent="." instance=ExtResource("4_1gvx4")]
 position = Vector2(28, 9)
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_x7pdn")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

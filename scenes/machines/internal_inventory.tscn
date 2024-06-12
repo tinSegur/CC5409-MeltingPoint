@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2idqpgwa2j1k"]
+[gd_scene load_steps=4 format=3 uid="uid://d2idqpgwa2j1k"]
 
 [ext_resource type="Script" path="res://scenes/machines/internal_inventory.gd" id="1_5374r"]
+[ext_resource type="Resource" uid="uid://clmvr10nax25o" path="res://scenes/materials/gold.tres" id="2_bqii3"]
+[ext_resource type="Resource" uid="uid://f004kgvtcc22" path="res://scenes/materials/iron.tres" id="3_jtwua"]
 
 [node name="InternalInventory" type="Node"]
 script = ExtResource("1_5374r")
+materials = Array[Resource("res://scenes/materials/material.gd")]([ExtResource("2_bqii3"), ExtResource("3_jtwua")])
