@@ -186,6 +186,9 @@ func _input(event: InputEvent) -> void:
 				deleting_overlay.visible = false
 				mouse_area.monitoring = false
 				mouse_area_col.shape.radius = 7
+		
+		if event.is_action("Ability"):
+			class_node.ability()
 
 func _physics_process(delta: float) -> void:
 	
@@ -304,6 +307,9 @@ func test():
 	var tile: TileData = tilemap.get_cell_tile_data(3, tile_coords)
 	if is_instance_valid(tile):
 		Debug.sprint(tile.get_custom_data("temperature"))
+
+func get_player_tile_position():
+	return tilemap.get_tile_coords(global_position)
 
 @rpc
 func send_data(pos : Vector2, vel : Vector2, pivot_scale: int):
