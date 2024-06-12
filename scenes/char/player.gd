@@ -72,7 +72,7 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("mine"):
 			if tile_selected:
 				mouse_area.monitoring = true
-				mouse_area_col.shape.radius = 12
+				mouse_area_col.shape.radius = 16
 				building_tile = true
 				return
 			if deleting:
@@ -148,13 +148,29 @@ func _input(event: InputEvent) -> void:
 				victory_screen.hide()
 		
 		if event.is_action_pressed("next_tile"):
-			if(tile_index >= 1):
-				tile_index = tile_index%4 + 1
+			if(tile_index <= 3):
+				tile_index = (tile_index+1)%4
+			elif (tile_index <= 32):
+				tile_index = (28 if tile_index == 32 else tile_index + 1)
+			elif (tile_index <= 34):
+				tile_index = tile_index%2 + 33
+			elif (tile_index <= 36):
+				pass
+			else:
+				tile_index = (37 if tile_index == 41 else tile_index + 1)
 		
 		if event.is_action_pressed("prev_tile"):
-			if(tile_index >= 1):
-				tile_index = (4 if tile_index == 1 else tile_index - 1)
-				
+			if(tile_index <= 3):
+				tile_index = (3 if tile_index == 0 else tile_index - 1)
+			elif (tile_index <= 32):
+				tile_index = (32 if tile_index == 28 else tile_index - 1)
+			elif (tile_index <= 34):
+				tile_index = (34 if tile_index == 33 else tile_index - 1)
+			elif (tile_index <= 36):
+				pass
+			else:
+				tile_index = (41 if tile_index == 37 else tile_index - 1)
+			
 		if event.is_action_pressed("delete"):
 			deleting = !deleting
 			if deleting:
@@ -181,6 +197,14 @@ func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		if Input.is_action_just_pressed("jump") && is_on_floor():
 			velocity.y = -jump_speed
+			
+		var ladder = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
+		if is_instance_valid(ladder):
+			if ladder.get_custom_data("climbable"):
+				if Input.is_action_pressed("jump"):
+					velocity.y = -75
+				else:
+					velocity.y = 75
 		
 		var move_input = Input.get_axis("move_left", "move_right")
 
@@ -227,10 +251,10 @@ func _physics_process(delta: float) -> void:
 		tilemap.show_preview(tilemap.get_tile_coords(get_global_mouse_position()), tile_index)
 	
 	if building_tile:
-		if tile_index == 0:
-			if (mouse_area.get_overlapping_bodies().size() == 0 and inventory.check_stock(Statics.Materials.IRON, 1)):
+		if tile_index >= 28:
+			if (mouse_area.get_overlapping_bodies().size() == 0 and inventory.check_stock(Statics.Materials.IRON, 2)):
 				if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position()), tile_index):
-					manual_remove_resource.rpc_id(1, Statics.Materials.IRON, 1)
+					manual_remove_resource.rpc_id(1, Statics.Materials.IRON, 2)
 		else:
 			if inventory.check_stock(Statics.Materials.IRON, 1):
 				if tilemap.place_tile(tilemap.get_tile_coords(get_global_mouse_position()), tile_index):
@@ -311,17 +335,33 @@ func recieve_machine_name(m_name: String):
 func try_place_machine(m_name: String):
 	var machine = machine_container.get_node(m_name)
 	
-	# Costo placeholder
-	if inventory.check_stock(Statics.Materials.IRON, 5):
+	var costs = machine.info.costs
+	var affordable = true
+	for cost in costs:
+		affordable = (affordable && inventory.check_stock(cost.material, cost.amount, cost.state))
+	
+	if affordable:
 		if machine.try_place():
-			inventory.remove_stock(Statics.Materials.IRON, 5)
+			for cost in costs:
+				inventory.remove_stock(cost.material, cost.amount, cost.state)
 			place_success.rpc_id(multiplayer.get_remote_sender_id())
+		else:
+			place_error.rpc_id(multiplayer.get_remote_sender_id(), "Invalid placement", machine.global_position)
+	else:
+		place_error.rpc_id(multiplayer.get_remote_sender_id(), "Missing materials", machine.global_position)
 
 @rpc("call_local", "any_peer", "reliable")
 func place_success():
 	building = false
 	build_preview = null
-	
+
+@rpc("call_local", "any_peer", "reliable")
+func place_error(msg: String, pos: Vector2):
+	var error = load("res://scenes/ui/notification.tscn").instantiate()
+	error.text = msg
+	error.global_position = pos
+	machine_container.add_child(error)
+
 @rpc("call_local", "reliable")
 func cancel_build(m_name: String):
 	var machine = machine_container.get_node(m_name)
@@ -335,7 +375,8 @@ func destroy_machine(m_name: String):
 
 func mine_resource(resource: int):
 	mining_progress = 0
-	manual_add_resource.rpc_id(1, resource, 1)
+	if resource == Statics.Materials.IRON:
+		manual_add_resource.rpc_id(1, resource, 1)
 	
 @rpc("call_local", "reliable")
 func manual_add_resource(resource: int, amount: int):

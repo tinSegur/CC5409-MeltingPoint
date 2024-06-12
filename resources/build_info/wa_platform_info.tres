@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=6 format=3 uid="uid://c6f7w44vbe48p"]
+
+[ext_resource type="Script" path="res://resources/build_info/build_info.gd" id="1_u5pea"]
+[ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="1_vl3sj"]
+[ext_resource type="Script" path="res://resources/build_info/cost_info.gd" id="2_21j0v"]
+[ext_resource type="Texture2D" uid="uid://doow4mx5waman" path="res://assets/machines/platform/warning_platform_icon.png" id="3_6jdkg"]
+
+[sub_resource type="Resource" id="Resource_6sk3m"]
+script = ExtResource("2_21j0v")
+material = 0
+state = 0
+amount = 2
+icon = ExtResource("1_vl3sj")
+
+[resource]
+script = ExtResource("1_u5pea")
+name = "Warning platform"
+icon = ExtResource("3_6jdkg")
+description = "Cosmetic variation of the platforms. Has 5 variations."
+costs = Array[ExtResource("2_21j0v")]([SubResource("Resource_6sk3m")])
