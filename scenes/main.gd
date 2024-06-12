@@ -12,7 +12,9 @@ extends Node2D
 @onready var inventory = $Inventory
 var players_ready = 0
 var variety = 0
-var used_positions : Array[Vector2]
+var iron_positions : Array[Vector2]
+var gold_positions : Array[Vector2]
+var crystal_positions : Array[Vector2]
 
 var ore_forms = [[Vector2(0,0),Vector2(-1,0),Vector2(1,0),Vector2(1,1)],
 				 [Vector2(0,0),Vector2(-1,0),Vector2(-1,-1),Vector2(1,0),Vector2(0,1)],
@@ -62,13 +64,12 @@ func resource_generation():
 			for pos in form:
 				tile_map.generate_resource.rpc("Iron", x + pos, rng.randf() <= pure_prob)
 				pure_prob *= 0.7
-      send_used_positions.rpc(x)
+			send_used_positions.rpc(x,Statics.Materials.IRON)
 			N_resources-=1
 		# Gold
-		N_resources = rng.randi_range(8, 12)
+		N_resources = rng.randi_range(10, 15)
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
-
 			var pure_prob: float = 1.0
 			while _used_positions.has(x):
 				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits_gold[0],y_limits_gold[1]))
@@ -79,7 +80,7 @@ func resource_generation():
 			for pos in form:
 				tile_map.generate_resource.rpc("Gold",x + pos, rng.randf() <= pure_prob)
 				pure_prob *= 0.7
-      send_used_positions.rpc(x)
+			send_used_positions.rpc(x,Statics.Materials.GOLD)
 			N_resources-=1
 		# Crystal
 		N_resources = rng.randi_range(8, 12)
@@ -95,16 +96,21 @@ func resource_generation():
 			for pos in form:
 				tile_map.generate_resource.rpc("Crystal",x + pos, rng.randf() <= pure_prob)
 				pure_prob *= 0.7
-      send_used_positions.rpc(x)
+			send_used_positions.rpc(x,Statics.Materials.CRYSTALS)
 			N_resources-=1
-			
 
 func get_used_positions():
-	return used_positions
+	return [iron_positions,gold_positions,crystal_positions]
 
 @rpc("authority", "call_local", "reliable")
-func send_used_positions(positions: Vector2):
-	used_positions.append(positions)
+func send_used_positions(positions: Vector2, ore : Statics.Materials):
+	match ore:
+		Statics.Materials.IRON: 
+			iron_positions.append(positions)
+		Statics.Materials.GOLD: 
+			gold_positions.append(positions)
+		Statics.Materials.CRYSTALS: 
+			crystal_positions.append(positions)
 
 func _on_inventory_stock_variety(d):
 	if d:

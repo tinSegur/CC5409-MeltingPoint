@@ -5,6 +5,7 @@ var timer : Timer
 var player : Player
 var player_position : Vector2
 var ore_postition : Vector2
+var ore : Statics.Materials
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,6 +14,7 @@ func _ready():
 	timer = $Timer
 	timer.start()
 	timer.timeout.connect(timer_ended)
+	sprite.frame=ore
 
 func _process(delta):
 	player_position = player.get_player_tile_position()

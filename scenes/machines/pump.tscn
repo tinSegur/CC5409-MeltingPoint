@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://1no5n47adfiw"]
+[gd_scene load_steps=17 format=3 uid="uid://1no5n47adfiw"]
 
 [ext_resource type="Script" path="res://scenes/machines/pump.gd" id="1_0x25e"]
-[ext_resource type="Script" path="res://scenes/machines/output.gd" id="2_1wj5b"]
 [ext_resource type="Resource" uid="uid://bgmjvyug8ehhy" path="res://resources/build_info/pump_info.tres" id="2_fqecg"]
 [ext_resource type="Texture2D" uid="uid://bilg3bbe5enp1" path="res://assets/machines/pump/pump.png" id="2_m8rnf"]
+[ext_resource type="Resource" uid="uid://clmvr10nax25o" path="res://scenes/materials/gold.tres" id="2_s1nt4"]
+[ext_resource type="PackedScene" uid="uid://cbmugsoctody6" path="res://scenes/machines/output.tscn" id="4_j5ufb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jnf32"]
 atlas = ExtResource("2_m8rnf")
@@ -59,7 +60,7 @@ animations = [{
 size = Vector2(18, 34)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_30ulj"]
-size = Vector2(18, 34)
+size = Vector2(16, 34)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wqgwi"]
 size = Vector2(16, 9)
@@ -85,7 +86,8 @@ properties/4/replication_mode = 2
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_0x25e")
-offset_vec = Vector2(9, 1)
+output_type = ExtResource("2_s1nt4")
+offset_vec = Vector2(9, 0)
 info = ExtResource("2_fqecg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -114,6 +116,7 @@ shape = SubResource("RectangleShape2D_wqgwi")
 replication_config = SubResource("SceneReplicationConfig_2iaew")
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
 
-[node name="Output" type="Node2D" parent="."]
-script = ExtResource("2_1wj5b")
+[node name="Output" parent="." instance=ExtResource("4_j5ufb")]
+position = Vector2(0, -22)
