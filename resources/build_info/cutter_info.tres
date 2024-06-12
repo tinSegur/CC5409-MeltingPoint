@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=8 format=3 uid="uid://cqd11a67jomeq"]
+[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=11 format=3 uid="uid://cqd11a67jomeq"]
 
+[ext_resource type="Texture2D" uid="uid://bpysvkl2lrogx" path="res://assets/machines/cutter/cutter_button_hover.png" id="1_4gcx0"]
 [ext_resource type="Texture2D" uid="uid://bod62sofbxid0" path="res://assets/items/solid_gold.png" id="1_hsjnb"]
 [ext_resource type="Script" path="res://resources/build_info/build_info.gd" id="1_q7c0m"]
 [ext_resource type="Script" path="res://resources/build_info/cost_info.gd" id="2_ld2va"]
+[ext_resource type="Texture2D" uid="uid://cxmfbbaqj46c7" path="res://assets/machines/cutter/cutter_button_pressed.png" id="2_u3sjb"]
+[ext_resource type="Texture2D" uid="uid://dft02a4fud41q" path="res://assets/machines/cutter/cutter_button_base.png" id="3_58nwb"]
 [ext_resource type="Texture2D" uid="uid://hxepxbkj7gv8" path="res://assets/items/liquid_iron.png" id="3_d3i7a"]
 [ext_resource type="Texture2D" uid="uid://ds1xsybnhh01y" path="res://assets/machines/cutter/cutter_icon.png" id="4_qjo71"]
 
@@ -24,5 +27,9 @@ icon = ExtResource("3_d3i7a")
 script = ExtResource("1_q7c0m")
 name = "Cutter"
 icon = ExtResource("4_qjo71")
+button = ExtResource("3_58nwb")
+b_pressed = ExtResource("2_u3sjb")
+b_hover = ExtResource("1_4gcx0")
 description = "Can refine solid iron or gold into advanced materials."
 costs = Array[ExtResource("2_ld2va")]([SubResource("Resource_0rkxc"), SubResource("Resource_qiuxm")])
+machine_scene = "res://scenes/machines/cutter.tscn"

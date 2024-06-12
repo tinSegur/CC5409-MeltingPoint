@@ -18,3 +18,4 @@ name = "Hub extractor"
 icon = ExtResource("3_0pwmo")
 description = "Can extract items from the hub to an adyacent pipe. Can be rotated."
 costs = Array[ExtResource("2_kpafs")]([SubResource("Resource_bwx5w")])
+machine_scene = "res://scenes/machines/hub_output.tscn"

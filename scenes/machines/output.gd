@@ -3,7 +3,7 @@ extends Node2D
 @onready var marker_2d = $Marker2D
 
 #@export var possible_outputs: Array[PackedScene]
-var output_scene: PackedScene
+var output_scene: PackedScene = preload("res://scenes/materials/material_item.tscn")
 var output_type : MPMaterial
 var item_container: Node2D
 var tilemap: TileMap
@@ -33,6 +33,8 @@ func generate(index: int, amount: int, state : int = Statics.Material_states.SOL
 				item.global_position = global_position
 				item.tilemap = tilemap
 				item.pipe_coords = tilemap.get_tile_coords(global_position)
+				if state != Statics.Material_states.SOLID:
+					item.liquid = true
 				item_container.add_child(item, true)
 				if state != Statics.Material_states.SOLID:
 					item.inner_temp = item.melting_point + 1

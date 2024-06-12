@@ -1,0 +1,119 @@
+[gd_scene load_steps=16 format=3 uid="uid://1no5n47adfiw"]
+
+[ext_resource type="Script" path="res://scenes/machines/pump.gd" id="1_0x25e"]
+[ext_resource type="Script" path="res://scenes/machines/output.gd" id="2_1wj5b"]
+[ext_resource type="Resource" uid="uid://bgmjvyug8ehhy" path="res://resources/build_info/pump_info.tres" id="2_fqecg"]
+[ext_resource type="Texture2D" uid="uid://bilg3bbe5enp1" path="res://assets/machines/pump/pump.png" id="2_m8rnf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jnf32"]
+atlas = ExtResource("2_m8rnf")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fn24"]
+atlas = ExtResource("2_m8rnf")
+region = Rect2(32, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d16rp"]
+atlas = ExtResource("2_m8rnf")
+region = Rect2(64, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0hgy"]
+atlas = ExtResource("2_m8rnf")
+region = Rect2(96, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_juuga"]
+atlas = ExtResource("2_m8rnf")
+region = Rect2(128, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwjx7"]
+atlas = ExtResource("2_m8rnf")
+region = Rect2(160, 0, 32, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wb7d4"]
+animations = [{
+"frames": [{
+"duration": 14.0,
+"texture": SubResource("AtlasTexture_jnf32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fn24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d16rp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k0hgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_juuga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nwjx7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xok3r"]
+size = Vector2(18, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_30ulj"]
+size = Vector2(18, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wqgwi"]
+size = Vector2(16, 9)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2iaew"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:builder_id")
+properties/1/spawn = true
+properties/1/replication_mode = 0
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:offset_vec")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:modulate")
+properties/4/spawn = true
+properties/4/replication_mode = 2
+
+[node name="Pump" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_0x25e")
+offset_vec = Vector2(9, 1)
+info = ExtResource("2_fqecg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_wb7d4")
+frame_progress = 0.385981
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xok3r")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_30ulj")
+
+[node name="ResourceDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceDetector"]
+position = Vector2(0, 22.5)
+shape = SubResource("RectangleShape2D_wqgwi")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_2iaew")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Output" type="Node2D" parent="."]
+script = ExtResource("2_1wj5b")

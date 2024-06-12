@@ -29,17 +29,19 @@ func _ready():
 	type = mat_data.type
 	melt_icon = mat_data.melt_icon
 	solid_icon = mat_data.solid_icon
+	inner_temp = mat_data.default_temp
+	
 	
 	var tile_coords = tilemap.get_tile_coords(global_position)
 	tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),1)
 	var tile : TileData = tilemap.get_cell_tile_data(3, tile_coords)
-	if is_instance_valid(tile):
-		inner_temp=tile.get_custom_data("temperature")
-		if can_melt :
-			if inner_temp>=melting_point :
-				sprite.set_texture(melt_icon)
-			else :
-				sprite.set_texture(solid_icon)
+	
+	if liquid:
+		sprite.set_texture(melt_icon)
+		inner_temp = (9+melting_point)/2
+	else:
+		sprite.set_texture(solid_icon)
+		inner_temp = melting_point/2
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

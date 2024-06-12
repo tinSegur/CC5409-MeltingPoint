@@ -1,13 +1,11 @@
 extends Machine
 
-@onready var animated_sprite_2d = $AnimatedSprite2D
+@onready var resource_detector : Area2D = $ResourceDetector
+@onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready():
-	animated_sprite_2d.stop()
-
-@onready var resource_detector = $ResourceDetector
-
-
+	Debug.sprint("build pump")
+	animated_sprite.stop()
 
 @rpc("call_local", "any_peer")
 func place():
@@ -18,7 +16,7 @@ func place():
 	output.output_type = output_type
 	output.output_scene = load("res://scenes/materials/material_item.tscn")
 
-	animated_sprite_2d.play()
+	animated_sprite.play()
 	timer.start()
 
 func is_valid_place() -> bool:
@@ -31,10 +29,8 @@ func is_valid_place() -> bool:
 			var tile_coords = tilemap.get_tile_coords(global_position + Vector2(0, 20).rotated(rotation))
 			var tile = tilemap.get_cell_tile_data(1, tile_coords)
 			if is_instance_valid(tile):
-				if tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(0,0):
+				if tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(1, 0):
 					resource = true
-	#Debug.sprint(str((bodies.size() - 1) == 0) + "," + str(resource))
-	#Debug.sprint(offset_vec)
 	return ((bodies.size()-1) == 0) and resource
 
 func try_place() -> bool:
@@ -42,7 +38,7 @@ func try_place() -> bool:
 		place.rpc()
 		return true
 	return false
-
+	
 func cancel_build():
 	queue_free()
 
@@ -54,5 +50,4 @@ func send_pos(pos: Vector2):
 	global_position = pos
 
 func spawn_resource():
-	output.generate(0, 1)
-	
+	output.generate(Statics.Materials.GOLD, 1, Statics.Material_states.LIQUID)

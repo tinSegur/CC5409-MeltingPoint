@@ -886,7 +886,7 @@ layer_5/tile_data = PackedInt32Array(2162688, 131072, 131078, 2228224, 262144, 1
 script = ExtResource("4_h6bot")
 
 [node name="MachineSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/machines/miner.tscn", "res://scenes/machines/hub_output.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/machines/miner.tscn", "res://scenes/machines/hub_output.tscn", "res://scenes/machines/cutter.tscn", "res://scenes/machines/pump.tscn")
 spawn_path = NodePath("../Machines")
 
 [node name="Inventory" parent="." instance=ExtResource("7_v3a7n")]

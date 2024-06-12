@@ -1,20 +1,26 @@
 extends MarginContainer
 
 var player: Player
-@onready var miner_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/MinerButton
-@onready var platform_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/PlatformButton
-@onready var pipe_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/PipeButton
-@onready var ext_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/OutputButton
-@onready var pump_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/PumpButton
-@onready var cutter_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/CutterButton
-@onready var ad_miner_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/AdMinerButton
-@onready var stabilizer_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/StabilizerButton
-@onready var ramp_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/RampButton
-@onready var ladder_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/LadderButton
-@onready var wa_platform_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer/WaPlatformButton
+
+@export var machines : Array[MPBuildInfo]
+@export var mch_button : PackedScene
+
+@onready var miner_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/MinerButton
+@onready var platform_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/PlatformButton
+@onready var pipe_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/PipeButton
+@onready var ext_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/OutputButton
+@onready var pump_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/PumpButton
+@onready var cutter_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/CutterButton
+@onready var ad_miner_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/AdMinerButton
+@onready var stabilizer_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/StabilizerButton
+@onready var ramp_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/RampButton
+@onready var ladder_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/LadderButton
+@onready var wa_platform_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/WaPlatformButton
 
 @onready var machine_preview = $PanelContainer/MarginContainer/HBoxContainer/MachinePreview
-@onready var buttons_container = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/GridContainer
+@onready var buttons_container = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer
+
+
 
 var build_info : MPBuildInfo
 
@@ -23,6 +29,17 @@ signal tile_selected
 
 func _ready():
 	player = get_parent().get_parent()
+	
+	for machine in machines:
+		var btn : MachineButton = mch_button.instantiate()
+		btn.setup(machine, machine_preview, player)
+		btn.machine_info = machine
+		btn.player = player
+		btn.machine_preview = machine_preview
+		btn.mch_selected.connect(_machine_button_selected)
+		buttons_container.add_child(btn)
+		
+		
 	
 	miner_button.pressed.connect(_miner_selected)
 	miner_button.mouse_entered.connect(_miner_hover)
@@ -64,6 +81,7 @@ func _ready():
 func _clear_info():
 	for node in machine_preview.get_children():
 		node.queue_free()
+
 
 func _miner_hover():
 	build_info = load("res://resources/build_info/miner_info.tres")
@@ -107,9 +125,9 @@ func _pump_hover():
 	build_info.render_info(machine_preview)
 
 func _pump_selected():
-	#player.build_scene = "res://scenes/machines/pump.tscn"
-	#machine_selected.emit()
-	#visible = false
+	player.build_scene = "res://scenes/machines/pump.tscn"
+	machine_selected.emit()
+	visible = false
 	pass
 	
 func _cutter_hover():
@@ -167,4 +185,9 @@ func _wa_platform_hover():
 func _wa_platform_selected():
 	player.tile_index = 37
 	tile_selected.emit()
+	visible = false
+
+func _machine_button_selected():
+	Debug.sprint("machine selected")
+	machine_selected.emit()
 	visible = false
