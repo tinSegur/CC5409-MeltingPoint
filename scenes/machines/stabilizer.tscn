@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdbbe6ag6k7gm"]
+
+[ext_resource type="Script" path="res://scenes/machines/abstract_machine.gd" id="1_5keer"]
+
+[node name="Stabilizer" type="StaticBody2D"]
+script = ExtResource("1_5keer")
