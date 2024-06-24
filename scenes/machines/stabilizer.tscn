@@ -1,6 +1,61 @@
-[gd_scene load_steps=2 format=3 uid="uid://bdbbe6ag6k7gm"]
+[gd_scene load_steps=9 format=3 uid="uid://bdbbe6ag6k7gm"]
 
-[ext_resource type="Script" path="res://scenes/machines/abstract_machine.gd" id="1_5keer"]
+[ext_resource type="Script" path="res://scenes/machines/stabilizer.gd" id="1_2v50w"]
+[ext_resource type="Texture2D" uid="uid://dv3gr2im1a6ty" path="res://assets/machines/stabilizer/stabilizer.png" id="2_tatul"]
+[ext_resource type="PackedScene" uid="uid://cgtrga7080al8" path="res://scenes/machines/input.tscn" id="3_25own"]
+[ext_resource type="Script" path="res://scenes/machines/internal_inventory.gd" id="4_gvaan"]
+[ext_resource type="PackedScene" uid="uid://ckejw3qy26lqg" path="res://scenes/machines/stable_output.tscn" id="5_jgvcl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2xgu7"]
+size = Vector2(34, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mneq0"]
+size = Vector2(34, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ybhh"]
+size = Vector2(32, 12.5)
 
 [node name="Stabilizer" type="StaticBody2D"]
-script = ExtResource("1_5keer")
+script = ExtResource("1_2v50w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tatul")
+hframes = 10
+vframes = 4
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_2xgu7")
+
+[node name="Input" parent="." instance=ExtResource("3_25own")]
+position = Vector2(-24, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mneq0")
+
+[node name="InternalInventory" type="Node" parent="."]
+script = ExtResource("4_gvaan")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Stable_output" parent="." instance=ExtResource("5_jgvcl")]
+
+[node name="Area2D2" type="Area2D" parent="."]
+collision_layer = 10
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_1ybhh")
+
+[node name="Area2D3" type="Area2D" parent="."]
+collision_layer = 10
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3"]
+position = Vector2(0, 14)
+shape = SubResource("RectangleShape2D_1ybhh")
+
+[connection signal="area_entered" from="Area2D2" to="." method="_on_area_2d_2_area_entered"]
+[connection signal="area_entered" from="Area2D3" to="." method="_on_area_2d_2_area_entered"]

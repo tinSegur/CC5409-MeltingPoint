@@ -55,4 +55,3 @@ func send_pos(pos: Vector2):
 
 func spawn_resource():
 	output.generate(0, 1)
-	
