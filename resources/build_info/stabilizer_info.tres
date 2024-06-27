@@ -24,4 +24,4 @@ b_pressed = ExtResource("2_l7mn8")
 b_hover = ExtResource("1_ji8dl")
 description = "Changes the temperature of the input items to the displayed one. Can be flipped."
 costs = Array[ExtResource("2_rc4x5")]([SubResource("Resource_yu6rd")])
-machine_scene = null
+machine_scene = "res://scenes/machines/stabilizer.tscn"

@@ -35,6 +35,7 @@ var stocks : Dictionary
 
 func _ready():
 	for mat in materials:
+		print("Init stock " + str(mat.type))
 		stocks[mat.type] = InternalStock.new(mat)
 
 func set_stock(id : Statics.Materials, amount : int, state : Statics.Material_states = Statics.Material_states.SOLID):

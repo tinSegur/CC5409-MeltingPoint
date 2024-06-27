@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://cuig2335qo1ln"]
+[gd_scene load_steps=6 format=3 uid="uid://cuig2335qo1ln"]
 
 [ext_resource type="Script" path="res://scenes/global_inventory.gd" id="1_wqxfl"]
 [ext_resource type="Resource" uid="uid://f004kgvtcc22" path="res://scenes/materials/iron.tres" id="2_rlfp0"]
 [ext_resource type="Resource" uid="uid://clmvr10nax25o" path="res://scenes/materials/gold.tres" id="3_l3aa2"]
+[ext_resource type="Resource" uid="uid://ddet442k06thk" path="res://scenes/materials/crystal.tres" id="4_nnar2"]
+[ext_resource type="Resource" uid="uid://be75tiv1pqnry" path="res://scenes/materials/advanced.tres" id="5_bdr7g"]
 
 [node name="Inventory" type="Node"]
 script = ExtResource("1_wqxfl")
-materials = Array[Resource("res://scenes/materials/material.gd")]([ExtResource("2_rlfp0"), ExtResource("3_l3aa2")])
+materials = Array[Resource("res://scenes/materials/material.gd")]([ExtResource("2_rlfp0"), ExtResource("3_l3aa2"), ExtResource("4_nnar2"), ExtResource("5_bdr7g")])
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
