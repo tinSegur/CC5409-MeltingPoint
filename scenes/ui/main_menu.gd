@@ -1,4 +1,4 @@
-extends Control
+extends Node
 
 @onready var play_button = %PlayButton
 @onready var help_button = %HelpButton
@@ -9,11 +9,14 @@ extends Control
 @onready var menu_container = %MenuContainer
 @onready var credits = %Credits
 
+@onready var items = $Items
+
 func _ready():
 	play_button.pressed.connect(_on_play_pressed)
 	credits_button.pressed.connect(_on_credits_pressed)
 	credits_back_button.pressed.connect(_on_credits_back_pressed)
 	quit_button.pressed.connect(_on_quit_pressed)
+	
 
 func _on_play_pressed():
 	get_tree().change_scene_to_file("res://scenes/lobby.tscn")

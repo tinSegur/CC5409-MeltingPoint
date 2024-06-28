@@ -55,7 +55,8 @@ var pipes_index = {
 }
 
 func _ready():
-	audio_listener_2d.make_current()
+	if is_instance_valid(audio_listener_2d):
+		audio_listener_2d.make_current()
 
 func _input(event):
 	if event.is_action_pressed("show_temp"):
