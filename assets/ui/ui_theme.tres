@@ -44,3 +44,7 @@ Button/styles/normal = SubResource("StyleBoxTexture_g3yjs")
 Button/styles/pressed = SubResource("StyleBoxTexture_joviq")
 Label/font_sizes/font_size = 24
 Label/fonts/font = ExtResource("1_0u27g")
+LineEdit/font_sizes/font_size = 24
+LineEdit/fonts/font = ExtResource("1_0u27g")
+RichTextLabel/font_sizes/normal_font_size = 24
+RichTextLabel/fonts/normal_font = ExtResource("1_0u27g")

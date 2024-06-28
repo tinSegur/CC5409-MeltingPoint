@@ -99,7 +99,6 @@ text = "Quit"
 
 [node name="Credits" type="PanelContainer" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -151,7 +150,7 @@ layout_mode = 2
 
 [node name="Label2" type="Label" parent="Credits/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Tilemap: 
+text = "Tilemap and font: 
        - Kenney asset pack"
 
 [node name="Label" type="Label" parent="Credits/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]

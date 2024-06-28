@@ -27,7 +27,7 @@ func render_info(parent_node: VBoxContainer):
 	var desc_label : RichTextLabel = RichTextLabel.new()
 	desc_label.text = description
 	desc_label.fit_content = true
-	desc_label["theme_override_font_sizes/normal_font_size"] = 8
+	desc_label["theme_override_font_sizes/normal_font_size"] = 16
 	parent_node.add_child(desc_label)
 	
 	var cost_grid : GridContainer = GridContainer.new()
