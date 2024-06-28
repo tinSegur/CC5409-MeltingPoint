@@ -34,9 +34,11 @@ var stocks : Dictionary
 @onready var timer : Timer = $Timer
 
 func _ready():
+	print(materials)
 	for mat in materials:
 		print("Init stock " + str(mat.type))
 		stocks[mat.type] = InternalStock.new(mat)
+	print(stocks)
 
 func set_stock(id : Statics.Materials, amount : int, state : Statics.Material_states = Statics.Material_states.SOLID):
 	if amount < 0:

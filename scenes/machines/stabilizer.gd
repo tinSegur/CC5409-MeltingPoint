@@ -5,6 +5,7 @@ extends Machine
 var set_temp : int = 0
 var output_mat : Statics.Materials = Statics.Materials.IRON
 var gold_charge : int = 0
+var is_charged : int = 0
 var material_queue : Array = []
 var orient : int = 0
 
@@ -15,9 +16,9 @@ func _ready():
 	output = $Stable_output
 
 func _input_event(viewport, event, shape_idx):
-	if event.is_action("mine"):
+	if event.is_action("mine") and placed:
 		set_temp = (set_temp+1)%10
-		sprite.set_hframe(set_temp)
+		sprite.set_frame_coords(Vector2i(set_temp, 2*is_charged + orient))
 
 func input_resource(item : MPMaterial, liquid : bool) -> Statics.INPUT_CODES:
 	Debug.sprint("input")
@@ -37,7 +38,8 @@ func spawn_resource():
 		output.generate(0, 1)
 		gold_charge -= 1
 		if gold_charge == 0:
-			sprite.set_hframes(orient)
+			is_charged = 0
+			sprite.set_frame_coords(Vector2i(set_temp, 2*is_charged + orient))
 
 
 
@@ -49,6 +51,7 @@ func _on_area_2d_2_area_entered(area):
 	
 	if (mat.type == Statics.Materials.GOLD and liquid):
 		if (gold_charge == 0):
-			sprite.set_vframes(2 + orient)
+			is_charged = 1
+			sprite.sprite.set_frame_coords(Vector2i(set_temp, 2*is_charged + orient))
 		gold_charge += efficiency
 		

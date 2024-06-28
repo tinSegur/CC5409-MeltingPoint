@@ -33,8 +33,11 @@ properties/4/spawn = true
 properties/4/replication_mode = 1
 
 [node name="Stabilizer" type="StaticBody2D"]
+input_pickable = true
 script = ExtResource("1_2v50w")
+offset_vec = Vector2(0, 0)
 info = ExtResource("2_4xdch")
+rotable = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_tatul")
