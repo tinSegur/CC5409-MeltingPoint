@@ -6,6 +6,7 @@ extends MarginContainer
 @onready var user = %User
 @onready var host = %Host
 @onready var join = %Join
+@onready var back = %Back
 
 
 @onready var ip = %IP
@@ -57,6 +58,7 @@ func _ready():
 	
 	host.pressed.connect(_on_host_pressed)
 	join.pressed.connect(_on_join_pressed)
+	back.pressed.connect(_on_back_pressed)
 	
 	confirm_join.pressed.connect(_on_confirm_join_pressed)
 	
@@ -114,6 +116,8 @@ func _on_host_pressed() -> void:
 func _on_join_pressed() -> void:
 	_go_to_menu(join_menu)
 
+func _on_back_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
 
 func _on_confirm_join_pressed() -> void:
 	var peer = ENetMultiplayerPeer.new()

@@ -1,0 +1,85 @@
+[gd_scene load_steps=4 format=3 uid="uid://c58gjhlofs1ah"]
+
+[ext_resource type="Texture2D" uid="uid://wk4qsp2dsnfg" path="res://assets/ui/menu_nine_patch.png" id="1_e0uit"]
+[ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_kqd0h"]
+[ext_resource type="Texture2D" uid="uid://bkrp0a3heydtb" path="res://assets/ui/logo.png" id="1_s4vo5"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 256.0
+offset_top = 144.0
+offset_right = 256.0
+offset_bottom = 144.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_kqd0h")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -10.0
+offset_right = 8.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_s4vo5")
+stretch_mode = 5
+
+[node name="NinePatchRect" type="NinePatchRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(120, 152)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("1_e0uit")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="VBoxContainer/NinePatchRect/VBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Play"
+
+[node name="HelpButton" type="Button" parent="VBoxContainer/NinePatchRect/VBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Tips"
+
+[node name="CreditsButton" type="Button" parent="VBoxContainer/NinePatchRect/VBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Credits"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer/NinePatchRect/VBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Quit"
