@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bslhrv3eo36wd"]
+[gd_scene load_steps=6 format=3 uid="uid://bslhrv3eo36wd"]
 
 [ext_resource type="Script" path="res://scenes/lobby.gd" id="1_g2fmt"]
 [ext_resource type="PackedScene" uid="uid://chbh4lxk8rmmd" path="res://scenes/ui/lobby_player.tscn" id="2_060bj"]
+[ext_resource type="Texture2D" uid="uid://wk4qsp2dsnfg" path="res://assets/ui/menu_nine_patch.png" id="3_70chq"]
+[ext_resource type="Theme" uid="uid://bsov5mkb3jbwv" path="res://assets/ui/ui_theme.tres" id="4_polcg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gfab3"]
 
 [node name="Lobby" type="MarginContainer"]
 anchors_preset = 15
@@ -9,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("4_polcg")
 script = ExtResource("1_g2fmt")
 lobby_player_scene = ExtResource("2_060bj")
 
@@ -16,6 +21,17 @@ lobby_player_scene = ExtResource("2_060bj")
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxEmpty_gfab3")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PanelContainer"]
+layout_mode = 2
+texture = ExtResource("3_70chq")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [node name="Menus" type="MarginContainer" parent="PanelContainer"]
 unique_name_in_owner = true
@@ -23,6 +39,7 @@ layout_mode = 2
 
 [node name="StartMenu" type="VBoxContainer" parent="PanelContainer/Menus"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
@@ -43,18 +60,21 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_polcg")
 text = "Host"
 
 [node name="Join" type="Button" parent="PanelContainer/Menus/StartMenu/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_polcg")
 text = "Join"
 
 [node name="Back" type="Button" parent="PanelContainer/Menus/StartMenu/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_polcg")
 text = "Back"
 
 [node name="JoinMenu" type="VBoxContainer" parent="PanelContainer/Menus"]
@@ -80,15 +100,18 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_polcg")
 text = "Back"
 
 [node name="ConfirmJoin" type="Button" parent="PanelContainer/Menus/JoinMenu/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_polcg")
 text = "Join"
 
 [node name="Info" type="Label" parent="PanelContainer/Menus/JoinMenu"]
+visible = false
 layout_mode = 2
 
 [node name="ReadyMenu" type="VBoxContainer" parent="PanelContainer/Menus"]
@@ -116,18 +139,21 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_polcg")
 text = "Engineer"
 
 [node name="RoleB" type="Button" parent="PanelContainer/Menus/ReadyMenu/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_polcg")
 text = "Scientist"
 
 [node name="RoleC" type="Button" parent="PanelContainer/Menus/ReadyMenu/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_polcg")
 text = "Scout"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu"]
@@ -137,6 +163,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_polcg")
 text = "Back
 "
 
@@ -144,6 +171,7 @@ text = "Back
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_polcg")
 text = "Ready"
 
 [node name="TimeContainer" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu"]

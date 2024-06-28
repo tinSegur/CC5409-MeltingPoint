@@ -1,0 +1,46 @@
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://bsov5mkb3jbwv"]
+
+[ext_resource type="FontFile" uid="uid://dobbv02oypcec" path="res://assets/ui/Kenney Pixel.ttf" id="1_0u27g"]
+[ext_resource type="Texture2D" uid="uid://cwh4u8vpu3g2x" path="res://assets/ui/button.png" id="2_u00ug"]
+[ext_resource type="Texture2D" uid="uid://ccjaapmbn1pig" path="res://assets/ui/button_pressed.png" id="3_b3jm2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wtas0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ubh01"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xtqsq"]
+texture = ExtResource("2_u00ug")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g3yjs"]
+texture = ExtResource("2_u00ug")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_joviq"]
+texture = ExtResource("3_b3jm2")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[resource]
+Button/colors/font_color = Color(0.196078, 0.196078, 0.294118, 1)
+Button/colors/font_disabled_color = Color(0.196078, 0.196078, 0.294118, 0.501961)
+Button/colors/font_focus_color = Color(0.196078, 0.196078, 0.294118, 1)
+Button/colors/font_hover_color = Color(0.196078, 0.196078, 0.294118, 1)
+Button/colors/font_hover_pressed_color = Color(0.196078, 0.196078, 0.294118, 1)
+Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("1_0u27g")
+Button/styles/disabled = SubResource("StyleBoxEmpty_wtas0")
+Button/styles/focus = SubResource("StyleBoxEmpty_ubh01")
+Button/styles/hover = SubResource("StyleBoxTexture_xtqsq")
+Button/styles/normal = SubResource("StyleBoxTexture_g3yjs")
+Button/styles/pressed = SubResource("StyleBoxTexture_joviq")
+Label/font_sizes/font_size = 24
+Label/fonts/font = ExtResource("1_0u27g")

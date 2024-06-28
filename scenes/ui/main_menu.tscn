@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://c58gjhlofs1ah"]
+[gd_scene load_steps=6 format=3 uid="uid://c58gjhlofs1ah"]
 
 [ext_resource type="Texture2D" uid="uid://wk4qsp2dsnfg" path="res://assets/ui/menu_nine_patch.png" id="1_e0uit"]
 [ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_kqd0h"]
 [ext_resource type="Texture2D" uid="uid://bkrp0a3heydtb" path="res://assets/ui/logo.png" id="1_s4vo5"]
+[ext_resource type="Theme" uid="uid://bsov5mkb3jbwv" path="res://assets/ui/ui_theme.tres" id="4_mm7cr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vclb5"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -13,9 +16,11 @@ offset_right = 256.0
 offset_bottom = 144.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("4_mm7cr")
 script = ExtResource("1_kqd0h")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MenuContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -30,7 +35,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="MenuContainer"]
 custom_minimum_size = Vector2(200, 120)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -38,7 +43,7 @@ size_flags_vertical = 4
 texture = ExtResource("1_s4vo5")
 stretch_mode = 5
 
-[node name="NinePatchRect" type="NinePatchRect" parent="VBoxContainer"]
+[node name="NinePatchRect" type="NinePatchRect" parent="MenuContainer"]
 custom_minimum_size = Vector2(120, 152)
 layout_mode = 2
 size_flags_vertical = 4
@@ -50,7 +55,7 @@ patch_margin_bottom = 8
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/NinePatchRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuContainer/NinePatchRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -60,26 +65,126 @@ grow_vertical = 2
 theme_override_constants/separation = 4
 alignment = 1
 
-[node name="PlayButton" type="Button" parent="VBoxContainer/NinePatchRect/VBoxContainer"]
+[node name="PlayButton" type="Button" parent="MenuContainer/NinePatchRect/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+theme = ExtResource("4_mm7cr")
 text = "Play"
 
-[node name="HelpButton" type="Button" parent="VBoxContainer/NinePatchRect/VBoxContainer"]
+[node name="HelpButton" type="Button" parent="MenuContainer/NinePatchRect/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+theme = ExtResource("4_mm7cr")
 text = "Tips"
 
-[node name="CreditsButton" type="Button" parent="VBoxContainer/NinePatchRect/VBoxContainer"]
+[node name="CreditsButton" type="Button" parent="MenuContainer/NinePatchRect/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+theme = ExtResource("4_mm7cr")
 text = "Credits"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer/NinePatchRect/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="MenuContainer/NinePatchRect/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+theme = ExtResource("4_mm7cr")
 text = "Quit"
+
+[node name="Credits" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -125.0
+offset_right = 200.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_vclb5")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Credits"]
+layout_mode = 2
+texture = ExtResource("1_e0uit")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Credits/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Credits/NinePatchRect/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Credits/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Credits/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Credits/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Tilemap: 
+       - Kenney asset pack"
+
+[node name="Label" type="Label" parent="Credits/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_mm7cr")
+text = "Sprites:
+       - Diego García"
+
+[node name="Label3" type="Label" parent="Credits/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Audio:
+       - greenvwbeetle
+       - f3bbbo"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Credits/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Credits/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Game Programming: 
+       - Leonel Espinoza
+       - Diego García
+       - Martín Segur"
+
+[node name="Label2" type="Label" parent="Credits/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Tilemap: 
+       -Kenney asset pack"
+
+[node name="CreditsBackButton" type="Button" parent="Credits/NinePatchRect/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("4_mm7cr")
+text = "Back"
