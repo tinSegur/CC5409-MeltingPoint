@@ -52,6 +52,7 @@ var building_tile = false
 var tile_index = -1
 var deleting = false
 @onready var deleting_overlay = $CanvasLayer/DeletingOverlay
+@onready var pause_menu = $CanvasLayer/PauseMenu
 
 var inventory: Node
 
@@ -63,6 +64,7 @@ func _ready():
 	mine_timer.connect("timeout", _on_mine_timer_timeout)
 	build_menu.machine_selected.connect(on_machine_selected)
 	build_menu.tile_selected.connect(on_tile_selected)
+	pause_menu.quit_pressed.connect(_on_quit_pressed)
 	tilemap = get_tree().current_scene.get_node("TileMap")
 	$AnimationTree.active = true
 	victory_screen.hide()
@@ -127,6 +129,8 @@ func _input(event: InputEvent) -> void:
 					build_preview = null
 		
 		if event.is_action_pressed("cancel"):
+			if (!building and !deleting and !build_menu.visible):
+				pause_menu.visible = true
 			if building:
 				building = false
 				if is_instance_valid(build_preview):
@@ -407,3 +411,10 @@ func try_delete_items():
 		var i = area as Item
 		if i:
 			i.destroy.rpc()
+
+func _on_quit_pressed():
+	if !multiplayer.is_server():
+		multiplayer.multiplayer_peer.disconnect_peer(1)
+	else:
+		multiplayer.multiplayer_peer.close()
+	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
