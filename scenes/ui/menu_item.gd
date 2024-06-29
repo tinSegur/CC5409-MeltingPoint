@@ -10,7 +10,6 @@ var pipe_coords: Vector2
 func _ready():
 	tilemap = get_tree().current_scene.get_node("TileMap")
 	var tile_coords = get_tile_coords(global_position)
-	tilemap.set_cell(0, pipe_coords, 5, tilemap.get_cell_atlas_coords(0, pipe_coords),1)
 	sprite.set_texture(icon)
 
 func _physics_process(delta: float) -> void:
