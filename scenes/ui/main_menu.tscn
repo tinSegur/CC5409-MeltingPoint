@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c58gjhlofs1ah"]
+[gd_scene load_steps=19 format=3 uid="uid://c58gjhlofs1ah"]
 
 [ext_resource type="Texture2D" uid="uid://wk4qsp2dsnfg" path="res://assets/ui/menu_nine_patch.png" id="1_e0uit"]
 [ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_kqd0h"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://borc0susc0fft" path="res://assets/items/unstable_crystal.png" id="10_1eueo"]
 [ext_resource type="Texture2D" uid="uid://bo8x2axxpero7" path="res://assets/items/gold_wire.png" id="11_wo7po"]
 [ext_resource type="Texture2D" uid="uid://bpu5yolsrkxyf" path="res://assets/items/stable_crystal.png" id="12_fo1x2"]
+[ext_resource type="PackedScene" uid="uid://bgujvp6tfioxm" path="res://scenes/ui/tips_screen.tscn" id="15_ax11i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5tkim"]
 texture = ExtResource("5_5k4oq")
@@ -413,7 +414,7 @@ text = "Sprites:
 
 [node name="Label3" type="Label" parent="Credits/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Audio:
+text = "Sound Effects:
        - greenvwbeetle
        - f3bbbo"
 
@@ -439,3 +440,10 @@ layout_mode = 2
 size_flags_horizontal = 8
 theme = ExtResource("4_mm7cr")
 text = "Back"
+
+[node name="TipsScreen" parent="." instance=ExtResource("15_ax11i")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_top = -150.5
+offset_bottom = 150.5

@@ -4,6 +4,7 @@ extends MarginContainer
 @onready var player_name: Label = %Name
 @onready var player_role: Label = %Role
 @onready var ready_texture: TextureRect = %Ready
+@onready var icon_texture = %Icon
 
 @export var default_icon: Texture2D
 @export var engineer_icon: Texture2D
@@ -41,23 +42,18 @@ func _set_player_name(value: String) -> void:
 
 func _set_player_role(value: Statics.Role) -> void:
 	player_role.visible = value != Statics.Role.NONE
+	icon_texture.visible = value != Statics.Role.NONE
 	match value:
 		Statics.Role.SCOUT:
 			player_role.text = "Scout"
+			icon_texture.set_texture(scout_icon)
 		Statics.Role.SCIENTIST:
 			player_role.text = "Scientist"
+			icon_texture.set_texture(scientist_icon)
 		Statics.Role.ENGINEER:
 			player_role.text = "Engineer"
+			icon_texture.set_texture(engineer_icon)
 
 
 func set_ready(value: bool) -> void:
 	ready_texture.visible = value
-	match player_role.text:
-		"Scout":
-			ready_texture.set_texture(scout_icon)
-		"Scientist":
-			ready_texture.set_texture(scientist_icon)
-		"Engineer":
-			ready_texture.set_texture(engineer_icon)
-		_:
-			ready_texture.set_texture(default_icon)

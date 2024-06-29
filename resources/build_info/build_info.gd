@@ -6,7 +6,7 @@ extends Resource
 @export var button : Texture2D
 @export var b_pressed : Texture2D
 @export var b_hover : Texture2D
-@export var description : String
+@export_multiline var description : String
 @export var costs : Array[MPCost]
 @export_file var machine_scene
  

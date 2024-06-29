@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MPTip" load_steps=3 format=3 uid="uid://cgi4pl0he7vvx"]
+
+[ext_resource type="Texture2D" uid="uid://0f3uchp5g42e" path="res://assets/ui/scout_icon.png" id="1_xmloy"]
+[ext_resource type="Script" path="res://resources/tip_info/tip_info.gd" id="2_kgcn5"]
+
+[resource]
+script = ExtResource("2_kgcn5")
+name = "Scout"
+icon = ExtResource("1_xmloy")
+description = "The Scout is the exploration specialist of the team. It can mine blocks faster than other characters and it is able to locate resource nodes using its radar."

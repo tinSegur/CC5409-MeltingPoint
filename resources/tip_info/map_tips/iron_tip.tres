@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="MPTip" load_steps=2 format=3 uid="uid://b8n1hiiuapitx"]
+
+[ext_resource type="Script" path="res://resources/tip_info/tip_info.gd" id="1_83gq0"]
+
+[resource]
+script = ExtResource("1_83gq0")
+name = "Iron ore"
+description = "The first resource available in the map. Is the only ore than can be mined manually."
