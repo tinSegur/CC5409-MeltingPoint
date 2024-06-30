@@ -1,11 +1,10 @@
 extends Machine
 
-
 @export var efficiency : int = 3
-var set_temp : int = 0
+@export var temp : int = 0
+@export var gold_charge : int = 0
+@export var is_charged : int = 0
 var output_mat : Statics.Materials = Statics.Materials.IRON
-var gold_charge : int = 0
-var is_charged : int = 0
 var material_queue : Array = []
 var orient : int = 0
 
@@ -14,11 +13,12 @@ var orient : int = 0
 func _ready():
 	super._ready()
 	output = $Stable_output
+	timer.start()
 
 func _input_event(viewport, event, shape_idx):
-	if event.is_action("mine") and placed:
-		set_temp = (set_temp+1)%10
-		sprite.set_frame_coords(Vector2i(set_temp, 2*is_charged + orient))
+	if event.is_action_pressed("mine") and placed:
+		temp = (temp+1)%10
+		set_temp.rpc(temp)
 
 func input_resource(item : MPMaterial, liquid : bool) -> Statics.INPUT_CODES:
 	Debug.sprint("input")
@@ -27,19 +27,17 @@ func input_resource(item : MPMaterial, liquid : bool) -> Statics.INPUT_CODES:
 	
 	return Statics.INPUT_CODES.ACCEPT
 
-func check_gold() -> bool:
-	return gold_charge > 0
-
-
 func spawn_resource():
+	Debug.sprint("stabilizer spawn")
 	if gold_charge > 0:
 		var mat = material_queue.pop_front()
 		output.output_type = mat
+		output.output_temp = temp
 		output.generate(0, 1)
 		gold_charge -= 1
 		if gold_charge == 0:
 			is_charged = 0
-			sprite.set_frame_coords(Vector2i(set_temp, 2*is_charged + orient))
+		set_charge(gold_charge)
 
 
 
@@ -47,11 +45,29 @@ func spawn_resource():
 func _on_area_2d_2_area_entered(area):
 	var mat : MPMaterial = area.mat_data
 	var liquid : bool = area.liquid
-	area.queue_free()
+	area.destroy()
 	
 	if (mat.type == Statics.Materials.GOLD and liquid):
 		if (gold_charge == 0):
 			is_charged = 1
-			sprite.sprite.set_frame_coords(Vector2i(set_temp, 2*is_charged + orient))
-		gold_charge += efficiency
 		
+		gold_charge += efficiency
+		set_charge.rpc(gold_charge)
+		
+
+func update_sprite():
+	sprite.set_frame_coords(Vector2i(temp, 2*is_charged + orient))
+
+
+@rpc("call_remote")
+func set_charge(amount : int):
+	gold_charge = amount
+	is_charged = 1 if amount > 0 else 0
+	update_sprite()
+
+@rpc("call_local", "any_peer")
+func set_temp(amount : int):
+	temp = amount
+	update_sprite()
+
+

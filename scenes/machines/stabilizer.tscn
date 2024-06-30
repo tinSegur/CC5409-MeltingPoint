@@ -13,7 +13,7 @@ size = Vector2(34, 16)
 size = Vector2(34, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ybhh"]
-size = Vector2(32, 12.5)
+size = Vector2(32, 11.25)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_n54u2"]
 properties/0/path = NodePath(".:position")
@@ -31,11 +31,20 @@ properties/3/replication_mode = 2
 properties/4/path = NodePath(".:offset_vec")
 properties/4/spawn = true
 properties/4/replication_mode = 1
+properties/5/path = NodePath(".:set_temp")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath(".:gold_charge")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath(".:is_charged")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [node name="Stabilizer" type="StaticBody2D"]
 input_pickable = true
 script = ExtResource("1_2v50w")
-offset_vec = Vector2(0, 0)
+offset_vec = Vector2(0, 9)
 info = ExtResource("2_4xdch")
 rotable = false
 
@@ -50,21 +59,24 @@ vframes = 4
 shape = SubResource("RectangleShape2D_2xgu7")
 
 [node name="Input" parent="." instance=ExtResource("3_25own")]
-position = Vector2(-24, 0)
+position = Vector2(-20, 0)
+scale = Vector2(0.7, 0.7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mneq0")
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
 
 [node name="Stable_output" parent="." instance=ExtResource("5_jgvcl")]
+position = Vector2(26, 0)
 
 [node name="Area2D2" type="Area2D" parent="."]
 collision_layer = 10
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(0, -14)
+position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_1ybhh")
 
 [node name="Area2D3" type="Area2D" parent="."]
@@ -72,11 +84,12 @@ collision_layer = 10
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3"]
-position = Vector2(0, 14)
+position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_1ybhh")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_n54u2")
 
+[connection signal="timeout" from="Timer" to="." method="spawn_resource"]
 [connection signal="area_entered" from="Area2D2" to="." method="_on_area_2d_2_area_entered"]
 [connection signal="area_entered" from="Area2D3" to="." method="_on_area_2d_2_area_entered"]

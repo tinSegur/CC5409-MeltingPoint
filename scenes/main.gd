@@ -120,6 +120,6 @@ func _on_inventory_stock_variety(d):
 	else:
 		variety -= 1
 	
-	if variety == 4:
+	if variety == 8:
 		for player in players.get_children():
 			player.victory()

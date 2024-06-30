@@ -6,6 +6,7 @@ func generate(index : int, amount : int, state : int = Statics.Material_states.S
 	while amount > 0:
 		var pipe = tilemap.get_cell_tile_data(0, tilemap.get_tile_coords(global_position))
 		if is_instance_valid(pipe):
+			
 			if pipe.get_custom_data("pipe_speed") == 0:
 				return
 			if !pipe.get_custom_data("occupied"):
@@ -20,5 +21,5 @@ func generate(index : int, amount : int, state : int = Statics.Material_states.S
 				item.inner_temp = output_temp
 				
 			amount -= 1
-			timer.start()
-			await timer.timeout
+		else:
+			Debug.sprint("no pipes")
