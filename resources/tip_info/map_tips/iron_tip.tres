@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="MPTip" load_steps=2 format=3 uid="uid://b8n1hiiuapitx"]
+[gd_resource type="Resource" script_class="MPTip" load_steps=3 format=3 uid="uid://b8n1hiiuapitx"]
 
 [ext_resource type="Script" path="res://resources/tip_info/tip_info.gd" id="1_83gq0"]
+[ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="1_xk1nv"]
 
 [resource]
 script = ExtResource("1_83gq0")
-name = "Iron ore"
+name = "Iron"
+icon = ExtResource("1_xk1nv")
 description = "The first resource available in the map. Is the only ore than can be mined manually."
