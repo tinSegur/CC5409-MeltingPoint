@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MPTip" load_steps=3 format=3 uid="uid://bb0iaehtov5pt"]
+
+[ext_resource type="Texture2D" uid="uid://bpu5yolsrkxyf" path="res://assets/items/stable_crystal.png" id="1_ldi7j"]
+[ext_resource type="Script" path="res://resources/tip_info/tip_info.gd" id="1_yru1i"]
+
+[resource]
+script = ExtResource("1_yru1i")
+name = "Stable crystals"
+icon = ExtResource("1_ldi7j")
+description = "The refined form of the unstable crystals. Can be created at a crafter by inputing iron sheets, liquid gold and cold unstable crystals into a crafter."

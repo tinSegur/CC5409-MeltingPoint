@@ -15,7 +15,7 @@ func render_info(parent_node: VBoxContainer):
 	if is_instance_valid(icon):
 		var image : TextureRect = TextureRect.new()
 		image.texture = icon
-		image.expand_mode = TextureRect.EXPAND_KEEP_SIZE
+		image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		image.custom_minimum_size = Vector2(48,48)
 		parent_node.add_child(image)

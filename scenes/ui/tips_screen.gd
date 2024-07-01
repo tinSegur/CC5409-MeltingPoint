@@ -24,4 +24,5 @@ func _ready():
 
 func _on_back_pressed():
 	visible = false
-	previous_menu.visible = true
+	if is_instance_valid(previous_menu):
+		previous_menu.visible = true
