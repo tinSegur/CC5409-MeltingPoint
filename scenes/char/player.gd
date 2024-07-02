@@ -292,10 +292,11 @@ func setup(player_data: Statics.PlayerData):
 	mine_time = stat_dict.mine_time
 	mining_radius = stat_dict.mining_radius
 	
-	
 	if is_multiplayer_authority():
 		camera.enabled = true
 		tilemap.player = self
+		if player_data.role == Statics.Role.SCIENTIST:
+			$CanvasLayer/ScientistPassive.visible = true
 
 func _on_mine_timer_timeout():
 	if mining:
@@ -306,10 +307,14 @@ func test():
 	var tile_coords = tilemap.get_tile_coords(global_position)
 	var tile: TileData = tilemap.get_cell_tile_data(3, tile_coords)
 	if is_instance_valid(tile):
-		Debug.sprint(tile.get_custom_data("temperature"))
+		return tile.get_custom_data("temperature")
+	return 0
 
 func get_player_tile_position():
 	return tilemap.get_tile_coords(global_position)
+
+func get_ScientistPassive():
+	return $CanvasLayer/ScientistPassive
 
 @rpc
 func send_data(pos : Vector2, vel : Vector2, pivot_scale: int):

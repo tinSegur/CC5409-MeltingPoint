@@ -231,6 +231,26 @@ text = "Deleting
 "
 uppercase = true
 
+[node name="ScientistPassive" type="PanelContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TermometerColor" type="ColorRect" parent="CanvasLayer/ScientistPassive"]
+layout_mode = 2
+color = Color(0.980392, 0.627451, 0.235294, 1)
+
+[node name="Temperature" type="Label" parent="CanvasLayer/ScientistPassive"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = " T°"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_pr5bg")
