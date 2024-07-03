@@ -42,5 +42,5 @@ func render_info(parent_node: VBoxContainer):
 		
 		var cost_label : Label = Label.new()
 		cost_label.text = str(cost.amount)
-		cost_label["theme_override_font_sizes/font_size"] = 8
+		cost_label["theme_override_font_sizes/font_size"] = 12
 		cost_grid.add_child(cost_label)
