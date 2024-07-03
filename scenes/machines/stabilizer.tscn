@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://cvd8jytnrybj6" path="res://resources/build_info/stabilizer_info.tres" id="2_4xdch"]
 [ext_resource type="Texture2D" uid="uid://dv3gr2im1a6ty" path="res://assets/machines/stabilizer/stabilizer.png" id="2_tatul"]
 [ext_resource type="PackedScene" uid="uid://cgtrga7080al8" path="res://scenes/machines/input.tscn" id="3_25own"]
-[ext_resource type="PackedScene" uid="uid://ckejw3qy26lqg" path="res://scenes/machines/stable_output.tscn" id="5_jgvcl"]
+[ext_resource type="PackedScene" uid="uid://cbmugsoctody6" path="res://scenes/machines/output.tscn" id="5_6qf63"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2xgu7"]
 size = Vector2(34, 16)
@@ -13,7 +13,7 @@ size = Vector2(34, 16)
 size = Vector2(34, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ybhh"]
-size = Vector2(32, 11.25)
+size = Vector2(32, 3.3125)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_n54u2"]
 properties/0/path = NodePath(".:position")
@@ -42,6 +42,7 @@ properties/7/spawn = true
 properties/7/replication_mode = 1
 
 [node name="Stabilizer" type="StaticBody2D"]
+collision_layer = 2
 input_pickable = true
 script = ExtResource("1_2v50w")
 offset_vec = Vector2(0, 9)
@@ -54,6 +55,8 @@ hframes = 10
 vframes = 4
 
 [node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("RectangleShape2D_2xgu7")
@@ -68,15 +71,12 @@ shape = SubResource("RectangleShape2D_mneq0")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 
-[node name="Stable_output" parent="." instance=ExtResource("5_jgvcl")]
-position = Vector2(26, 0)
-
 [node name="Area2D2" type="Area2D" parent="."]
 collision_layer = 10
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(0, -12)
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_1ybhh")
 
 [node name="Area2D3" type="Area2D" parent="."]
@@ -84,11 +84,14 @@ collision_layer = 10
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3"]
-position = Vector2(0, 12)
+position = Vector2(0, 8.34375)
 shape = SubResource("RectangleShape2D_1ybhh")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_n54u2")
+
+[node name="Output" parent="." instance=ExtResource("5_6qf63")]
+position = Vector2(28, 0)
 
 [connection signal="timeout" from="Timer" to="." method="spawn_resource"]
 [connection signal="area_entered" from="Area2D2" to="." method="_on_area_2d_2_area_entered"]

@@ -10,6 +10,10 @@ var tilemap: TileMap
 #var outputs_amount: int = 0
 @onready var timer = $Timer
 
+var stable_mode : bool = false
+var output_temp : int = 0
+
+
 func _ready():
 	tilemap = get_tree().current_scene.get_node("TileMap")
 	item_container = get_tree().current_scene.get_node("%Items")
@@ -38,8 +42,11 @@ func generate(index: int, amount: int, state : int = Statics.Material_states.SOL
 				item_container.add_child(item, true)
 				if state != Statics.Material_states.SOLID:
 					item.inner_temp = item.melting_point + 1
-		#else:
-			#Debug.sprint("invalid pipe")
+				
+				if stable_mode:
+					item.inner_temp = output_temp
+		else:
+			Debug.sprint("invalid pipe")
 
 		timer.start()
 		amount -= 1

@@ -32,4 +32,4 @@ b_pressed = ExtResource("2_121ei")
 b_hover = ExtResource("1_ds2ms")
 description = "Upgraded version of the miner. Can be placed in iron or crystal deposits."
 costs = Array[ExtResource("2_ypfgk")]([SubResource("Resource_jqmas"), SubResource("Resource_sdkpu")])
-machine_scene = null
+machine_scene = "res://scenes/machines/advanced_miner.tscn"

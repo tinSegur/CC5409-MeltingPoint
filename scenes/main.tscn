@@ -893,7 +893,7 @@ stream = ExtResource("10_0xsmw")
 stream = ExtResource("11_pllwk")
 
 [node name="MachineSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/machines/miner.tscn", "res://scenes/machines/hub_output.tscn", "res://scenes/machines/cutter.tscn", "res://scenes/machines/pump.tscn", "res://scenes/machines/stabilizer.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/machines/miner.tscn", "res://scenes/machines/hub_output.tscn", "res://scenes/machines/cutter.tscn", "res://scenes/machines/pump.tscn", "res://scenes/machines/stabilizer.tscn", "res://scenes/machines/advanced_miner.tscn", "res://scenes/machines/crafter.tscn")
 spawn_path = NodePath("../Machines")
 
 [node name="Inventory" parent="." instance=ExtResource("7_v3a7n")]
