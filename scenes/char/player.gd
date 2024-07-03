@@ -32,6 +32,7 @@ var stat_dict = {
 @onready var pivot = $Pivot
 @onready var mouse_area: Area2D = $MouseArea
 @onready var mouse_area_col = $MouseArea/CollisionShape2D
+@onready var audio_listener_2d = $AudioListener2D
 
 @onready var mining_raycast: RayCast2D = $MiningRaycast
 @onready var mine_timer = $MineTimer
@@ -130,6 +131,9 @@ func _input(event: InputEvent) -> void:
 					build_preview = null
 		
 		if event.is_action_pressed("cancel"):
+			if pause_menu.visible:
+				pause_menu.visible = false
+				return
 			if (!building and !deleting and !build_menu.visible):
 				pause_menu.visible = true
 			if building:
@@ -301,6 +305,7 @@ func setup(player_data: Statics.PlayerData):
 	if is_multiplayer_authority():
 		camera.enabled = true
 		tilemap.player = self
+		audio_listener_2d.make_current()
 
 func _on_mine_timer_timeout():
 	if mining:
@@ -382,7 +387,7 @@ func cancel_build(m_name: String):
 func destroy_machine(m_name: String):
 	var machine = machine_container.get_node(m_name)
 	if machine.placed:
-		machine.queue_free()
+		machine.cancel_build()
 
 func mine_resource(resource: int):
 	mining_progress = 0

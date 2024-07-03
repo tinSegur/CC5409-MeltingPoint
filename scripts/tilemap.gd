@@ -5,7 +5,6 @@ var progress = 0
 var player: Player
 @onready var build_stream_player_2d = $BuildStreamPlayer2D
 @onready var mine_stream_player_2d = $MineStreamPlayer2D
-@onready var audio_listener_2d = $AudioListener2D
 
 var pipes_index = {
 	# Codificacion binaria: dddd iiii
@@ -53,10 +52,6 @@ var pipes_index = {
 	"28": 26,
 	"30": 22
 }
-
-func _ready():
-	if is_instance_valid(audio_listener_2d):
-		audio_listener_2d.make_current()
 
 func _input(event):
 	if event.is_action_pressed("show_temp"):
@@ -111,7 +106,7 @@ func get_tile_coords(coords):
 @rpc("any_peer", "call_local", "reliable")
 func mine_tile(layer: int, coords: Vector2):
 	erase_cell(layer, coords)
-	audio_listener_2d.global_position = to_global(map_to_local(coords))
+	mine_stream_player_2d.global_position = to_global(map_to_local(coords))
 	mine_stream_player_2d.play()
 	
 @rpc("authority", "call_local", "reliable")
@@ -236,7 +231,7 @@ func place(coords: Vector2i, index: int):
 		set_cell(0, coords, 5, Vector2i(index - 12, 1))
 	else:
 		set_cell(0, coords, 5, Vector2i(index - 24, 2))
-	audio_listener_2d.global_position = to_global(map_to_local(coords))
+	build_stream_player_2d.global_position = to_global(map_to_local(coords))
 	build_stream_player_2d.play()
 
 func show_preview(coords: Vector2i, index: int):

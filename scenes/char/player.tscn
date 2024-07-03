@@ -256,3 +256,5 @@ monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MouseArea"]
 shape = SubResource("CircleShape2D_j6huy")
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
