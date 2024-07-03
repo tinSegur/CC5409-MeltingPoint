@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://8d3ys4aw51lk"]
+[gd_scene load_steps=21 format=3 uid="uid://8d3ys4aw51lk"]
 
 [ext_resource type="Script" path="res://scenes/char/player.gd" id="1_7q1sy"]
 [ext_resource type="PackedScene" uid="uid://dskjy6yd4quog" path="res://scenes/bullet.tscn" id="2_pyqhq"]
@@ -18,6 +18,14 @@ border_width_top = 8
 border_width_right = 8
 border_width_bottom = 8
 border_color = Color(0.784314, 0.117647, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_avfco"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.313726, 0.352941, 0.901961, 1)
 
 [sub_resource type="Animation" id="Animation_aucjd"]
 length = 0.001
@@ -250,6 +258,25 @@ color = Color(0.980392, 0.627451, 0.235294, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 text = " T°"
+
+[node name="PurifyOverlay" type="PanelContainer" parent="CanvasLayer"]
+visible = false
+layout_direction = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_avfco")
+
+[node name="Label" type="Label" parent="CanvasLayer/PurifyOverlay"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.352941, 0.313726, 0.901961, 1)
+theme_override_font_sizes/font_size = 20
+text = " Purify
+"
+uppercase = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

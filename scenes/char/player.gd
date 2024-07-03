@@ -51,7 +51,9 @@ var tile_selected = false
 var building_tile = false
 var tile_index = -1
 var deleting = false
+var purify = false
 @onready var deleting_overlay = $CanvasLayer/DeletingOverlay
+@onready var purify_overlay = $CanvasLayer/PurifyOverlay
 
 var inventory: Node
 
@@ -83,6 +85,12 @@ func _input(event: InputEvent) -> void:
 						try_delete_items()
 				else:
 					try_delete_machine()
+			if purify:
+				var tile_coords = tilemap.get_tile_coords(get_global_mouse_position())
+				if is_instance_valid(tilemap.get_cell_tile_data(0, tile_coords)):
+					if tilemap.get_cell_source_id(0, tile_coords) > 3:
+						tilemap.mine_tile.rpc(0,tilemap.get_tile_coords(get_global_mouse_position()))
+						try_delete_items()
 			if !building:
 				mining = true
 				if mining_raycast.is_colliding():
@@ -115,6 +123,8 @@ func _input(event: InputEvent) -> void:
 			if build_menu.visible:
 				building_tile = false
 				tile_selected = false
+				purify = false
+				purify_overlay.visible = false
 				deleting = false
 				deleting_overlay.visible = false
 				mouse_area.monitoring = false
@@ -136,6 +146,8 @@ func _input(event: InputEvent) -> void:
 			mouse_area_col.shape.radius = 7
 			building_tile = false
 			tile_selected = false
+			purify = false
+			purify_overlay.visible = false
 			deleting = false
 			deleting_overlay.visible = false
 			tile_index = -1
@@ -180,6 +192,8 @@ func _input(event: InputEvent) -> void:
 				building = false
 				building_tile = false
 				tile_selected = false
+				purify = false
+				purify_overlay.visible = false
 				tile_index = -1
 				tilemap.clear_previews()
 			else:
@@ -316,6 +330,8 @@ func get_player_tile_position():
 func get_ScientistPassive():
 	return $CanvasLayer/ScientistPassive
 
+func get_PurifyOverlay():
+	return purify_overlay
 @rpc
 func send_data(pos : Vector2, vel : Vector2, pivot_scale: int):
 	global_position = lerp(global_position, pos, 0.75)
