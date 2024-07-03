@@ -1,10 +1,8 @@
-[gd_scene load_steps=43 format=3 uid="uid://c0xu2cniynmx2"]
+[gd_scene load_steps=30 format=3 uid="uid://c0xu2cniynmx2"]
 
+[ext_resource type="Theme" uid="uid://bsov5mkb3jbwv" path="res://assets/ui/ui_theme.tres" id="1_67dro"]
 [ext_resource type="Script" path="res://scenes/ui/build_menu.gd" id="1_71fyl"]
-[ext_resource type="Texture2D" uid="uid://3mk6t3y2y3qc" path="res://assets/machines/basic_miner_button_base.png" id="1_qo6ks"]
-[ext_resource type="Texture2D" uid="uid://d4ft1pxnx1wei" path="res://assets/machines/basic_miner_button_pressed.png" id="2_e2605"]
 [ext_resource type="Resource" uid="uid://cqd11a67jomeq" path="res://resources/build_info/cutter_info.tres" id="2_favnl"]
-[ext_resource type="Texture2D" uid="uid://2uusjfglcfyo" path="res://assets/machines/basic_miner_button_hover.png" id="3_nu03j"]
 [ext_resource type="Resource" uid="uid://d0ntbd4skon4y" path="res://resources/build_info/extractor_info.tres" id="3_ubhvk"]
 [ext_resource type="Resource" uid="uid://spy6rrsf8grq" path="res://resources/build_info/miner_info.tres" id="4_aq5vg"]
 [ext_resource type="Texture2D" uid="uid://cyuqcf3g4rgu0" path="res://assets/machines/platform/platform_button.png" id="5_5rygq"]
@@ -13,24 +11,13 @@
 [ext_resource type="Resource" uid="uid://cvd8jytnrybj6" path="res://resources/build_info/stabilizer_info.tres" id="6_5j35g"]
 [ext_resource type="PackedScene" uid="uid://cv4ic6augq1or" path="res://scenes/ui/machine_button.tscn" id="7_hkers"]
 [ext_resource type="Texture2D" uid="uid://dqaiq2as1goqv" path="res://assets/machines/platform/platform_button_hover.png" id="7_m0k2m"]
+[ext_resource type="Texture2D" uid="uid://wk4qsp2dsnfg" path="res://assets/ui/menu_nine_patch.png" id="8_rdunj"]
 [ext_resource type="Texture2D" uid="uid://c7lxsel7g0ff1" path="res://assets/machines/pipes/pipe_button.png" id="8_wlnk2"]
 [ext_resource type="Texture2D" uid="uid://cvt5v1fal7lf7" path="res://assets/machines/pipes/pipe_button_pressed.png" id="9_ni04f"]
 [ext_resource type="Texture2D" uid="uid://c0xfanjai2hk1" path="res://assets/machines/pipes/pipe_button_hover.png" id="10_1sese"]
-[ext_resource type="Texture2D" uid="uid://b8hrx5lepjioq" path="res://assets/machines/hub_output/hub_output_button_base.png" id="11_3qkwx"]
-[ext_resource type="Texture2D" uid="uid://g3f3rsruf5kn" path="res://assets/machines/hub_output/hub_output_button_pressed.png" id="12_xufyi"]
-[ext_resource type="Texture2D" uid="uid://o04wmgbcge84" path="res://assets/machines/hub_output/hub_output_button_hover.png" id="13_64hhh"]
-[ext_resource type="Texture2D" uid="uid://q1m6s5ppshoo" path="res://assets/machines/pump/pump_button_base.png" id="14_d7nip"]
-[ext_resource type="Texture2D" uid="uid://vxleuehmcxcq" path="res://assets/machines/pump/pump_button_pressed.png" id="15_qy5x2"]
-[ext_resource type="Texture2D" uid="uid://cyw2y3vse8f20" path="res://assets/machines/pump/pump_button_hover.png" id="16_vvgfm"]
-[ext_resource type="Texture2D" uid="uid://dft02a4fud41q" path="res://assets/machines/cutter/cutter_button_base.png" id="17_x6551"]
-[ext_resource type="Texture2D" uid="uid://cxmfbbaqj46c7" path="res://assets/machines/cutter/cutter_button_pressed.png" id="18_wq1ue"]
-[ext_resource type="Texture2D" uid="uid://bpysvkl2lrogx" path="res://assets/machines/cutter/cutter_button_hover.png" id="19_fwvm4"]
 [ext_resource type="Texture2D" uid="uid://cqrhrkr583ek5" path="res://assets/machines/advanced_miner/advanced_miner_button_base.png" id="20_7am7f"]
 [ext_resource type="Texture2D" uid="uid://bld8p6s1op50i" path="res://assets/machines/advanced_miner/advanced_miner_button_pressed.png" id="21_oc1k1"]
 [ext_resource type="Texture2D" uid="uid://r30k0dor1lxn" path="res://assets/machines/advanced_miner/advanced_miner_button_hover.png" id="22_ndin1"]
-[ext_resource type="Texture2D" uid="uid://o04qwualu4rr" path="res://assets/machines/stabilizer/stabilizer_button_base.png" id="23_n8ci5"]
-[ext_resource type="Texture2D" uid="uid://bdm4aaqf0o7ec" path="res://assets/machines/stabilizer/stabilizer_button_pressed.png" id="24_iwkf7"]
-[ext_resource type="Texture2D" uid="uid://b2nda3318a77g" path="res://assets/machines/stabilizer/stabilizer_button_hover.png" id="25_ibdjy"]
 [ext_resource type="Texture2D" uid="uid://dlj31glbrq12f" path="res://assets/machines/platform/ramp_button_base.png" id="26_7sk0g"]
 [ext_resource type="Texture2D" uid="uid://caonnl7lj25lw" path="res://assets/machines/platform/ramp_button_pressed.png" id="27_3vx7n"]
 [ext_resource type="Texture2D" uid="uid://dlyd4j63ftbrk" path="res://assets/machines/platform/ramp_button_hover.png" id="28_5gdpd"]
@@ -41,36 +28,36 @@
 [ext_resource type="Texture2D" uid="uid://sd04lroqvdvs" path="res://assets/machines/platform/warning_platform_button_pressed.png" id="33_v25yn"]
 [ext_resource type="Texture2D" uid="uid://do3bc533wwr8m" path="res://assets/machines/platform/warning_platform_button_hover.png" id="34_inhne"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfceq"]
-bg_color = Color(0.313726, 0.313726, 0.313726, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jidcy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6du6p"]
 bg_color = Color(1, 1, 1, 1)
 border_width_left = 2
 
 [node name="BuildMenu" type="MarginContainer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -236.0
-offset_top = -134.0
-offset_right = 236.0
-offset_bottom = 134.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_67dro")
 script = ExtResource("1_71fyl")
-machines = Array[Resource("res://resources/build_info/build_info.gd")]([ExtResource("2_favnl"), ExtResource("3_ubhvk"), ExtResource("4_aq5vg"), ExtResource("5_mf0ls"), ExtResource("6_5j35g")])
+machines = Array[Resource("res://resources/build_info/build_info.gd")]([ExtResource("3_ubhvk"), ExtResource("4_aq5vg"), ExtResource("5_mf0ls"), ExtResource("2_favnl"), ExtResource("6_5j35g")])
 mch_button = ExtResource("7_hkers")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_qfceq")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jidcy")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PanelContainer"]
+layout_mode = 2
+texture = ExtResource("8_rdunj")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
@@ -87,7 +74,7 @@ text = "Select Buildable"
 horizontal_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector"]
-custom_minimum_size = Vector2(40, 60)
+custom_minimum_size = Vector2(256, 60)
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
@@ -98,14 +85,6 @@ layout_mode = 2
 theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 16
 columns = 4
-
-[node name="MinerButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture_normal = ExtResource("1_qo6ks")
-texture_pressed = ExtResource("2_e2605")
-texture_hover = ExtResource("3_nu03j")
-stretch_mode = 3
 
 [node name="PlatformButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer"]
 custom_minimum_size = Vector2(48, 48)
@@ -123,41 +102,11 @@ texture_pressed = ExtResource("9_ni04f")
 texture_hover = ExtResource("10_1sese")
 stretch_mode = 3
 
-[node name="OutputButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture_normal = ExtResource("11_3qkwx")
-texture_pressed = ExtResource("12_xufyi")
-texture_hover = ExtResource("13_64hhh")
-stretch_mode = 3
-
-[node name="PumpButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture_normal = ExtResource("14_d7nip")
-texture_pressed = ExtResource("15_qy5x2")
-texture_hover = ExtResource("16_vvgfm")
-stretch_mode = 3
-
-[node name="CutterButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture_normal = ExtResource("17_x6551")
-texture_pressed = ExtResource("18_wq1ue")
-texture_hover = ExtResource("19_fwvm4")
-stretch_mode = 3
-
 [node name="AdMinerButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer"]
 layout_mode = 2
 texture_normal = ExtResource("20_7am7f")
 texture_pressed = ExtResource("21_oc1k1")
 texture_hover = ExtResource("22_ndin1")
-
-[node name="StabilizerButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer"]
-layout_mode = 2
-texture_normal = ExtResource("23_n8ci5")
-texture_pressed = ExtResource("24_iwkf7")
-texture_hover = ExtResource("25_ibdjy")
 
 [node name="RampButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer"]
 layout_mode = 2

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MPTip" load_steps=3 format=3 uid="uid://8d4p0sa7nq4b"]
+
+[ext_resource type="Script" path="res://resources/tip_info/tip_info.gd" id="1_86rbk"]
+[ext_resource type="Texture2D" uid="uid://btrpgq63sbcgg" path="res://assets/ui/engineer_icon.png" id="1_xqmoc"]
+
+[resource]
+script = ExtResource("1_86rbk")
+name = "Engineer"
+icon = ExtResource("1_xqmoc")
+description = "The Engineer is the machine expert of the team. It uses less materials when building machines and it is able overclock one machine."
