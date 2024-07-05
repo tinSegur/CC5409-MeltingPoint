@@ -68,7 +68,6 @@ func _ready():
 	pause_menu.quit_pressed.connect(_on_quit_pressed)
 	tilemap = get_tree().current_scene.get_node("TileMap")
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
-	#multiplayer.peer_connected.connect(_on_peer_connected)
 	$AnimationTree.active = true
 	victory_screen.hide()
 
@@ -307,6 +306,7 @@ func setup(player_data: Statics.PlayerData):
 		camera.enabled = true
 		tilemap.player = self
 		audio_listener_2d.make_current()
+		multiplayer.peer_connected.connect(_on_peer_connected)
 
 func _on_mine_timer_timeout():
 	if mining:

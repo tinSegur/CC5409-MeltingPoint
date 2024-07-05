@@ -14,6 +14,7 @@ var players: Array[Statics.PlayerData] = []
 # Emitted when UPnP port mapping setup is completed (regardless of success or failure).
 signal upnp_completed(error)
 
+signal new_player(player: Statics.PlayerData)
 signal player_added(player: Statics.PlayerData)
 
 # Replace this with your own server port number between 1024 and 65535.
@@ -93,9 +94,9 @@ func _exit_tree():
 	thread.wait_to_finish()
 
 func player_connecting(id: int):
-	for player in players:
-		Debug.sprint("Sending data")
-		send_current_player_data.rpc_id(id, player.id, player.name, player.role)
+	Debug.sprint("Sending data")
+	var player = get_current_player()
+	send_current_player_data.rpc_id(id, player.id, player.name, player.role)
 
 @rpc("authority", "reliable")
 func send_current_player_data(id: int, name: String, role: Statics.Role):
@@ -109,5 +110,19 @@ func add_new_player(id: int, name: String):
 
 @rpc("any_peer", "call_remote", "reliable")
 func _add_new_player(id: int, name: String):
+	Debug.sprint("add_new_player")
 	var player_data = Statics.PlayerData.new(id, name)
 	add_player(player_data)
+
+@rpc("any_peer", "reliable")
+func send_info(info_dict: Dictionary) -> void:
+	if is_instance_valid(Game.get_player(info_dict.id)):
+		return
+	var player = Statics.PlayerData.new(info_dict.id, info_dict.name, info_dict.role)
+	add_player(player)
+	send_info.rpc_id(multiplayer.get_remote_sender_id(), Game.get_current_player().to_dict())
+	new_player.emit(player)
+
+@rpc("any_peer","call_local","reliable")
+func test_rpc():
+	Debug.sprint("TestPrint")

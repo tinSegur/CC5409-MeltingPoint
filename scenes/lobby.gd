@@ -57,6 +57,7 @@ func _ready():
 	
 	Game.player_updated.connect(func(id) : _check_ready())
 	Game.players_updated.connect(_check_ready)
+	Game.new_player.connect(_add_player)
 	
 	host.pressed.connect(_on_host_pressed)
 	join.pressed.connect(_on_join_pressed)
@@ -87,6 +88,9 @@ func _ready():
 	
 	Game.upnp_completed.connect(_on_upnp_completed, 1)
 
+func _input(event):
+	if event.is_action_pressed("test"):
+		Game.test_rpc.rpc()
 
 func _process(delta: float) -> void:
 	if !start_timer.is_stopped():
@@ -113,6 +117,7 @@ func _on_host_pressed() -> void:
 	
 	var player = Statics.PlayerData.new(multiplayer.get_unique_id(), user.text)
 	_add_player(player)
+	Game.add_player(player)
 	
 	_go_to_menu(ready_menu)
 
@@ -131,9 +136,9 @@ func _on_confirm_join_pressed() -> void:
 		return
 	
 	multiplayer.multiplayer_peer = peer
-	
 	var player = Statics.PlayerData.new(multiplayer.get_unique_id(), user.text)
 	_add_player(player)
+	Game.add_player(player)
 	Game.add_new_player(multiplayer.get_unique_id(), user.text)
 	_go_to_menu(ready_menu)
 
@@ -149,9 +154,9 @@ func _on_connection_failed() -> void:
 
 
 func _on_peer_connected(id: int) -> void:
-	#Debug.sprint("peer_connected %d" % id)
+	Debug.sprint("peer_connected %d" % id)
 	
-	send_info.rpc_id(id, Game.get_current_player().to_dict())
+	Game.send_info.rpc_id(id, Game.get_current_player().to_dict())
 	var local_id = multiplayer.get_unique_id()
 	if multiplayer.is_server():
 		for player_id in status:
@@ -176,8 +181,7 @@ func _on_server_disconnected() -> void:
 
 
 func _add_player(player: Statics.PlayerData) -> void:
-	Game.add_player(player)
-	
+	#Game.add_player(player)
 	var lobby_player = lobby_player_scene.instantiate() as UILobbyPlayer
 	players.add_child(lobby_player)
 	lobby_player.setup(player)
@@ -195,8 +199,12 @@ func _remove_player(id: int):
 
 @rpc("any_peer", "reliable")
 func send_info(info_dict: Dictionary) -> void:
+	if is_instance_valid(Game.get_player(info_dict.id)):
+		return
 	var player = Statics.PlayerData.new(info_dict.id, info_dict.name, info_dict.role)
 	_add_player(player)
+	send_info.rpc_id(multiplayer.get_remote_sender_id(), Game.get_current_player().to_dict())
+	
 
 
 func _paint_ready(id: int) -> void:
