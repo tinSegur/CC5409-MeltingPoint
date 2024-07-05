@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MPTip" load_steps=3 format=3 uid="uid://drx6hvx5me61a"]
+
+[ext_resource type="Texture2D" uid="uid://dx4i0rq47gds5" path="res://assets/tip_images/melting_tip.png" id="1_2gsma"]
+[ext_resource type="Script" path="res://resources/tip_info/tip_info.gd" id="1_218kw"]
+
+[resource]
+script = ExtResource("1_218kw")
+name = "Melting"
+icon = ExtResource("1_2gsma")
+description = "To melt a resource you need to heat the item by putting it in a high temperature zone until it reaches its melting point. When the item is close to melting, it will turn red."

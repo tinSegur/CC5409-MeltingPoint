@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bgujvp6tfioxm"]
+[gd_scene load_steps=27 format=3 uid="uid://bgujvp6tfioxm"]
 
 [ext_resource type="Theme" uid="uid://bsov5mkb3jbwv" path="res://assets/ui/ui_theme.tres" id="1_bhr7k"]
 [ext_resource type="Texture2D" uid="uid://wk4qsp2dsnfg" path="res://assets/ui/menu_nine_patch.png" id="1_h5v4l"]
@@ -12,6 +12,18 @@
 [ext_resource type="Resource" uid="uid://cxbhnwbea66nf" path="res://resources/tip_info/map_tips/gold_tip.tres" id="7_txpb1"]
 [ext_resource type="Resource" uid="uid://ciceaobsg0ghl" path="res://resources/tip_info/map_tips/crystal_tip.tres" id="9_u1kbn"]
 [ext_resource type="Resource" uid="uid://bb0iaehtov5pt" path="res://resources/tip_info/map_tips/stable_crystal_tip.tres" id="10_3680v"]
+[ext_resource type="Resource" uid="uid://du57cjks7rilg" path="res://resources/build_info/platform_info.tres" id="11_a83l4"]
+[ext_resource type="Resource" uid="uid://drx6hvx5me61a" path="res://resources/tip_info/map_tips/melting_tip.tres" id="11_dgsly"]
+[ext_resource type="Resource" uid="uid://mvs17mq7yyb1" path="res://resources/build_info/ramp_info.tres" id="12_u1djg"]
+[ext_resource type="Resource" uid="uid://c6f7w44vbe48p" path="res://resources/build_info/wa_platform_info.tres" id="13_8pq3o"]
+[ext_resource type="Resource" uid="uid://lg164y7wu5es" path="res://resources/build_info/ladder_info.tres" id="14_fy6y1"]
+[ext_resource type="Resource" uid="uid://dasu103gg0xo7" path="res://resources/build_info/pipe_info.tres" id="15_kxjwg"]
+[ext_resource type="Resource" uid="uid://d0ntbd4skon4y" path="res://resources/build_info/extractor_info.tres" id="16_g2nbs"]
+[ext_resource type="Resource" uid="uid://spy6rrsf8grq" path="res://resources/build_info/miner_info.tres" id="17_50o5p"]
+[ext_resource type="Resource" uid="uid://bgmjvyug8ehhy" path="res://resources/build_info/pump_info.tres" id="18_cpwf0"]
+[ext_resource type="Resource" uid="uid://cqd11a67jomeq" path="res://resources/build_info/cutter_info.tres" id="19_pjy25"]
+[ext_resource type="Resource" uid="uid://plc5ncpomxft" path="res://resources/build_info/ad_miner_info.tres" id="20_b6va5"]
+[ext_resource type="Resource" uid="uid://cvd8jytnrybj6" path="res://resources/build_info/stabilizer_info.tres" id="21_rx8t4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oxi4n"]
 
@@ -34,7 +46,8 @@ grow_vertical = 2
 theme = ExtResource("1_bhr7k")
 script = ExtResource("2_owuod")
 player_tips = Array[Resource("res://resources/tip_info/tip_info.gd")]([ExtResource("4_cxdvm"), ExtResource("4_kxupd"), ExtResource("3_xy3ch"), ExtResource("6_ryp14")])
-map_tips = Array[Resource("res://resources/tip_info/tip_info.gd")]([ExtResource("6_mrop2"), ExtResource("7_txpb1"), ExtResource("9_u1kbn"), ExtResource("10_3680v")])
+map_tips = Array[Resource("res://resources/tip_info/tip_info.gd")]([ExtResource("6_mrop2"), ExtResource("7_txpb1"), ExtResource("9_u1kbn"), ExtResource("10_3680v"), ExtResource("11_dgsly")])
+machine_tips = Array[Resource("res://resources/build_info/build_info.gd")]([ExtResource("11_a83l4"), ExtResource("12_u1djg"), ExtResource("13_8pq3o"), ExtResource("14_fy6y1"), ExtResource("15_kxjwg"), ExtResource("16_g2nbs"), ExtResource("17_50o5p"), ExtResource("18_cpwf0"), ExtResource("19_pjy25"), ExtResource("20_b6va5"), ExtResource("21_rx8t4")])
 tip_button = ExtResource("4_5df7j")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
