@@ -41,6 +41,8 @@ var status = { 1 : false }
 
 var _menu_stack: Array[Control] = []
 
+var reconnect: bool = false
+
 func _ready():
 	
 	if Game.multiplayer_test:
@@ -72,6 +74,8 @@ func _ready():
 	ready_toggle.pressed.connect(_on_ready_toggled)
 	
 	start_timer.timeout.connect(_on_start_timer_timeout)
+	
+	Game.player_added.connect(add_current_player)
 	
 	ready_toggle.disabled = true
 	time_container.hide()
@@ -130,7 +134,7 @@ func _on_confirm_join_pressed() -> void:
 	
 	var player = Statics.PlayerData.new(multiplayer.get_unique_id(), user.text)
 	_add_player(player)
-	
+	Game.add_new_player(multiplayer.get_unique_id(), user.text)
 	_go_to_menu(ready_menu)
 
 
@@ -202,7 +206,10 @@ func _paint_ready(id: int) -> void:
 
 
 func _on_ready_toggled() -> void:
-	player_ready.rpc_id(1, multiplayer.get_unique_id())
+	if !reconnect:
+		player_ready.rpc_id(1, multiplayer.get_unique_id())
+	else:
+		player_ready(multiplayer.get_unique_id())
 
 
 @rpc("reliable", "any_peer", "call_local")
@@ -217,6 +224,10 @@ func player_ready(id: int):
 			starting_game.rpc(true)
 		else:
 			starting_game.rpc(false)
+	elif reconnect:
+		status[id] = true
+		set_player_ready(id, status[id])
+		start_game()
 
 
 @rpc("reliable", "any_peer", "call_local")
@@ -299,3 +310,12 @@ func _back_to_first_menu() -> void:
 		first.show()
 	if Game.is_online():
 		_disconnect()
+
+func add_current_player(player: Statics.PlayerData) -> void:
+	Debug.sprint("Lobby add player")
+	reconnect = true
+	var lobby_player = lobby_player_scene.instantiate() as UILobbyPlayer
+	players.add_child(lobby_player)
+	lobby_player.setup(player)
+	lobby_player.set_ready(true)
+	status[player.id] = true

@@ -67,6 +67,7 @@ func _ready():
 	pause_menu.quit_pressed.connect(_on_quit_pressed)
 	tilemap = get_tree().current_scene.get_node("TileMap")
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
+	multiplayer.peer_connected.connect(_on_peer_connected)
 	$AnimationTree.active = true
 	victory_screen.hide()
 
@@ -429,3 +430,7 @@ func _on_peer_disconnected(id: int):
 func _host_disconnected():
 	Game.players = []
 	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
+	
+func _on_peer_connected(id: int):
+	Debug.sprint("Player_connected " + str(id))
+	Game.player_connecting(id)

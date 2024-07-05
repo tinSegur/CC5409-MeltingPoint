@@ -14,11 +14,14 @@ var players: Array[Statics.PlayerData] = []
 # Emitted when UPnP port mapping setup is completed (regardless of success or failure).
 signal upnp_completed(error)
 
+signal player_added(player: Statics.PlayerData)
+
 # Replace this with your own server port number between 1024 and 65535.
 const SERVER_PORT = 5409
 var thread = null
 
 func add_player(player: Statics.PlayerData) -> void:
+	Debug.sprint("Add player")
 	players.append(player)
 	players_updated.emit()
 
@@ -89,3 +92,22 @@ func _exit_tree():
 	# Wait for thread finish here to handle game exit while the thread is running.
 	thread.wait_to_finish()
 
+func player_connecting(id: int):
+	for player in players:
+		Debug.sprint("Sending data")
+		send_current_player_data.rpc_id(id, player.id, player.name, player.role)
+
+@rpc("authority", "reliable")
+func send_current_player_data(id: int, name: String, role: Statics.Role):
+	Debug.sprint("Game add player")
+	var player_data = Statics.PlayerData.new(id, name, role)
+	add_player(player_data)
+	player_added.emit(player_data)
+
+func add_new_player(id: int, name: String):
+	_add_new_player.rpc(id, name)
+
+@rpc("any_peer", "call_remote", "reliable")
+func _add_new_player(id: int, name: String):
+	var player_data = Statics.PlayerData.new(id, name)
+	add_player(player_data)
