@@ -5,6 +5,7 @@ var melting_point : int = 2
 var breaking_delta : float = 100.0
 var can_break : bool = false
 var can_melt : bool = true
+var melt_speed : float = 0.02
 var type : Statics.Materials
 var melt_icon : Texture2D
 var solid_icon : Texture2D
@@ -27,6 +28,7 @@ func _ready():
 	can_break = mat_data.can_break
 	can_melt = mat_data.can_melt
 	type = mat_data.type
+	melt_speed = mat_data.melt_speed/1000
 	melt_icon = mat_data.melt_icon
 	solid_icon = mat_data.solid_icon
 	inner_temp = mat_data.default_temp
@@ -55,7 +57,7 @@ func _ready():
 
 func change_temp(new_temp : int):
 	sprite = $Sprite2D
-	inner_temp = move_toward(inner_temp, new_temp, max((new_temp - inner_temp)*0.02, 0.01))
+	inner_temp = move_toward(inner_temp, new_temp, max((new_temp - inner_temp)*melt_speed, 0.01))
 
 	delta_temp=new_temp-inner_temp
 	if can_melt :

@@ -12,6 +12,7 @@ var matter_states = Statics.Material_states
 @export var melt_icon : Texture2D
 @export var solid_icon : Texture2D
 @export var default_temp : int = 5
+@export var melt_speed : float = 0.02
 @export var states : Array[Statics.Material_states] = [matter_states.SOLID, matter_states.LIQUID]
 @export var state_sprites : Dictionary = {matter_states.SOLID : null, matter_states.LIQUID : null}
 

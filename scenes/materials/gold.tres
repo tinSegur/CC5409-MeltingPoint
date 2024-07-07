@@ -14,5 +14,6 @@ can_melt = true
 melt_icon = ExtResource("1_1owae")
 solid_icon = ExtResource("3_tx55p")
 default_temp = 5
+melt_speed = 20.0
 states = Array[int]([0, 1])
 state_sprites = null
