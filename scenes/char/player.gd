@@ -196,7 +196,7 @@ func _input(event: InputEvent) -> void:
 				mouse_area.monitoring = false
 				mouse_area_col.shape.radius = 7
 		
-		if event.is_action("Ability"):
+		if event.is_action_pressed("Ability"):
 			class_node.ability()
 
 func _physics_process(delta: float) -> void:
@@ -381,7 +381,7 @@ func place_error(msg: String, pos: Vector2):
 @rpc("call_local", "reliable")
 func cancel_build(m_name: String):
 	var machine = machine_container.get_node(m_name)
-	machine.queue_free()
+	machine.cancel_build()
 	
 @rpc("call_local", "reliable")
 func destroy_machine(m_name: String):

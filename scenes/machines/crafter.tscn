@@ -106,6 +106,7 @@ sprite_frames = SubResource("SpriteFrames_7da7u")
 frame_progress = 0.84226
 
 [node name="Hitbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 10
 
@@ -113,6 +114,7 @@ collision_mask = 10
 shape = SubResource("RectangleShape2D_3vvoo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_xev7i")
 
 [node name="InternalInventory" type="Node" parent="."]
@@ -129,6 +131,7 @@ autostart = true
 replication_config = SubResource("SceneReplicationConfig_ypay3")
 
 [node name="Input" type="Area2D" parent="."]
+visible = false
 collision_layer = 10
 collision_mask = 16
 
