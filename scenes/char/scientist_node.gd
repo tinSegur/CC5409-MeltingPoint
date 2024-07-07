@@ -5,7 +5,6 @@ var player: Player
 var ScientistPassive: PanelContainer
 var TempLabel : Label
 var TempColor : ColorRect
-var PurifyOverlay : PanelContainer
 
 var ColorDict : Dictionary = {
 	"0": Color8(170,200,250,255),
@@ -27,7 +26,6 @@ func _ready():
 	ScientistPassive = player.get_ScientistPassive()
 	TempColor = ScientistPassive.get_child(0)
 	TempLabel = ScientistPassive.get_child(1)
-	PurifyOverlay = player.get_PurifyOverlay()
 
 func _process(delta):
 	var Temp : String = str(player.test())
@@ -41,9 +39,8 @@ func update_temp(temp : String):
 
 func ability():
 	#activar ovelay
-	PurifyOverlay.visible = true
-	Player.purify = true
-	#trakear mouse
+	
+	player.switch_Purify()
 	
 	#al hacer click verificar el bloque
 	
@@ -52,5 +49,3 @@ func ability():
 	#dejar de trakear mouse
 	
 	#desactivar overlay
-	
-	pass

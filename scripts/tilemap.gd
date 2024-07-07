@@ -252,3 +252,6 @@ func clear_previews():
 	var previews = get_used_cells(4)
 	for coords in previews:
 		erase_cell(4, coords)
+
+func purify_ore(coords: Vector2i):
+	pass

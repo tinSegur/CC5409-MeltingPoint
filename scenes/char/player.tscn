@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://8d3ys4aw51lk"]
+[gd_scene load_steps=22 format=3 uid="uid://8d3ys4aw51lk"]
 
 [ext_resource type="Script" path="res://scenes/char/player.gd" id="1_7q1sy"]
 [ext_resource type="PackedScene" uid="uid://dskjy6yd4quog" path="res://scenes/bullet.tscn" id="2_pyqhq"]
@@ -242,13 +242,15 @@ text = "Deleting
 uppercase = true
 
 [node name="ScientistPassive" type="PanelContainer" parent="CanvasLayer"]
-visible = false
-anchors_preset = 1
+anchors_preset = 3
 anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = -40.0
-offset_bottom = 40.0
+offset_top = -40.0
 grow_horizontal = 0
+grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
@@ -290,9 +292,6 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 active = false
-libraries = {
-"": SubResource("AnimationLibrary_pr5bg")
-}
 tree_root = SubResource("AnimationNodeStateMachine_qfhim")
 anim_player = NodePath("../AnimationPlayer")
 

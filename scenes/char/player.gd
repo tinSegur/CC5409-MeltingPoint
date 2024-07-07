@@ -91,10 +91,9 @@ func _input(event: InputEvent) -> void:
 					try_delete_machine()
 			if purify:
 				var tile_coords = tilemap.get_tile_coords(get_global_mouse_position())
-				if is_instance_valid(tilemap.get_cell_tile_data(0, tile_coords)):
-					if tilemap.get_cell_source_id(0, tile_coords) > 3:
-						tilemap.mine_tile.rpc(0,tilemap.get_tile_coords(get_global_mouse_position()))
-						try_delete_items()
+				var res = tilemap.get_cell_tile_data(1, tile_coords)
+				if is_instance_valid(res):
+					tilemap.purify_ore(tile_coords)
 			if !building:
 				mining = true
 				if mining_raycast.is_colliding():
@@ -210,7 +209,8 @@ func _input(event: InputEvent) -> void:
 				mouse_area.monitoring = false
 				mouse_area_col.shape.radius = 7
 		
-		if event.is_action("Ability"):
+		if event.is_action_pressed("Ability"):
+			Debug.sprint("ability pressed")
 			class_node.ability()
 
 func _physics_process(delta: float) -> void:
@@ -342,6 +342,20 @@ func get_ScientistPassive():
 
 func get_PurifyOverlay():
 	return purify_overlay
+
+func switch_Purify():
+	purify = !purify
+	purify_overlay.visible = purify
+	Debug.sprint(purify)
+	if purify:
+		building = false
+		building_tile = false
+		tile_selected = false
+		deleting = false
+		deleting_overlay.visible = false
+		tile_index = -1
+		tilemap.clear_previews()
+	
 @rpc
 func send_data(pos : Vector2, vel : Vector2, pivot_scale: int):
 	global_position = lerp(global_position, pos, 0.75)
