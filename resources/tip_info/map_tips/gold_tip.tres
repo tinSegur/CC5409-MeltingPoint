@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MPTip" load_steps=3 format=3 uid="uid://cxbhnwbea66nf"]
+
+[ext_resource type="Script" path="res://resources/tip_info/tip_info.gd" id="1_e3bsp"]
+[ext_resource type="Texture2D" uid="uid://bod62sofbxid0" path="res://assets/items/solid_gold.png" id="1_xkvx4"]
+
+[resource]
+script = ExtResource("1_e3bsp")
+name = "Gold"
+icon = ExtResource("1_xkvx4")
+description = "Gold is the second resource available. It needs a pump to be extracted in liquid state and has a very low melting point, so you will have to bring it to the surface to solidify it."

@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c0xu2cniynmx2" path="res://scenes/ui/build_menu.tscn" id="4_sewft"]
 [ext_resource type="PackedScene" uid="uid://c58mc210m3nti" path="res://scenes/ui/victory_screen.tscn" id="4_ysssu"]
 [ext_resource type="PackedScene" uid="uid://48wa7sf15027" path="res://scenes/ui/inventory_display.tscn" id="5_56sa5"]
+[ext_resource type="PackedScene" uid="uid://cpdiqnkkmkw1q" path="res://scenes/ui/pause_menu.tscn" id="7_lpjm8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mash1"]
 radius = 6.0
@@ -214,6 +215,7 @@ vframes = 2
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="VictoryScreen" parent="CanvasLayer" instance=ExtResource("4_ysssu")]
+visible = false
 
 [node name="BuildMenu" parent="CanvasLayer" instance=ExtResource("4_sewft")]
 visible = false
@@ -278,6 +280,9 @@ text = " Purify
 "
 uppercase = true
 
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("7_lpjm8")]
+visible = false
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_pr5bg")
@@ -285,6 +290,9 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 active = false
+libraries = {
+"": SubResource("AnimationLibrary_pr5bg")
+}
 tree_root = SubResource("AnimationNodeStateMachine_qfhim")
 anim_player = NodePath("../AnimationPlayer")
 
@@ -295,3 +303,5 @@ monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MouseArea"]
 shape = SubResource("CircleShape2D_j6huy")
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]

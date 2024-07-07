@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MPTip" load_steps=3 format=3 uid="uid://ckpcrhilclh3u"]
+
+[ext_resource type="Texture2D" uid="uid://dmnclqndw5d5l" path="res://assets/tip_images/scout_radar_image.png" id="1_b3mx4"]
+[ext_resource type="Script" path="res://resources/tip_info/tip_info.gd" id="1_n4s0y"]
+
+[resource]
+script = ExtResource("1_n4s0y")
+name = "Scout radar"
+icon = ExtResource("1_b3mx4")
+description = "The Scout  can use its radar to locate nearby resources. The color of the arrow represents the type of resource found. Press H to activate it."

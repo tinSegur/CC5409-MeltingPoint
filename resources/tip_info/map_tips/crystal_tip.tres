@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MPTip" load_steps=3 format=3 uid="uid://ciceaobsg0ghl"]
+
+[ext_resource type="Script" path="res://resources/tip_info/tip_info.gd" id="1_vvcpa"]
+[ext_resource type="Texture2D" uid="uid://borc0susc0fft" path="res://assets/items/unstable_crystal.png" id="1_x4axp"]
+
+[resource]
+script = ExtResource("1_vvcpa")
+name = "Unstable crystals"
+icon = ExtResource("1_x4axp")
+description = "The last resource available. It doesn't melt, but will break if its temperature changes too fast."

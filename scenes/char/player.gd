@@ -32,6 +32,7 @@ var stat_dict = {
 @onready var pivot = $Pivot
 @onready var mouse_area: Area2D = $MouseArea
 @onready var mouse_area_col = $MouseArea/CollisionShape2D
+@onready var audio_listener_2d = $AudioListener2D
 
 @onready var mining_raycast: RayCast2D = $MiningRaycast
 @onready var mine_timer = $MineTimer
@@ -53,6 +54,7 @@ var tile_index = -1
 var deleting = false
 var purify = false
 @onready var deleting_overlay = $CanvasLayer/DeletingOverlay
+@onready var pause_menu = $CanvasLayer/PauseMenu
 @onready var purify_overlay = $CanvasLayer/PurifyOverlay
 
 var inventory: Node
@@ -65,7 +67,9 @@ func _ready():
 	mine_timer.connect("timeout", _on_mine_timer_timeout)
 	build_menu.machine_selected.connect(on_machine_selected)
 	build_menu.tile_selected.connect(on_tile_selected)
+	pause_menu.quit_pressed.connect(_on_quit_pressed)
 	tilemap = get_tree().current_scene.get_node("TileMap")
+	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	$AnimationTree.active = true
 	victory_screen.hide()
 
@@ -137,6 +141,11 @@ func _input(event: InputEvent) -> void:
 					build_preview = null
 		
 		if event.is_action_pressed("cancel"):
+			if pause_menu.visible:
+				pause_menu.visible = false
+				return
+			if (!building and !deleting and !build_menu.visible):
+				pause_menu.visible = true
 			if building:
 				building = false
 				if is_instance_valid(build_preview):
@@ -309,6 +318,7 @@ func setup(player_data: Statics.PlayerData):
 	if is_multiplayer_authority():
 		camera.enabled = true
 		tilemap.player = self
+		audio_listener_2d.make_current()
 		if player_data.role == Statics.Role.SCIENTIST:
 			$CanvasLayer/ScientistPassive.visible = true
 
@@ -398,7 +408,7 @@ func cancel_build(m_name: String):
 func destroy_machine(m_name: String):
 	var machine = machine_container.get_node(m_name)
 	if machine.placed:
-		machine.queue_free()
+		machine.cancel_build()
 
 func mine_resource(resource: int):
 	mining_progress = 0
@@ -428,3 +438,20 @@ func try_delete_items():
 		var i = area as Item
 		if i:
 			i.destroy.rpc()
+
+func _on_quit_pressed():
+	if multiplayer.is_server():
+		_host_disconnected.rpc()
+	multiplayer.multiplayer_peer.close()
+	Game.players = []
+	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
+
+func _on_peer_disconnected(id: int):
+	if (str(id) == name):
+		Game.remove_player(id)
+		queue_free()
+
+@rpc("authority","call_remote","reliable")
+func _host_disconnected():
+	Game.players = []
+	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")

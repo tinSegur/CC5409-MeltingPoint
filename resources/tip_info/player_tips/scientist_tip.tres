@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MPTip" load_steps=3 format=3 uid="uid://bo1wgwmav1mvj"]
+
+[ext_resource type="Script" path="res://resources/tip_info/tip_info.gd" id="1_7vmdj"]
+[ext_resource type="Texture2D" uid="uid://cmk2beiwdvpq8" path="res://assets/ui/scientist_icon.png" id="1_lggi6"]
+
+[resource]
+script = ExtResource("1_7vmdj")
+name = "Scientist"
+icon = ExtResource("1_lggi6")
+description = "The Scientist is the smart one of the team. It can read the current temperature with its termometer and can purify the impure resource nodes of the map."
