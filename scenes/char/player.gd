@@ -52,8 +52,10 @@ var tile_selected = false
 var building_tile = false
 var tile_index = -1
 var deleting = false
+var purify = false
 @onready var deleting_overlay = $CanvasLayer/DeletingOverlay
 @onready var pause_menu = $CanvasLayer/PauseMenu
+@onready var purify_overlay = $CanvasLayer/PurifyOverlay
 
 var inventory: Node
 
@@ -87,6 +89,30 @@ func _input(event: InputEvent) -> void:
 						try_delete_items()
 				else:
 					try_delete_machine()
+			if purify:
+				var tile_coords = tilemap.get_tile_coords(get_global_mouse_position())
+				var res = tilemap.get_cell_tile_data(1, tile_coords)
+				if is_instance_valid(res):
+					var atlas_coords : Vector2i = tilemap.get_cell_atlas_coords(1,tile_coords)
+					var ore : Statics.Materials
+					if atlas_coords.y != 1:
+						return
+					match atlas_coords:
+						Vector2(0,1):
+							ore=Statics.Materials.IRON
+						Vector2(1,1):
+							ore=Statics.Materials.GOLD
+						Vector2(3,1):
+							ore=Statics.Materials.CRYSTALS
+					if inventory.check_stock(ore, 10):
+						tilemap.purify_ore.rpc(tile_coords)
+						if multiplayer.is_server():
+							inventory.remove_stock(ore, 10)
+						else:
+							inventory.remove_stock.rpc_id(1,ore, 10)
+					else:
+						place_error("Not Enough Resources",get_global_mouse_position())
+						
 			if !building:
 				mining = true
 				if mining_raycast.is_colliding():
@@ -114,11 +140,15 @@ func _input(event: InputEvent) -> void:
 			test()
 		
 		if event.is_action_pressed("build"):
+			if pause_menu.visible:
+				return
 			mining = false
 			build_menu.visible = !build_menu.visible
 			if build_menu.visible:
 				building_tile = false
 				tile_selected = false
+				purify = false
+				purify_overlay.visible = false
 				deleting = false
 				deleting_overlay.visible = false
 				mouse_area.monitoring = false
@@ -134,7 +164,7 @@ func _input(event: InputEvent) -> void:
 			if pause_menu.visible:
 				pause_menu.visible = false
 				return
-			if (!building and !deleting and !build_menu.visible):
+			if (!building and !deleting and !purify and !build_menu.visible and !victory_screen.visible):
 				pause_menu.visible = true
 			if building:
 				building = false
@@ -145,6 +175,8 @@ func _input(event: InputEvent) -> void:
 			mouse_area_col.shape.radius = 7
 			building_tile = false
 			tile_selected = false
+			purify = false
+			purify_overlay.visible = false
 			deleting = false
 			deleting_overlay.visible = false
 			tile_index = -1
@@ -181,6 +213,8 @@ func _input(event: InputEvent) -> void:
 				tile_index = (41 if tile_index == 37 else tile_index - 1)
 			
 		if event.is_action_pressed("delete"):
+			if pause_menu.visible:
+				return
 			deleting = !deleting
 			if deleting:
 				mouse_area.monitoring = true
@@ -189,6 +223,8 @@ func _input(event: InputEvent) -> void:
 				building = false
 				building_tile = false
 				tile_selected = false
+				purify = false
+				purify_overlay.visible = false
 				tile_index = -1
 				tilemap.clear_previews()
 			else:
@@ -197,6 +233,8 @@ func _input(event: InputEvent) -> void:
 				mouse_area_col.shape.radius = 7
 		
 		if event.is_action_pressed("Ability"):
+			if pause_menu.visible:
+				return
 			class_node.ability()
 
 func _physics_process(delta: float) -> void:
@@ -301,11 +339,12 @@ func setup(player_data: Statics.PlayerData):
 	mine_time = stat_dict.mine_time
 	mining_radius = stat_dict.mining_radius
 	
-	
 	if is_multiplayer_authority():
 		camera.enabled = true
 		tilemap.player = self
 		audio_listener_2d.make_current()
+		if player_data.role == Statics.Role.SCIENTIST:
+			$CanvasLayer/ScientistPassive.visible = true
 
 func _on_mine_timer_timeout():
 	if mining:
@@ -316,11 +355,28 @@ func test():
 	var tile_coords = tilemap.get_tile_coords(global_position)
 	var tile: TileData = tilemap.get_cell_tile_data(3, tile_coords)
 	if is_instance_valid(tile):
-		Debug.sprint(tile.get_custom_data("temperature"))
+		return tile.get_custom_data("temperature")
+	return 0
 
 func get_player_tile_position():
 	return tilemap.get_tile_coords(global_position)
 
+func get_ScientistPassive():
+	return $CanvasLayer/ScientistPassive
+
+
+func switch_Purify():
+	purify = !purify
+	purify_overlay.visible = purify
+	if purify:
+		building = false
+		building_tile = false
+		tile_selected = false
+		deleting = false
+		deleting_overlay.visible = false
+		tile_index = -1
+		tilemap.clear_previews()
+	
 @rpc
 func send_data(pos : Vector2, vel : Vector2, pivot_scale: int):
 	global_position = lerp(global_position, pos, 0.75)
@@ -421,6 +477,7 @@ func try_delete_items():
 func _on_quit_pressed():
 	if multiplayer.is_server():
 		_host_disconnected.rpc()
+		await get_tree().create_timer(0.2).timeout
 	multiplayer.multiplayer_peer.close()
 	Game.players = []
 	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
