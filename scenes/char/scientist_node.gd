@@ -39,13 +39,5 @@ func update_temp(temp : String):
 
 func ability():
 	#activar ovelay
-	
 	player.switch_Purify()
-	
-	#al hacer click verificar el bloque
-	
-	#cambiar atlas si es posible
-	
-	#dejar de trakear mouse
-	
 	#desactivar overlay

@@ -93,7 +93,26 @@ func _input(event: InputEvent) -> void:
 				var tile_coords = tilemap.get_tile_coords(get_global_mouse_position())
 				var res = tilemap.get_cell_tile_data(1, tile_coords)
 				if is_instance_valid(res):
-					tilemap.purify_ore(tile_coords)
+					var atlas_coords : Vector2i = tilemap.get_cell_atlas_coords(1,tile_coords)
+					var ore : Statics.Materials
+					if atlas_coords.y != 1:
+						return
+					match atlas_coords:
+						Vector2(0,1):
+							ore=Statics.Materials.IRON
+						Vector2(1,1):
+							ore=Statics.Materials.GOLD
+						Vector2(3,1):
+							ore=Statics.Materials.CRYSTALS
+					if inventory.check_stock(ore, 10):
+						tilemap.purify_ore.rpc(tile_coords)
+						if multiplayer.is_server():
+							inventory.remove_stock(ore, 10)
+						else:
+							inventory.remove_stock.rpc_id(1,ore, 10)
+					else:
+						place_error("Not Enough Resources",get_global_mouse_position())
+						
 			if !building:
 				mining = true
 				if mining_raycast.is_colliding():
@@ -210,7 +229,6 @@ func _input(event: InputEvent) -> void:
 				mouse_area_col.shape.radius = 7
 		
 		if event.is_action_pressed("Ability"):
-			Debug.sprint("ability pressed")
 			class_node.ability()
 
 func _physics_process(delta: float) -> void:
@@ -340,13 +358,10 @@ func get_player_tile_position():
 func get_ScientistPassive():
 	return $CanvasLayer/ScientistPassive
 
-func get_PurifyOverlay():
-	return purify_overlay
 
 func switch_Purify():
 	purify = !purify
 	purify_overlay.visible = purify
-	Debug.sprint(purify)
 	if purify:
 		building = false
 		building_tile = false

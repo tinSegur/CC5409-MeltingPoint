@@ -253,5 +253,8 @@ func clear_previews():
 	for coords in previews:
 		erase_cell(4, coords)
 
+@rpc("any_peer", "call_local", "reliable")
 func purify_ore(coords: Vector2i):
-	pass
+	var ore_atlas_coordinates : Vector2i = get_cell_atlas_coords(1, coords)
+	ore_atlas_coordinates.y = 0
+	set_cell(1, coords, 3, ore_atlas_coordinates)

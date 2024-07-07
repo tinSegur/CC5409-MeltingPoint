@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://8d3ys4aw51lk"]
+[gd_scene load_steps=23 format=3 uid="uid://8d3ys4aw51lk"]
 
 [ext_resource type="Script" path="res://scenes/char/player.gd" id="1_7q1sy"]
 [ext_resource type="PackedScene" uid="uid://dskjy6yd4quog" path="res://scenes/bullet.tscn" id="2_pyqhq"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c0xu2cniynmx2" path="res://scenes/ui/build_menu.tscn" id="4_sewft"]
 [ext_resource type="PackedScene" uid="uid://c58mc210m3nti" path="res://scenes/ui/victory_screen.tscn" id="4_ysssu"]
 [ext_resource type="PackedScene" uid="uid://48wa7sf15027" path="res://scenes/ui/inventory_display.tscn" id="5_56sa5"]
+[ext_resource type="Theme" uid="uid://bsov5mkb3jbwv" path="res://assets/ui/ui_theme.tres" id="7_4iad1"]
 [ext_resource type="PackedScene" uid="uid://cpdiqnkkmkw1q" path="res://scenes/ui/pause_menu.tscn" id="7_lpjm8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mash1"]
@@ -230,18 +231,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("7_4iad1")
 theme_override_styles/panel = SubResource("StyleBoxFlat_i2170")
 
 [node name="Label" type="Label" parent="CanvasLayer/DeletingOverlay"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.784314, 0.117647, 0, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 30
 text = "Deleting
 "
 uppercase = true
 
 [node name="ScientistPassive" type="PanelContainer" parent="CanvasLayer"]
+visible = false
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -253,6 +258,7 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("7_4iad1")
 
 [node name="TermometerColor" type="ColorRect" parent="CanvasLayer/ScientistPassive"]
 layout_mode = 2
@@ -261,6 +267,9 @@ color = Color(0.980392, 0.627451, 0.235294, 1)
 [node name="Temperature" type="Label" parent="CanvasLayer/ScientistPassive"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 20
 text = " T°"
 
 [node name="PurifyOverlay" type="PanelContainer" parent="CanvasLayer"]
@@ -271,13 +280,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("7_4iad1")
 theme_override_styles/panel = SubResource("StyleBoxFlat_avfco")
 
 [node name="Label" type="Label" parent="CanvasLayer/PurifyOverlay"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.352941, 0.313726, 0.901961, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 30
 text = " Purify
 "
 uppercase = true
