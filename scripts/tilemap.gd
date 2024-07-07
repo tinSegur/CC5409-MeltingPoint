@@ -6,6 +6,8 @@ var player: Player
 @onready var build_stream_player_2d = $BuildStreamPlayer2D
 @onready var mine_stream_player_2d = $MineStreamPlayer2D
 
+var ore_positions : Array[Vector2]
+
 var pipes_index = {
 	# Codificacion binaria: dddd iiii
 	# dddd = direccion

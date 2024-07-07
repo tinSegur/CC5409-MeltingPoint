@@ -12,6 +12,7 @@ extends Node2D
 @onready var inventory = $Inventory
 var players_ready = 0
 var variety = 0
+var generated : bool = false
 var iron_positions : Array[Vector2]
 var gold_positions : Array[Vector2]
 var crystal_positions : Array[Vector2]
@@ -29,7 +30,8 @@ func _ready() -> void:
 		player.global_position = Vector2(1350, 614)
 		players.add_child(player)
 		player.setup(player_data)
-	player_ready.rpc_id(1)
+	player_ready.rpc_id(1, multiplayer.get_unique_id())
+	Game.spawn_new_player.connect(_on_spawn_new_player)
 
 func _input(event):
 	if event.is_action_pressed("test"):
@@ -41,10 +43,14 @@ func _input(event):
 
 
 @rpc("call_local", "any_peer")
-func player_ready():
+func player_ready(id: int):
 	players_ready += 1
 	if players_ready == Game.players.size():
-		resource_generation()
+		if !generated:
+			generated = true
+			resource_generation()
+		#else:
+			#send_ore_positions.rpc_id(id)
 
 func resource_generation():
 	if is_multiplayer_authority():
@@ -112,6 +118,14 @@ func send_used_positions(positions: Vector2, ore : Statics.Materials):
 		Statics.Materials.CRYSTALS: 
 			crystal_positions.append(positions)
 
+func send_ore_positions(id: int):
+	for pos in iron_positions:
+		send_used_positions.rpc_id(id, pos, Statics.Materials.IRON)
+	for pos in gold_positions:
+		send_used_positions.rpc_id(id, pos, Statics.Materials.GOLD)
+	for pos in crystal_positions:
+		send_used_positions.rpc_id(id, pos, Statics.Materials.CRYSTALS)
+
 func _on_inventory_stock_variety(d):
 	if d:
 		variety += 1
@@ -121,3 +135,10 @@ func _on_inventory_stock_variety(d):
 	if variety == 2:
 		for player in players.get_children():
 			player.victory()
+
+func _on_spawn_new_player(id: int):
+	var player_data = Game.get_player(id)
+	var player = player_scene.instantiate()
+	player.global_position = Vector2(1350, 614)
+	players.add_child(player)
+	player.setup(player_data)

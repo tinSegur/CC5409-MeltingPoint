@@ -235,6 +235,7 @@ func player_ready(id: int):
 	elif reconnect:
 		status[id] = true
 		set_player_ready(id, status[id])
+		Game.new_player_ready.rpc(multiplayer.get_unique_id())
 		start_game()
 
 

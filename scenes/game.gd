@@ -15,6 +15,7 @@ var players: Array[Statics.PlayerData] = []
 signal upnp_completed(error)
 
 signal new_player(player: Statics.PlayerData)
+signal spawn_new_player(id: int)
 signal player_added(player: Statics.PlayerData)
 
 # Replace this with your own server port number between 1024 and 65535.
@@ -123,6 +124,10 @@ func send_info(info_dict: Dictionary) -> void:
 	send_info.rpc_id(multiplayer.get_remote_sender_id(), Game.get_current_player().to_dict())
 	new_player.emit(player)
 
+@rpc("any_peer", "reliable", "call_remote")
+func new_player_ready(id: int):
+	spawn_new_player.emit(id)
+	
 @rpc("any_peer","call_local","reliable")
 func test_rpc():
 	Debug.sprint("TestPrint")

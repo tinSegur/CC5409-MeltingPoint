@@ -11,14 +11,13 @@ role = 3
 [sub_resource type="Resource" id="Resource_whfqj"]
 script = ExtResource("2_jtkqd")
 name = "Client1"
-role = 4
+role = 1
 
 [sub_resource type="Resource" id="Resource_d74em"]
 script = ExtResource("2_jtkqd")
 name = "Client2"
-role = 5
+role = 2
 
 [node name="Game" type="Node"]
 script = ExtResource("1_fmbhi")
-multiplayer_test = false
 test_players = Array[ExtResource("2_jtkqd")]([SubResource("Resource_7n774"), SubResource("Resource_whfqj"), SubResource("Resource_d74em")])
