@@ -11,6 +11,7 @@ script = ExtResource("1_wqxfl")
 materials = Array[Resource("res://scenes/materials/material.gd")]([ExtResource("2_rlfp0"), ExtResource("3_l3aa2"), ExtResource("4_nnar2"), ExtResource("5_bdr7g")])
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

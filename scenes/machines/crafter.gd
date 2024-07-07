@@ -16,11 +16,14 @@ func place():
 	timer.start()
 
 func input_resource(item : MPMaterial, liquid : bool) -> Statics.INPUT_CODES:
-	if liquid:
-		internal_inv.add_stock(item.type, 1, Statics.Material_states.LIQUID)
+	if item.type == Statics.Materials.CRYSTALS:
+		if liquid:
+			internal_inv.add_stock(item.type, 1, Statics.Material_states.SOLID)
 	else:
-		internal_inv.add_stock(item.type, 1, Statics.Material_states.SOLID)
-	
+		if liquid:
+			internal_inv.add_stock(item.type, 1, Statics.Material_states.LIQUID)
+		else:
+			internal_inv.add_stock(item.type, 1, Statics.Material_states.SOLID)
 	return Statics.INPUT_CODES.ACCEPT
 
 func check_recipe_reqs(r : Recipe) -> bool:
@@ -45,7 +48,14 @@ func _on_timer_timeout():
 
 
 func _on_input_area_entered(area):
+	if !placed:
+		return
+	
 	var mat : MPMaterial = area.mat_data
 	var liquid : bool = area.liquid
+	
+	if mat.type == Statics.Materials.CRYSTALS:
+		liquid = area.inner_temp < 3
+
 	input_resource(mat, liquid)
 	area.destroy()

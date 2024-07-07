@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://bh2y738ylrnqm"]
+[gd_scene load_steps=19 format=3 uid="uid://bh2y738ylrnqm"]
 
 [ext_resource type="Script" path="res://scenes/machines/crafter.gd" id="1_nqlwn"]
 [ext_resource type="Texture2D" uid="uid://dyxvfkf178e24" path="res://assets/machines/crafter/crafter.png" id="2_o8gvy"]
 [ext_resource type="Resource" uid="uid://ddet442k06thk" path="res://scenes/materials/crystal.tres" id="2_yrhu2"]
 [ext_resource type="Script" path="res://scenes/machines/recipe.gd" id="3_qa8cw"]
 [ext_resource type="Script" path="res://scenes/machines/internal_inventory.gd" id="3_qny88"]
+[ext_resource type="Resource" uid="uid://gqldc7c0s0ce" path="res://resources/build_info/crafter_info.tres" id="4_3ny8h"]
 [ext_resource type="Resource" uid="uid://f004kgvtcc22" path="res://scenes/materials/iron.tres" id="4_8iyxv"]
 [ext_resource type="Resource" uid="uid://clmvr10nax25o" path="res://scenes/materials/gold.tres" id="5_6irh0"]
 [ext_resource type="PackedScene" uid="uid://cbmugsoctody6" path="res://scenes/machines/output.tscn" id="7_7qja8"]
@@ -12,8 +13,8 @@
 [sub_resource type="Resource" id="Resource_jixnh"]
 script = ExtResource("3_qa8cw")
 material = ExtResource("2_yrhu2")
-melt_reqs = Array[int]([0, 0, 0, 0, 0])
-solid_reqs = Array[int]([0, 0, 0, 0, 0])
+melt_reqs = Array[int]([0, 5, 0, 0, 0])
+solid_reqs = Array[int]([0, 0, 1, 5, 0])
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7a125"]
 atlas = ExtResource("2_o8gvy")
@@ -89,12 +90,15 @@ properties/4/spawn = true
 properties/4/replication_mode = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0e8ak"]
-size = Vector2(12, 52)
+size = Vector2(14, 52)
 
 [node name="Crafter" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_nqlwn")
 recipe = SubResource("Resource_jixnh")
-offset_vec = Vector2(0, 0)
+offset_vec = Vector2(9, 9)
+info = ExtResource("4_3ny8h")
 rotable = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -102,7 +106,6 @@ sprite_frames = SubResource("SpriteFrames_7da7u")
 frame_progress = 0.84226
 
 [node name="Hitbox" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 10
 
@@ -110,7 +113,6 @@ collision_mask = 10
 shape = SubResource("RectangleShape2D_3vvoo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("RectangleShape2D_xev7i")
 
 [node name="InternalInventory" type="Node" parent="."]
@@ -127,12 +129,11 @@ autostart = true
 replication_config = SubResource("SceneReplicationConfig_ypay3")
 
 [node name="Input" type="Area2D" parent="."]
-visible = false
 collision_layer = 10
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Input"]
-position = Vector2(-22, 0)
+position = Vector2(-23, 0)
 shape = SubResource("RectangleShape2D_0e8ak")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

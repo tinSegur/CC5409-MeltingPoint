@@ -40,6 +40,8 @@ func _input(event):
 		inventory.add_resource.rpc(Statics.Materials.GOLD, 10, Statics.Material_states.LIQUID)
 		inventory.add_resource.rpc(Statics.Materials.ADVANCED, 10, Statics.Material_states.SOLID)
 		inventory.add_resource.rpc(Statics.Materials.ADVANCED, 10, Statics.Material_states.LIQUID)
+		inventory.add_resource.rpc(Statics.Materials.CRYSTALS, 10, Statics.Material_states.SOLID)
+		inventory.add_resource.rpc(Statics.Materials.CRYSTALS, 10, Statics.Material_states.LIQUID)
 
 
 @rpc("call_local", "any_peer")

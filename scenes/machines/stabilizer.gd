@@ -32,6 +32,8 @@ func input_resource(item : MPMaterial, liquid : bool) -> Statics.INPUT_CODES:
 	return Statics.INPUT_CODES.ACCEPT
 
 func spawn_resource():
+	if material_queue.is_empty():
+		return
 	Debug.sprint("stabilizer spawn")
 	Debug.sprint(gold_charge)
 	if gold_charge > 0:
@@ -46,6 +48,9 @@ func spawn_resource():
 		set_charge(gold_charge)
 
 func _on_area_2d_2_area_entered(area):
+	if !placed:
+		return
+	
 	var mat : MPMaterial = area.mat_data
 	var liquid : bool = area.liquid
 	area.destroy()
