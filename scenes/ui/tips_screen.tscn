@@ -1,0 +1,109 @@
+[gd_scene load_steps=27 format=3 uid="uid://bgujvp6tfioxm"]
+
+[ext_resource type="Theme" uid="uid://bsov5mkb3jbwv" path="res://assets/ui/ui_theme.tres" id="1_bhr7k"]
+[ext_resource type="Texture2D" uid="uid://wk4qsp2dsnfg" path="res://assets/ui/menu_nine_patch.png" id="1_h5v4l"]
+[ext_resource type="Script" path="res://scenes/ui/tips_screen.gd" id="2_owuod"]
+[ext_resource type="Resource" uid="uid://cgi4pl0he7vvx" path="res://resources/tip_info/player_tips/scout_tip.tres" id="3_xy3ch"]
+[ext_resource type="PackedScene" uid="uid://ck4lacroc33bw" path="res://scenes/ui/tip_button.tscn" id="4_5df7j"]
+[ext_resource type="Resource" uid="uid://8d4p0sa7nq4b" path="res://resources/tip_info/player_tips/engineer_tip.tres" id="4_cxdvm"]
+[ext_resource type="Resource" uid="uid://bo1wgwmav1mvj" path="res://resources/tip_info/player_tips/scientist_tip.tres" id="4_kxupd"]
+[ext_resource type="Resource" uid="uid://b8n1hiiuapitx" path="res://resources/tip_info/map_tips/iron_tip.tres" id="6_mrop2"]
+[ext_resource type="Resource" uid="uid://ckpcrhilclh3u" path="res://resources/tip_info/player_tips/radar_tip.tres" id="6_ryp14"]
+[ext_resource type="Resource" uid="uid://cxbhnwbea66nf" path="res://resources/tip_info/map_tips/gold_tip.tres" id="7_txpb1"]
+[ext_resource type="Resource" uid="uid://ciceaobsg0ghl" path="res://resources/tip_info/map_tips/crystal_tip.tres" id="9_u1kbn"]
+[ext_resource type="Resource" uid="uid://bb0iaehtov5pt" path="res://resources/tip_info/map_tips/stable_crystal_tip.tres" id="10_3680v"]
+[ext_resource type="Resource" uid="uid://du57cjks7rilg" path="res://resources/build_info/platform_info.tres" id="11_a83l4"]
+[ext_resource type="Resource" uid="uid://drx6hvx5me61a" path="res://resources/tip_info/map_tips/melting_tip.tres" id="11_dgsly"]
+[ext_resource type="Resource" uid="uid://mvs17mq7yyb1" path="res://resources/build_info/ramp_info.tres" id="12_u1djg"]
+[ext_resource type="Resource" uid="uid://c6f7w44vbe48p" path="res://resources/build_info/wa_platform_info.tres" id="13_8pq3o"]
+[ext_resource type="Resource" uid="uid://lg164y7wu5es" path="res://resources/build_info/ladder_info.tres" id="14_fy6y1"]
+[ext_resource type="Resource" uid="uid://dasu103gg0xo7" path="res://resources/build_info/pipe_info.tres" id="15_kxjwg"]
+[ext_resource type="Resource" uid="uid://d0ntbd4skon4y" path="res://resources/build_info/extractor_info.tres" id="16_g2nbs"]
+[ext_resource type="Resource" uid="uid://spy6rrsf8grq" path="res://resources/build_info/miner_info.tres" id="17_50o5p"]
+[ext_resource type="Resource" uid="uid://bgmjvyug8ehhy" path="res://resources/build_info/pump_info.tres" id="18_cpwf0"]
+[ext_resource type="Resource" uid="uid://cqd11a67jomeq" path="res://resources/build_info/cutter_info.tres" id="19_pjy25"]
+[ext_resource type="Resource" uid="uid://plc5ncpomxft" path="res://resources/build_info/ad_miner_info.tres" id="20_b6va5"]
+[ext_resource type="Resource" uid="uid://cvd8jytnrybj6" path="res://resources/build_info/stabilizer_info.tres" id="21_rx8t4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oxi4n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nbawg"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+
+[node name="TipsScreen" type="MarginContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -51.0
+offset_right = 196.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_bhr7k")
+script = ExtResource("2_owuod")
+player_tips = Array[Resource("res://resources/tip_info/tip_info.gd")]([ExtResource("4_cxdvm"), ExtResource("4_kxupd"), ExtResource("3_xy3ch"), ExtResource("6_ryp14")])
+map_tips = Array[Resource("res://resources/tip_info/tip_info.gd")]([ExtResource("6_mrop2"), ExtResource("7_txpb1"), ExtResource("9_u1kbn"), ExtResource("10_3680v"), ExtResource("11_dgsly")])
+machine_tips = Array[Resource("res://resources/build_info/build_info.gd")]([ExtResource("11_a83l4"), ExtResource("12_u1djg"), ExtResource("13_8pq3o"), ExtResource("14_fy6y1"), ExtResource("15_kxjwg"), ExtResource("16_g2nbs"), ExtResource("17_50o5p"), ExtResource("18_cpwf0"), ExtResource("19_pjy25"), ExtResource("20_b6va5"), ExtResource("21_rx8t4")])
+tip_button = ExtResource("4_5df7j")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_oxi4n")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PanelContainer"]
+layout_mode = 2
+texture = ExtResource("1_h5v4l")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="TipSelector" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/TipSelector"]
+layout_mode = 2
+text = "Tips"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/HBoxContainer/TipSelector"]
+custom_minimum_size = Vector2(125, 175)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="TipsContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/TipSelector/ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Back" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer/TipSelector"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Back"
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_nbawg")
+
+[node name="TipDisplay" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3

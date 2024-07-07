@@ -18,3 +18,4 @@ name = "Warning platform"
 icon = ExtResource("3_6jdkg")
 description = "Cosmetic variation of the platforms. Has 5 variations."
 costs = Array[ExtResource("2_21j0v")]([SubResource("Resource_6sk3m")])
+machine_scene = null

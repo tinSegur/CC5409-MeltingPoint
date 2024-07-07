@@ -6,7 +6,7 @@ extends Resource
 @export var button : Texture2D
 @export var b_pressed : Texture2D
 @export var b_hover : Texture2D
-@export var description : String
+@export_multiline var description : String
 @export var costs : Array[MPCost]
 @export_file var machine_scene
  
@@ -27,7 +27,7 @@ func render_info(parent_node: VBoxContainer):
 	var desc_label : RichTextLabel = RichTextLabel.new()
 	desc_label.text = description
 	desc_label.fit_content = true
-	desc_label["theme_override_font_sizes/normal_font_size"] = 8
+	desc_label["theme_override_font_sizes/normal_font_size"] = 16
 	parent_node.add_child(desc_label)
 	
 	var cost_grid : GridContainer = GridContainer.new()
@@ -42,5 +42,5 @@ func render_info(parent_node: VBoxContainer):
 		
 		var cost_label : Label = Label.new()
 		cost_label.text = str(cost.amount)
-		cost_label["theme_override_font_sizes/font_size"] = 8
+		cost_label["theme_override_font_sizes/font_size"] = 12
 		cost_grid.add_child(cost_label)

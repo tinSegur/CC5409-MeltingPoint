@@ -5,14 +5,14 @@ var player: Player
 @export var machines : Array[MPBuildInfo]
 @export var mch_button : PackedScene
 
-@onready var miner_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/MinerButton
+#@onready var miner_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/MinerButton
 @onready var platform_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/PlatformButton
 @onready var pipe_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/PipeButton
-@onready var ext_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/OutputButton
-@onready var pump_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/PumpButton
-@onready var cutter_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/CutterButton
+#@onready var ext_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/OutputButton
+#@onready var pump_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/PumpButton
+#@onready var cutter_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/CutterButton
 @onready var ad_miner_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/AdMinerButton
-@onready var stabilizer_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/StabilizerButton
+#@onready var stabilizer_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/StabilizerButton
 @onready var ramp_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/RampButton
 @onready var ladder_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/LadderButton
 @onready var wa_platform_button = $PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer/WaPlatformButton
@@ -41,8 +41,8 @@ func _ready():
 		
 		
 	
-	miner_button.pressed.connect(_miner_selected)
-	miner_button.mouse_entered.connect(_miner_hover)
+	#miner_button.pressed.connect(_miner_selected)
+	#miner_button.mouse_entered.connect(_miner_hover)
 	
 	platform_button.pressed.connect(_platform_selected)
 	platform_button.mouse_entered.connect(_platform_hover)
@@ -50,20 +50,20 @@ func _ready():
 	pipe_button.pressed.connect(_pipe_selected)
 	pipe_button.mouse_entered.connect(_pipe_hover)
 	
-	ext_button.pressed.connect(_extractor_selected)
-	ext_button.mouse_entered.connect(_extractor_hover)
+	#ext_button.pressed.connect(_extractor_selected)
+	#ext_button.mouse_entered.connect(_extractor_hover)
 	
-	pump_button.pressed.connect(_pump_selected)
-	pump_button.mouse_entered.connect(_pump_hover)
+	#pump_button.pressed.connect(_pump_selected)
+	#pump_button.mouse_entered.connect(_pump_hover)
 	
-	cutter_button.pressed.connect(_cutter_selected)
-	cutter_button.mouse_entered.connect(_cutter_hover)
+	#cutter_button.pressed.connect(_cutter_selected)
+	#cutter_button.mouse_entered.connect(_cutter_hover)
 	
 	ad_miner_button.pressed.connect(_ad_miner_selected)
 	ad_miner_button.mouse_entered.connect(_ad_miner_hover)
 	
-	stabilizer_button.pressed.connect(_stabilizer_selected)
-	stabilizer_button.mouse_entered.connect(_stabilizer_hover)
+	#stabilizer_button.pressed.connect(_stabilizer_selected)
+	#stabilizer_button.mouse_entered.connect(_stabilizer_hover)
 	
 	ramp_button.pressed.connect(_ramp_selected)
 	ramp_button.mouse_entered.connect(_ramp_hover)

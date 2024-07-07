@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dj1bq1lqrooa6"]
+
+[ext_resource type="Script" path="res://scenes/ui/menu_item.gd" id="1_lmiex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ugdk"]
+size = Vector2(16, 16)
+
+[node name="MenuItem" type="Area2D"]
+scale = Vector2(0.5, 0.5)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_lmiex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3ugdk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

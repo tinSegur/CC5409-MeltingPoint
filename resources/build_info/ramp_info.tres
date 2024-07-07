@@ -18,3 +18,4 @@ name = "Ramp"
 icon = ExtResource("3_apefk")
 description = "Diagonal platform for easier movement. Can be flipped."
 costs = Array[ExtResource("2_p7xou")]([SubResource("Resource_wyk3r")])
+machine_scene = null

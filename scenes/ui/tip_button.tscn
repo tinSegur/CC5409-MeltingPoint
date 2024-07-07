@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck4lacroc33bw"]
+
+[ext_resource type="Script" path="res://scenes/ui/tip_button.gd" id="1_xjguw"]
+
+[node name="TipButton" type="Button"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 16
+text = "Name"
+clip_text = true
+script = ExtResource("1_xjguw")
