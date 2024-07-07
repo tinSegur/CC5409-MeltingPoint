@@ -38,6 +38,10 @@ func _input(event):
 		inventory.add_resource.rpc(Statics.Materials.IRON, 10, Statics.Material_states.LIQUID)
 		inventory.add_resource.rpc(Statics.Materials.GOLD, 10, Statics.Material_states.SOLID)
 		inventory.add_resource.rpc(Statics.Materials.GOLD, 10, Statics.Material_states.LIQUID)
+		inventory.add_resource.rpc(Statics.Materials.ADVANCED, 10, Statics.Material_states.SOLID)
+		inventory.add_resource.rpc(Statics.Materials.ADVANCED, 10, Statics.Material_states.LIQUID)
+		inventory.add_resource.rpc(Statics.Materials.CRYSTALS, 10, Statics.Material_states.SOLID)
+		inventory.add_resource.rpc(Statics.Materials.CRYSTALS, 10, Statics.Material_states.LIQUID)
 
 
 @rpc("call_local", "any_peer")
@@ -118,6 +122,6 @@ func _on_inventory_stock_variety(d):
 	else:
 		variety -= 1
 	
-	if variety == 2:
+	if variety == 8:
 		for player in players.get_children():
 			player.victory()

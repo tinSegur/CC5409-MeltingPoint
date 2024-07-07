@@ -35,3 +35,5 @@ shape = SubResource("RectangleShape2D_jnega")
 
 [node name="Input" parent="." instance=ExtResource("3_3puih")]
 scale = Vector2(4.75, 4.75)
+
+[node name="Timer" type="Timer" parent="."]

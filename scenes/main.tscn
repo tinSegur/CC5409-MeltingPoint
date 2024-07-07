@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b5hufqs7sbm01"]
+[gd_scene load_steps=23 format=3 uid="uid://b5hufqs7sbm01"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_ysfbh"]
 [ext_resource type="PackedScene" uid="uid://8d3ys4aw51lk" path="res://scenes/char/player.tscn" id="2_jyiyy"]
@@ -12,10 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://b4n2dbk141yi8" path="res://assets/machines/pipes/pipe_tilemap.png" id="8_lccsp"]
 [ext_resource type="AudioStream" uid="uid://db23ssifmrixb" path="res://assets/audio/build_sound.wav" id="10_0xsmw"]
 [ext_resource type="PackedScene" uid="uid://c8yc16m21f7p6" path="res://scenes/machines/hub.tscn" id="10_bvumi"]
-[ext_resource type="Resource" uid="uid://f004kgvtcc22" path="res://scenes/materials/iron.tres" id="11_old2k"]
 [ext_resource type="AudioStream" uid="uid://dla3koce06syw" path="res://assets/audio/dig_sound.wav" id="11_pllwk"]
-[ext_resource type="Resource" uid="uid://clmvr10nax25o" path="res://scenes/materials/gold.tres" id="12_o5bs8"]
-[ext_resource type="Resource" uid="uid://ddet442k06thk" path="res://scenes/materials/crystal.tres" id="13_1vmug"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6da87"]
 texture = ExtResource("3_jasfh")
@@ -894,11 +891,10 @@ stream = ExtResource("10_0xsmw")
 stream = ExtResource("11_pllwk")
 
 [node name="MachineSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/machines/miner.tscn", "res://scenes/machines/hub_output.tscn", "res://scenes/machines/cutter.tscn", "res://scenes/machines/pump.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/machines/miner.tscn", "res://scenes/machines/hub_output.tscn", "res://scenes/machines/cutter.tscn", "res://scenes/machines/pump.tscn", "res://scenes/machines/stabilizer.tscn", "res://scenes/machines/advanced_miner.tscn", "res://scenes/machines/crafter.tscn", "res://scenes/machines/overclocker.tscn")
 spawn_path = NodePath("../Machines")
 
 [node name="Inventory" parent="." instance=ExtResource("7_v3a7n")]
-materials = Array[Resource("res://scenes/materials/material.gd")]([ExtResource("11_old2k"), ExtResource("12_o5bs8"), ExtResource("13_1vmug")])
 
 [node name="Hub" parent="." instance=ExtResource("10_bvumi")]
 position = Vector2(1350, 594)

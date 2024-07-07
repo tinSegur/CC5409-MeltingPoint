@@ -27,6 +27,12 @@ func kformat(n : int) -> String:
 	if leading == 0:
 		form = form.substr(0, 2) + "." + form[3]
 	else:
-		form = form.substr(0, leading-1) + "." + form[leading]
+		form = form.substr(0, leading) + "." + form[leading]
+	
+	match order:
+		1:
+			form = form + 'k'
+		2:
+			form = form + 'm'
 
 	return form

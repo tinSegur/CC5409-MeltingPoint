@@ -7,8 +7,6 @@ func _ready():
 
 @onready var resource_detector = $ResourceDetector
 
-
-
 @rpc("call_local", "any_peer")
 func place():
 	timer.timeout.connect(spawn_resource)
@@ -31,9 +29,9 @@ func is_valid_place() -> bool:
 			var tile_coords = tilemap.get_tile_coords(global_position + Vector2(0, 20).rotated(rotation))
 			var tile = tilemap.get_cell_tile_data(1, tile_coords)
 			if is_instance_valid(tile):
-				if tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(0,0):
+				if tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(0,0) or tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(3, 0):
 					resource = true
-	#Debug.sprint(str((bodies.size() - 1) == 0) + "," + str(resource))
+	Debug.sprint(str((bodies.size() - 1) == 0) + "," + str(resource))
 	#Debug.sprint(offset_vec)
 	return ((bodies.size()-1) == 0) and resource
 

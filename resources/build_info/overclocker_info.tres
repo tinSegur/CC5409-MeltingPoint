@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=6 format=3 uid="uid://bi8m013mcgig0"]
+
+[ext_resource type="Texture2D" uid="uid://bj1nqrywa8ujk" path="res://assets/machines/overclocker/overclocker_button_hover.png" id="1_m47fw"]
+[ext_resource type="Texture2D" uid="uid://3p7816sjv2ch" path="res://assets/machines/overclocker/overclocker_button_pressed.png" id="2_nv84s"]
+[ext_resource type="Texture2D" uid="uid://cbu6koidxx7r5" path="res://assets/machines/overclocker/overclocker_button_base.png" id="3_way7t"]
+[ext_resource type="Texture2D" uid="uid://b1bu1khine8sj" path="res://assets/machines/overclocker/overclocker_icon.png" id="5_sigti"]
+[ext_resource type="Script" path="res://resources/build_info/build_info.gd" id="6_i3lin"]
+
+[resource]
+script = ExtResource("6_i3lin")
+name = "Overclocker"
+icon = ExtResource("5_sigti")
+button = ExtResource("3_way7t")
+b_pressed = ExtResource("2_nv84s")
+b_hover = ExtResource("1_m47fw")
+description = "overclocks things
+"
+costs = Array[Resource("res://resources/build_info/cost_info.gd")]([])
+machine_scene = "res://scenes/machines/overclocker.tscn"

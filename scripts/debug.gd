@@ -12,6 +12,9 @@ func _ready() -> void:
 
 # screen print
 func sprint(message: Variant, seconds: int = 2) -> void:
+	if OS.has_feature("standalone"):
+		return
+	
 	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
 		print(message)
 	else:

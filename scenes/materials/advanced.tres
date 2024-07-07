@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("1_v2sx2")
 inventory_sprite = ExtResource("1_fllvo")
-type = 0
+type = 3
 melting_point = 2
 breaking_delta = 100.0
 can_break = false

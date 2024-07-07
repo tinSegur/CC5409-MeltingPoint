@@ -437,7 +437,7 @@ func place_error(msg: String, pos: Vector2):
 @rpc("call_local", "reliable")
 func cancel_build(m_name: String):
 	var machine = machine_container.get_node(m_name)
-	machine.queue_free()
+	machine.cancel_build()
 	
 @rpc("call_local", "reliable")
 func destroy_machine(m_name: String):

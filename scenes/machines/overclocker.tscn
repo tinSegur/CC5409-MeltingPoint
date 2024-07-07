@@ -1,0 +1,109 @@
+[gd_scene load_steps=14 format=3 uid="uid://hpka22rig76k"]
+
+[ext_resource type="Script" path="res://scenes/machines/overclocker.gd" id="1_2ajc5"]
+[ext_resource type="Texture2D" uid="uid://c1hcpk4yhqaet" path="res://assets/machines/overclocker/overclocker.png" id="2_4adyh"]
+[ext_resource type="Resource" uid="uid://bi8m013mcgig0" path="res://resources/build_info/overclocker_info.tres" id="2_17up1"]
+[ext_resource type="PackedScene" uid="uid://cbmugsoctody6" path="res://scenes/machines/output.tscn" id="3_eosxa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pkiv"]
+atlas = ExtResource("2_4adyh")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dkan"]
+atlas = ExtResource("2_4adyh")
+region = Rect2(18, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fm31b"]
+atlas = ExtResource("2_4adyh")
+region = Rect2(36, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2yx80"]
+atlas = ExtResource("2_4adyh")
+region = Rect2(54, 0, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mmiet"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6pkiv")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_3dkan")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fm31b")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_2yx80")
+}],
+"loop": true,
+"name": &"default",
+"speed": 13.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7d3tn"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l7fin"]
+size = Vector2(16, 16)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_g7urf"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:modulate")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:builder_id")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:offset_vec")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_48r4o"]
+radius = 63.1269
+
+[node name="Overclocker" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_2ajc5")
+offset_vec = Vector2(9, 9)
+info = ExtResource("2_17up1")
+rotable = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mmiet")
+frame_progress = 0.567562
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_7d3tn")
+
+[node name="Output" parent="." instance=ExtResource("3_eosxa")]
+position = Vector2(10, 0)
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_l7fin")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_g7urf")
+
+[node name="MachineDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MachineDetector"]
+shape = SubResource("CircleShape2D_48r4o")
+
+[connection signal="body_entered" from="MachineDetector" to="." method="_on_machine_detector_body_entered"]
+[connection signal="body_exited" from="MachineDetector" to="." method="_on_machine_detector_body_exited"]
