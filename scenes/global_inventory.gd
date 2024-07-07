@@ -56,6 +56,7 @@ func add_stock(id : Statics.Materials, amount : int = 1, state : Statics.Materia
 		return
 	set_stock(id, stocks[id].get_amount(state) + amount, state)
 
+@rpc("any_peer","call_remote","reliable")
 func remove_stock(id : Statics.Materials, amount : int = 1, state : Statics.Material_states = Statics.Material_states.SOLID):
 	set_stock(id, stocks[id].get_amount(state) - amount, state)
 
