@@ -2,7 +2,7 @@ class_name ScientistNode
 extends ClassNode
 
 var player: Player
-var ScientistPassive: PanelContainer
+var ScientistPassive: MarginContainer
 var TempLabel : Label
 var TempColor : ColorRect
 

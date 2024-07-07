@@ -140,6 +140,8 @@ func _input(event: InputEvent) -> void:
 			test()
 		
 		if event.is_action_pressed("build"):
+			if pause_menu.visible:
+				return
 			mining = false
 			build_menu.visible = !build_menu.visible
 			if build_menu.visible:
@@ -162,7 +164,7 @@ func _input(event: InputEvent) -> void:
 			if pause_menu.visible:
 				pause_menu.visible = false
 				return
-			if (!building and !deleting and !build_menu.visible):
+			if (!building and !deleting and !purify and !build_menu.visible and !victory_screen.visible):
 				pause_menu.visible = true
 			if building:
 				building = false
@@ -211,6 +213,8 @@ func _input(event: InputEvent) -> void:
 				tile_index = (41 if tile_index == 37 else tile_index - 1)
 			
 		if event.is_action_pressed("delete"):
+			if pause_menu.visible:
+				return
 			deleting = !deleting
 			if deleting:
 				mouse_area.monitoring = true
@@ -229,6 +233,8 @@ func _input(event: InputEvent) -> void:
 				mouse_area_col.shape.radius = 7
 		
 		if event.is_action_pressed("Ability"):
+			if pause_menu.visible:
+				return
 			class_node.ability()
 
 func _physics_process(delta: float) -> void:
@@ -471,6 +477,7 @@ func try_delete_items():
 func _on_quit_pressed():
 	if multiplayer.is_server():
 		_host_disconnected.rpc()
+		await get_tree().create_timer(0.2).timeout
 	multiplayer.multiplayer_peer.close()
 	Game.players = []
 	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")

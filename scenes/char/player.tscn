@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://8d3ys4aw51lk"]
+[gd_scene load_steps=24 format=3 uid="uid://8d3ys4aw51lk"]
 
 [ext_resource type="Script" path="res://scenes/char/player.gd" id="1_7q1sy"]
 [ext_resource type="PackedScene" uid="uid://dskjy6yd4quog" path="res://scenes/bullet.tscn" id="2_pyqhq"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://48wa7sf15027" path="res://scenes/ui/inventory_display.tscn" id="5_56sa5"]
 [ext_resource type="Theme" uid="uid://bsov5mkb3jbwv" path="res://assets/ui/ui_theme.tres" id="7_4iad1"]
 [ext_resource type="PackedScene" uid="uid://cpdiqnkkmkw1q" path="res://scenes/ui/pause_menu.tscn" id="7_lpjm8"]
+[ext_resource type="Texture2D" uid="uid://b2bgsp2phdh56" path="res://assets/ui/menu_nine_patch_alt.png" id="8_1msjj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mash1"]
 radius = 6.0
@@ -245,33 +246,6 @@ text = "Deleting
 "
 uppercase = true
 
-[node name="ScientistPassive" type="PanelContainer" parent="CanvasLayer"]
-visible = false
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -40.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme = ExtResource("7_4iad1")
-
-[node name="TermometerColor" type="ColorRect" parent="CanvasLayer/ScientistPassive"]
-layout_mode = 2
-color = Color(0.980392, 0.627451, 0.235294, 1)
-
-[node name="Temperature" type="Label" parent="CanvasLayer/ScientistPassive"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 8
-theme_override_font_sizes/font_size = 20
-text = " T°"
-
 [node name="PurifyOverlay" type="PanelContainer" parent="CanvasLayer"]
 visible = false
 layout_direction = 3
@@ -293,6 +267,50 @@ theme_override_font_sizes/font_size = 30
 text = " Purify
 "
 uppercase = true
+
+[node name="ScientistPassive" type="MarginContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -48.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("7_4iad1")
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TermometerColor" type="ColorRect" parent="CanvasLayer/ScientistPassive"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.980392, 0.627451, 0.235294, 1)
+
+[node name="Temperature" type="Label" parent="CanvasLayer/ScientistPassive"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 20
+text = " T°"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/ScientistPassive"]
+layout_mode = 2
+texture = ExtResource("8_1msjj")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("7_lpjm8")]
 visible = false
