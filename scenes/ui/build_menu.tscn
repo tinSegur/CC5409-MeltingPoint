@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c0xu2cniynmx2"]
+[gd_scene load_steps=32 format=3 uid="uid://c0xu2cniynmx2"]
 
 [ext_resource type="Theme" uid="uid://bsov5mkb3jbwv" path="res://assets/ui/ui_theme.tres" id="1_67dro"]
 [ext_resource type="Script" path="res://scenes/ui/build_menu.gd" id="1_71fyl"]
@@ -17,7 +17,6 @@
 [ext_resource type="Resource" uid="uid://gqldc7c0s0ce" path="res://resources/build_info/crafter_info.tres" id="9_bitse"]
 [ext_resource type="Texture2D" uid="uid://cvt5v1fal7lf7" path="res://assets/machines/pipes/pipe_button_pressed.png" id="9_ni04f"]
 [ext_resource type="Texture2D" uid="uid://c0xfanjai2hk1" path="res://assets/machines/pipes/pipe_button_hover.png" id="10_1sese"]
-[ext_resource type="Resource" uid="uid://bi8m013mcgig0" path="res://resources/build_info/overclocker_info.tres" id="10_jc55h"]
 [ext_resource type="Texture2D" uid="uid://cqrhrkr583ek5" path="res://assets/machines/advanced_miner/advanced_miner_button_base.png" id="20_7am7f"]
 [ext_resource type="Texture2D" uid="uid://bld8p6s1op50i" path="res://assets/machines/advanced_miner/advanced_miner_button_pressed.png" id="21_oc1k1"]
 [ext_resource type="Texture2D" uid="uid://r30k0dor1lxn" path="res://assets/machines/advanced_miner/advanced_miner_button_hover.png" id="22_ndin1"]
@@ -45,7 +44,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_67dro")
 script = ExtResource("1_71fyl")
-machines = Array[Resource("res://resources/build_info/build_info.gd")]([ExtResource("3_ubhvk"), ExtResource("4_aq5vg"), ExtResource("5_mf0ls"), ExtResource("2_favnl"), ExtResource("6_5j35g"), ExtResource("8_8su2j"), ExtResource("9_bitse"), ExtResource("10_jc55h")])
+machines = Array[Resource("res://resources/build_info/build_info.gd")]([ExtResource("3_ubhvk"), ExtResource("4_aq5vg"), ExtResource("5_mf0ls"), ExtResource("2_favnl"), ExtResource("6_5j35g"), ExtResource("8_8su2j"), ExtResource("9_bitse")])
 mch_button = ExtResource("7_hkers")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

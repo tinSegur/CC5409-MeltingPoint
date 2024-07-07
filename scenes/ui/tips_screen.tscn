@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bgujvp6tfioxm"]
+[gd_scene load_steps=28 format=3 uid="uid://bgujvp6tfioxm"]
 
 [ext_resource type="Theme" uid="uid://bsov5mkb3jbwv" path="res://assets/ui/ui_theme.tres" id="1_bhr7k"]
 [ext_resource type="Texture2D" uid="uid://wk4qsp2dsnfg" path="res://assets/ui/menu_nine_patch.png" id="1_h5v4l"]
@@ -24,6 +24,7 @@
 [ext_resource type="Resource" uid="uid://cqd11a67jomeq" path="res://resources/build_info/cutter_info.tres" id="19_pjy25"]
 [ext_resource type="Resource" uid="uid://plc5ncpomxft" path="res://resources/build_info/ad_miner_info.tres" id="20_b6va5"]
 [ext_resource type="Resource" uid="uid://cvd8jytnrybj6" path="res://resources/build_info/stabilizer_info.tres" id="21_rx8t4"]
+[ext_resource type="Resource" uid="uid://bi8m013mcgig0" path="res://resources/build_info/overclocker_info.tres" id="23_otlfr"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oxi4n"]
 
@@ -47,7 +48,7 @@ theme = ExtResource("1_bhr7k")
 script = ExtResource("2_owuod")
 player_tips = Array[Resource("res://resources/tip_info/tip_info.gd")]([ExtResource("4_cxdvm"), ExtResource("4_kxupd"), ExtResource("3_xy3ch"), ExtResource("6_ryp14")])
 map_tips = Array[Resource("res://resources/tip_info/tip_info.gd")]([ExtResource("6_mrop2"), ExtResource("7_txpb1"), ExtResource("9_u1kbn"), ExtResource("10_3680v"), ExtResource("11_dgsly")])
-machine_tips = Array[Resource("res://resources/build_info/build_info.gd")]([ExtResource("11_a83l4"), ExtResource("12_u1djg"), ExtResource("13_8pq3o"), ExtResource("14_fy6y1"), ExtResource("15_kxjwg"), ExtResource("16_g2nbs"), ExtResource("17_50o5p"), ExtResource("18_cpwf0"), ExtResource("19_pjy25"), ExtResource("20_b6va5"), ExtResource("21_rx8t4")])
+machine_tips = Array[Resource("res://resources/build_info/build_info.gd")]([ExtResource("11_a83l4"), ExtResource("12_u1djg"), ExtResource("13_8pq3o"), ExtResource("14_fy6y1"), ExtResource("15_kxjwg"), ExtResource("16_g2nbs"), ExtResource("17_50o5p"), ExtResource("18_cpwf0"), ExtResource("19_pjy25"), ExtResource("20_b6va5"), ExtResource("21_rx8t4"), ExtResource("23_otlfr")])
 tip_button = ExtResource("4_5df7j")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

@@ -9,7 +9,7 @@
 script = ExtResource("1_rhokj")
 inventory_sprite = ExtResource("1_ij4nv")
 type = 0
-melting_point = 3
+melting_point = 4
 breaking_delta = 2.0
 can_break = false
 can_melt = true

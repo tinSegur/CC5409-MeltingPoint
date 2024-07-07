@@ -241,7 +241,7 @@ shape = SubResource("RectangleShape2D_q7y4d")
 replication_config = SubResource("SceneReplicationConfig_yqx4d")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 2.0
 
 [node name="Output" parent="." instance=ExtResource("3_sctoj")]
 position = Vector2(0, -22)

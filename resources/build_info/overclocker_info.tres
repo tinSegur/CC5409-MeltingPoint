@@ -13,7 +13,6 @@ icon = ExtResource("5_sigti")
 button = ExtResource("3_way7t")
 b_pressed = ExtResource("2_nv84s")
 b_hover = ExtResource("1_m47fw")
-description = "overclocks things
-"
+description = "Exclusive to the Engineer, speeds up nearby machines. Only one can exist in the world. Press H as the Engineer to create it."
 costs = Array[Resource("res://resources/build_info/cost_info.gd")]([])
 machine_scene = "res://scenes/machines/overclocker.tscn"

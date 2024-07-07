@@ -120,7 +120,7 @@ func _input(event: InputEvent) -> void:
 					var dir = Vector2.ZERO.direction_to(mining_raycast.target_position)
 					mining_coords = tilemap.get_tile_coords(collision_point + dir)
 					tilemap.breaking(mining_coords, 0)
-					mine_timer.start(0.5)
+					mine_timer.start(mine_time)
 			else:
 				if is_instance_valid(build_preview):
 					try_place_machine.rpc_id(1, build_preview.name)
@@ -349,7 +349,7 @@ func setup(player_data: Statics.PlayerData):
 func _on_mine_timer_timeout():
 	if mining:
 		mining_progress += 1
-		mine_timer.start(0.5)
+		mine_timer.start(mine_time)
 
 func test():
 	var tile_coords = tilemap.get_tile_coords(global_position)

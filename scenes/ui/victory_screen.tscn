@@ -1,4 +1,9 @@
-[gd_scene format=3 uid="uid://c58mc210m3nti"]
+[gd_scene load_steps=4 format=3 uid="uid://c58mc210m3nti"]
+
+[ext_resource type="Theme" uid="uid://bsov5mkb3jbwv" path="res://assets/ui/ui_theme.tres" id="1_boahl"]
+[ext_resource type="Texture2D" uid="uid://wk4qsp2dsnfg" path="res://assets/ui/menu_nine_patch.png" id="2_x3dar"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f0btv"]
 
 [node name="VictoryScreen" type="MarginContainer"]
 anchors_preset = 8
@@ -14,12 +19,26 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("1_boahl")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_x3dar")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(128, 32)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_f0btv")
 
 [node name="Label" type="Label" parent="PanelContainer"]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
 text = "Victory"
 horizontal_alignment = 1

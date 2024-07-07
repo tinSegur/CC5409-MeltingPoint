@@ -42,7 +42,7 @@ func overclock_machine(machine : Machine):
 		return
 	
 	if machine.placed:
-		machine.modulate = Color(1.0, 1.0, 0.5, 1.0)
+		machine.modulate = Color(0.9, 0.7, 1.0, 1.0)
 		if placed:
 			machine.timer.wait_time = machine.timer.wait_time/2
 
