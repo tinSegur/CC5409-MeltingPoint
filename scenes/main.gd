@@ -55,12 +55,12 @@ func resource_generation():
 		var rng = RandomNumberGenerator.new()
 		var _used_positions = [Vector2(-1,-1)]
 		# Iron
-		var N_resources = rng.randi_range(10, 15)
+		var N_resources = Game.iron_amount
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
 			var pure_prob: float = 1.0
 			while _used_positions.has(x):
-				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits_iron[0],y_limits_iron[1]))
+				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(Game.iron_min,Game.iron_max))
 			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
 				continue
 			_used_positions.append(x)
@@ -71,12 +71,12 @@ func resource_generation():
 			send_used_positions.rpc(x,Statics.Materials.IRON)
 			N_resources-=1
 		# Gold
-		N_resources = rng.randi_range(10, 15)
+		N_resources = Game.gold_amount
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
 			var pure_prob: float = 1.0
 			while _used_positions.has(x):
-				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits_gold[0],y_limits_gold[1]))
+				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(Game.gold_min,Game.gold_max))
 			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
 				continue
 			_used_positions.append(x)
@@ -87,12 +87,12 @@ func resource_generation():
 			send_used_positions.rpc(x,Statics.Materials.GOLD)
 			N_resources-=1
 		# Crystal
-		N_resources = rng.randi_range(8, 12)
+		N_resources = Game.crystal_amount
 		while N_resources!=0:
 			var x = Vector2(-1,-1)
 			var pure_prob: float = 1.0
 			while _used_positions.has(x):
-				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(y_limits_crystal[0],y_limits_crystal[1]))
+				x = Vector2(rng.randi_range(x_limits[0],x_limits[1]),rng.randi_range(Game.crystal_min,Game.crystal_max))
 			if !is_instance_valid(tile_map.get_cell_tile_data(0, x)):
 				continue
 			_used_positions.append(x)
