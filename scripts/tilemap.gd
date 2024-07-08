@@ -181,7 +181,7 @@ func place_tile(coords: Vector2i, index: int):
 	return false
 
 func update_pipe(coords: Vector2i):
-	#Debug.sprint(coords)
+	##Debug.sprint(coords)
 	var pipe = get_cell_tile_data(0, coords)
 	var dir = pipe.get_custom_data("direction")
 	var other: TileData

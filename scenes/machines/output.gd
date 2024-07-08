@@ -49,8 +49,8 @@ func generate(index: int, amount: int, state : int = Statics.Material_states.SOL
 				
 				if stable_mode:
 					item.inner_temp = output_temp
-		else:
-			Debug.sprint("invalid pipe")
+		#else:
+			#Debug.sprint("invalid pipe")
 
 		timer.start()
 		amount -= 1

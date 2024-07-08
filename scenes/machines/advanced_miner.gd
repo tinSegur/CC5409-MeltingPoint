@@ -31,7 +31,7 @@ func is_valid_place() -> bool:
 			if is_instance_valid(tile):
 				if tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(0,0) or tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(3, 0):
 					resource = true
-	Debug.sprint(str((bodies.size() - 1) == 0) + "," + str(resource))
+	#(str((bodies.size() - 1) == 0) + "," + str(resource))
 	#Debug.sprint(offset_vec)
 	return ((bodies.size()-1) == 0) and resource
 

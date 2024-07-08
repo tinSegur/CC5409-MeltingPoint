@@ -4,7 +4,7 @@ extends Machine
 @onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready():
-	Debug.sprint("build pump")
+	#Debug.sprint("build pump")
 	animated_sprite.stop()
 
 @rpc("call_local", "any_peer")

@@ -112,7 +112,7 @@ func _input(event: InputEvent) -> void:
 							inventory.remove_stock.rpc_id(1,ore, 10)
 					else:
 						place_error("Not Enough Resources",get_global_mouse_position())
-						
+
 			if !building:
 				mining = true
 				if mining_raycast.is_colliding():
@@ -159,7 +159,7 @@ func _input(event: InputEvent) -> void:
 					cancel_build.rpc_id(1, build_preview.name)
 					building = false
 					build_preview = null
-		
+
 		if event.is_action_pressed("cancel"):
 			if pause_menu.visible:
 				pause_menu.visible = false
@@ -406,7 +406,6 @@ func recieve_machine_name(m_name: String):
 @rpc("call_local", "reliable")
 func try_place_machine(m_name: String):
 	var machine = machine_container.get_node(m_name)
-	
 	var costs = machine.info.costs
 	var affordable = true
 	for cost in costs:

@@ -21,7 +21,7 @@ func _input_event(viewport, event, shape_idx):
 		cableMode = !cableMode
 
 func input_resource(item : MPMaterial, liquid : bool) -> Statics.INPUT_CODES:
-	Debug.sprint("input")
+	#Debug.sprint("input")
 	
 	if liquid:
 		internal_inv.add_stock(item.type, 1, Statics.Material_states.LIQUID)
