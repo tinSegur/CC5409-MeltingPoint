@@ -35,6 +35,17 @@ extends MarginContainer
 
 @onready var lobby_settings = %LobbySettings
 
+@onready var iron_amount = %IronAmount
+@onready var iron_min = %IronMin
+@onready var iron_max = %IronMax
+@onready var gold_amount = %GoldAmount
+@onready var gold_min = %GoldMin
+@onready var gold_max = %GoldMax
+@onready var crystal_amount = %CrystalAmount
+@onready var crystal_min = %CrystalMin
+@onready var crystal_max = %CrystalMax
+
+
 @export var lobby_player_scene: PackedScene
 
 # { id: true }
@@ -270,6 +281,7 @@ func _disconnect():
 
 func _on_start_timer_timeout() -> void:
 	if multiplayer.is_server():
+		set_generation_values()
 		start_game.rpc()
 
 
@@ -302,3 +314,17 @@ func _back_to_first_menu() -> void:
 		first.show()
 	if Game.is_online():
 		_disconnect()
+		
+func set_generation_values():
+	Game.iron_amount = iron_amount.value
+	if iron_min.value < iron_max.value:
+		Game.iron_min = iron_min.value
+		Game.iron_max = iron_max.value
+	Game.gold_amount = gold_amount.value
+	if gold_min.value < gold_max.value:
+		Game.gold_min = gold_min.value
+		Game.gold_max = gold_max.value
+	Game.crystal_amount = crystal_amount.value
+	if crystal_min.value < crystal_max.value:
+		Game.crystal_min = crystal_min.value
+		Game.crystal_max = crystal_max.value
