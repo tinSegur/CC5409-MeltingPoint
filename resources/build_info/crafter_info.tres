@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=10 format=3 uid="uid://gqldc7c0s0ce"]
+[gd_resource type="Resource" script_class="MPBuildInfo" load_steps=13 format=3 uid="uid://gqldc7c0s0ce"]
 
 [ext_resource type="Script" path="res://resources/build_info/build_info.gd" id="1_gi3s5"]
 [ext_resource type="Texture2D" uid="uid://ytl3dpbv10p7" path="res://assets/machines/crafter/crafter_button_hover.png" id="1_nj8gv"]
@@ -6,24 +6,30 @@
 [ext_resource type="Texture2D" uid="uid://blisnuo541hc3" path="res://assets/machines/crafter/crafter_button_base.png" id="3_50lh7"]
 [ext_resource type="Texture2D" uid="uid://bqug16scb5mkm" path="res://assets/machines/crafter/crafter_icon.png" id="4_fof3a"]
 [ext_resource type="Script" path="res://resources/build_info/cost_info.gd" id="4_j1ooq"]
+[ext_resource type="Texture2D" uid="uid://bi4dg8pw6ceit" path="res://assets/items/iron_sheet.png" id="4_nj56d"]
+[ext_resource type="Texture2D" uid="uid://bo8x2axxpero7" path="res://assets/items/gold_wire.png" id="6_c8qkw"]
+[ext_resource type="Texture2D" uid="uid://sg2jfb5qfw7u" path="res://assets/items/solid_iron.png" id="7_mls2j"]
 
 [sub_resource type="Resource" id="Resource_47k6v"]
 script = ExtResource("4_j1ooq")
 material = 3
 state = 0
 amount = 60
+icon = ExtResource("4_nj56d")
 
 [sub_resource type="Resource" id="Resource_am5rl"]
 script = ExtResource("4_j1ooq")
 material = 3
 state = 1
 amount = 30
+icon = ExtResource("6_c8qkw")
 
 [sub_resource type="Resource" id="Resource_ttxo3"]
 script = ExtResource("4_j1ooq")
 material = 0
 state = 0
 amount = 20
+icon = ExtResource("7_mls2j")
 
 [resource]
 script = ExtResource("1_gi3s5")

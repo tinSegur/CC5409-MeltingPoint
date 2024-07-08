@@ -1,8 +1,10 @@
-[gd_scene load_steps=34 format=3 uid="uid://q5srs237754j"]
+[gd_scene load_steps=36 format=3 uid="uid://q5srs237754j"]
 
 [ext_resource type="Script" path="res://scenes/machines/advanced_miner.gd" id="1_pi4cj"]
 [ext_resource type="Resource" uid="uid://plc5ncpomxft" path="res://resources/build_info/ad_miner_info.tres" id="2_6dnlu"]
+[ext_resource type="Resource" uid="uid://f004kgvtcc22" path="res://scenes/materials/iron.tres" id="2_mb7ny"]
 [ext_resource type="Texture2D" uid="uid://ca4aw8br32dvl" path="res://assets/machines/advanced_miner/advanced_miner.png" id="2_sn244"]
+[ext_resource type="Resource" uid="uid://ddet442k06thk" path="res://scenes/materials/crystal.tres" id="3_6s4ft"]
 [ext_resource type="PackedScene" uid="uid://cbmugsoctody6" path="res://scenes/machines/output.tscn" id="3_sctoj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cexpj"]
@@ -211,6 +213,8 @@ properties/4/replication_mode = 1
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_pi4cj")
+iron_data = ExtResource("2_mb7ny")
+crystal_data = ExtResource("3_6s4ft")
 info = ExtResource("2_6dnlu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

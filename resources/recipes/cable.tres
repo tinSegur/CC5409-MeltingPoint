@@ -6,5 +6,5 @@
 [resource]
 script = ExtResource("1_exw8j")
 material = ExtResource("1_nhtp0")
-melt_reqs = Array[int]([0, 2, 0, 0, 0])
-solid_reqs = Array[int]([0, 0, 0, 0, 0])
+melt_reqs = Array[int]([0, 0, 0, 0, 0])
+solid_reqs = Array[int]([0, 2, 0, 0, 0])

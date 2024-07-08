@@ -1,17 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dy41ucflg3i77"]
+[gd_scene load_steps=4 format=3 uid="uid://6qe7prb8l6qt"]
 
-[ext_resource type="Script" path="res://scenes/char/engineer_node.gd" id="1_6u4kn"]
-[ext_resource type="Texture2D" uid="uid://dxuabudhvb5go" path="res://assets/players/engineer.png" id="2_7o0hv"]
+[ext_resource type="Script" path="res://scenes/char/engineer_node.gd" id="1_drogn"]
+[ext_resource type="Texture2D" uid="uid://dxuabudhvb5go" path="res://assets/players/engineer.png" id="2_wjlm5"]
+[ext_resource type="Texture2D" uid="uid://btrpgq63sbcgg" path="res://assets/ui/engineer_icon.png" id="3_sypaa"]
 
 [node name="EngineerNode" type="Node2D"]
-script = ExtResource("1_6u4kn")
-overclocker_path = "res://scenes/machines/overclocker.tscn"
-stat_dict = {
-"acceleration": 200,
-"gravity": 200,
-"jump_speed": 135,
-"mine_time": 0.5,
-"mining_radius": 60,
-"speed": 85
-}
-player_sprite = ExtResource("2_7o0hv")
+script = ExtResource("1_drogn")
+player_sprite = ExtResource("2_wjlm5")
+ui_sprite = ExtResource("3_sypaa")
