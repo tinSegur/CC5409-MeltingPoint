@@ -33,6 +33,7 @@ extends MarginContainer
 @onready var time_container: HBoxContainer = %TimeContainer
 @onready var time: Label = %Time
 
+@onready var lobby_settings = %LobbySettings
 
 @export var lobby_player_scene: PackedScene
 
@@ -110,6 +111,7 @@ func _on_host_pressed() -> void:
 	var player = Statics.PlayerData.new(multiplayer.get_unique_id(), user.text)
 	_add_player(player)
 	
+	lobby_settings.show()
 	_go_to_menu(ready_menu)
 
 
@@ -130,7 +132,7 @@ func _on_confirm_join_pressed() -> void:
 	
 	var player = Statics.PlayerData.new(multiplayer.get_unique_id(), user.text)
 	_add_player(player)
-	
+	lobby_settings.hide()
 	_go_to_menu(ready_menu)
 
 
@@ -285,6 +287,7 @@ func _go_to_menu(menu: Control) -> void:
 func _back_menu() -> void:
 	_hide_menus()
 	_menu_stack.pop_back()
+	lobby_settings.hide()
 	var menu = _menu_stack.back()
 	if menu:
 		menu.show()
