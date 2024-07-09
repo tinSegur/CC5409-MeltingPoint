@@ -307,6 +307,7 @@ value = 9.0
 ticks_on_borders = true
 
 [node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer3/HBoxContainer2/IronMin"]
+layout_mode = 0
 offset_right = 24.0
 offset_bottom = 18.0
 size_flags_horizontal = 4
@@ -343,6 +344,7 @@ value = 70.0
 ticks_on_borders = true
 
 [node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer4/HBoxContainer3/IronMax"]
+layout_mode = 0
 offset_right = 24.0
 offset_bottom = 18.0
 size_flags_horizontal = 4
@@ -441,6 +443,7 @@ value = 60.0
 ticks_on_borders = true
 
 [node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer3/HBoxContainer2/GoldMin"]
+layout_mode = 0
 offset_right = 24.0
 offset_bottom = 18.0
 size_flags_horizontal = 4
@@ -477,6 +480,7 @@ value = 110.0
 ticks_on_borders = true
 
 [node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer4/HBoxContainer3/GoldMax"]
+layout_mode = 0
 offset_right = 24.0
 offset_bottom = 18.0
 size_flags_horizontal = 4
@@ -575,6 +579,7 @@ value = 100.0
 ticks_on_borders = true
 
 [node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer3/HBoxContainer2/CrystalMin"]
+layout_mode = 0
 offset_right = 24.0
 offset_bottom = 18.0
 size_flags_horizontal = 4
@@ -611,6 +616,7 @@ value = 150.0
 ticks_on_borders = true
 
 [node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer4/HBoxContainer3/CrystalMax"]
+layout_mode = 0
 offset_right = 24.0
 offset_bottom = 18.0
 size_flags_horizontal = 4
