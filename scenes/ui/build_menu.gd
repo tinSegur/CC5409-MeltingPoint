@@ -59,8 +59,8 @@ func _ready():
 	#cutter_button.pressed.connect(_cutter_selected)
 	#cutter_button.mouse_entered.connect(_cutter_hover)
 	
-	ad_miner_button.pressed.connect(_ad_miner_selected)
-	ad_miner_button.mouse_entered.connect(_ad_miner_hover)
+	#ad_miner_button.pressed.connect(_ad_miner_selected)
+	#ad_miner_button.mouse_entered.connect(_ad_miner_hover)
 	
 	#stabilizer_button.pressed.connect(_stabilizer_selected)
 	#stabilizer_button.mouse_entered.connect(_stabilizer_hover)

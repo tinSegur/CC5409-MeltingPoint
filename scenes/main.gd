@@ -32,17 +32,22 @@ func _ready() -> void:
 	player_ready.rpc_id(1)
 
 func _input(event):
-	if event.is_action_pressed("test"):
-
+	if event.is_action_pressed("1"):
 		inventory.add_resource.rpc(Statics.Materials.IRON, 10, Statics.Material_states.SOLID)
+	if event.is_action_pressed("2"):
 		inventory.add_resource.rpc(Statics.Materials.IRON, 10, Statics.Material_states.LIQUID)
+	if event.is_action_pressed("3"):
 		inventory.add_resource.rpc(Statics.Materials.GOLD, 10, Statics.Material_states.SOLID)
+	if event.is_action_pressed("4"):
 		inventory.add_resource.rpc(Statics.Materials.GOLD, 10, Statics.Material_states.LIQUID)
+	if event.is_action_pressed("5"):
 		inventory.add_resource.rpc(Statics.Materials.ADVANCED, 10, Statics.Material_states.SOLID)
+	if event.is_action_pressed("6"):
 		inventory.add_resource.rpc(Statics.Materials.ADVANCED, 10, Statics.Material_states.LIQUID)
+	if event.is_action_pressed("7"):
 		inventory.add_resource.rpc(Statics.Materials.CRYSTALS, 10, Statics.Material_states.SOLID)
+	if event.is_action_pressed("8"):
 		inventory.add_resource.rpc(Statics.Materials.CRYSTALS, 10, Statics.Material_states.LIQUID)
-
 
 @rpc("call_local", "any_peer")
 func player_ready():
