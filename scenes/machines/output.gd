@@ -14,7 +14,7 @@ var stable_mode : bool = false
 var output_temp : int = 0
 
 var crafter_mode : bool = false
-
+var ambient_mode : bool = false
 
 func _ready():
 	tilemap = get_tree().current_scene.get_node("TileMap")
@@ -47,10 +47,17 @@ func generate(index: int, amount: int, state : int = Statics.Material_states.SOL
 				if state != Statics.Material_states.SOLID:
 					item.inner_temp = item.melting_point + 1
 				
+				if ambient_mode:
+					var tile_coords = tilemap.get_tile_coords(global_position)
+					var tile: TileData= tilemap.get_cell_tile_data(3, tile_coords)
+					if is_instance_valid(tile):
+						var new_temp=tile.get_custom_data("temperature")
+						item.inner_temp = new_temp
+				
 				if stable_mode:
 					item.inner_temp = output_temp
-		else:
-			Debug.sprint("invalid pipe")
+		#else:
+			#Debug.sprint("invalid pipe")
 
 		timer.start()
 		amount -= 1

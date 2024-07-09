@@ -188,6 +188,6 @@ func _wa_platform_selected():
 	visible = false
 
 func _machine_button_selected():
-	Debug.sprint("machine selected")
+	#Debug.sprint("machine selected")
 	machine_selected.emit()
 	visible = false

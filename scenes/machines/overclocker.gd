@@ -22,16 +22,17 @@ func place():
 	var bodies = machine_detector.get_overlapping_bodies()
 	for machine in bodies:
 		overclock_machine(machine)
-	
+	Game.set_overclocker_placed.rpc(true)
 	overclock_placed.emit()
 
 func cancel_build():
-	Debug.sprint("overclock cancel")
+	#Debug.sprint("overclock cancel")
 	if placed:
 		var bodies = machine_detector.get_overlapping_bodies()
 		for machine in bodies:
 			unoverclock_machine(machine)
 	queue_free()
+	Game.set_overclocker_placed.rpc(false)
 
 func overclock_machine(machine : Machine):
 	var hub = machine as Hub

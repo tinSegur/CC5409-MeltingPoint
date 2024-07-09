@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://c0xu2cniynmx2"]
+[gd_scene load_steps=29 format=3 uid="uid://c0xu2cniynmx2"]
 
 [ext_resource type="Theme" uid="uid://bsov5mkb3jbwv" path="res://assets/ui/ui_theme.tres" id="1_67dro"]
 [ext_resource type="Script" path="res://scenes/ui/build_menu.gd" id="1_71fyl"]
@@ -17,9 +17,6 @@
 [ext_resource type="Resource" uid="uid://gqldc7c0s0ce" path="res://resources/build_info/crafter_info.tres" id="9_bitse"]
 [ext_resource type="Texture2D" uid="uid://cvt5v1fal7lf7" path="res://assets/machines/pipes/pipe_button_pressed.png" id="9_ni04f"]
 [ext_resource type="Texture2D" uid="uid://c0xfanjai2hk1" path="res://assets/machines/pipes/pipe_button_hover.png" id="10_1sese"]
-[ext_resource type="Texture2D" uid="uid://cqrhrkr583ek5" path="res://assets/machines/advanced_miner/advanced_miner_button_base.png" id="20_7am7f"]
-[ext_resource type="Texture2D" uid="uid://bld8p6s1op50i" path="res://assets/machines/advanced_miner/advanced_miner_button_pressed.png" id="21_oc1k1"]
-[ext_resource type="Texture2D" uid="uid://r30k0dor1lxn" path="res://assets/machines/advanced_miner/advanced_miner_button_hover.png" id="22_ndin1"]
 [ext_resource type="Texture2D" uid="uid://dlj31glbrq12f" path="res://assets/machines/platform/ramp_button_base.png" id="26_7sk0g"]
 [ext_resource type="Texture2D" uid="uid://caonnl7lj25lw" path="res://assets/machines/platform/ramp_button_pressed.png" id="27_3vx7n"]
 [ext_resource type="Texture2D" uid="uid://dlyd4j63ftbrk" path="res://assets/machines/platform/ramp_button_hover.png" id="28_5gdpd"]
@@ -103,12 +100,6 @@ texture_normal = ExtResource("8_wlnk2")
 texture_pressed = ExtResource("9_ni04f")
 texture_hover = ExtResource("10_1sese")
 stretch_mode = 3
-
-[node name="AdMinerButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer"]
-layout_mode = 2
-texture_normal = ExtResource("20_7am7f")
-texture_pressed = ExtResource("21_oc1k1")
-texture_hover = ExtResource("22_ndin1")
 
 [node name="RampButton" type="TextureButton" parent="PanelContainer/MarginContainer/HBoxContainer/MachineSelector/ScrollContainer/GridContainer"]
 layout_mode = 2

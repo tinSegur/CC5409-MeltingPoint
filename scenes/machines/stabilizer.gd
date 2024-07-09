@@ -25,7 +25,7 @@ func place():
 	timer.start()
 
 func input_resource(item : MPMaterial, liquid : bool) -> Statics.INPUT_CODES:
-	Debug.sprint("input")
+	#Debug.sprint("input")
 	
 	material_queue.append(item)
 	
@@ -34,13 +34,13 @@ func input_resource(item : MPMaterial, liquid : bool) -> Statics.INPUT_CODES:
 func spawn_resource():
 	if material_queue.is_empty():
 		return
-	Debug.sprint("stabilizer spawn")
-	Debug.sprint(gold_charge)
+	#Debug.sprint("stabilizer spawn")
+	#Debug.sprint(gold_charge)
 	if gold_charge > 0:
 		var mat = material_queue.pop_front()
 		output.output_type = mat
 		output.output_temp = temp
-		Debug.sprint("mat")
+		#Debug.sprint("mat")
 		output.generate(0, 1)
 		gold_charge -= 1
 		if gold_charge == 0:

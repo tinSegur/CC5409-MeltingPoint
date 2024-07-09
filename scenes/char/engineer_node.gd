@@ -11,9 +11,9 @@ func _ready():
 	player = get_parent()
 
 func ability():
-	if !overclocker_placed:
+	if !Game.overclocker_placed:
 		player.build_scene = overclocker_path
 		player.on_machine_selected()
 	else:
-		player.place_error("Overclocker already exists", player.global_position + Vector2(0.0, 20))
+		player.place_error("Overclocker already exists", player.global_position + Vector2(0.0, -20))
 	

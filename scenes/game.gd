@@ -18,6 +18,9 @@ signal upnp_completed(error)
 const SERVER_PORT = 5409
 var thread = null
 
+
+var overclocker_placed = false
+
 # World gen variables
 var iron_amount : int = 12
 var iron_min : int = 9
@@ -100,3 +103,6 @@ func _exit_tree():
 	# Wait for thread finish here to handle game exit while the thread is running.
 	thread.wait_to_finish()
 
+@rpc("any_peer", "reliable", "call_local")
+func set_overclocker_placed(b : bool):
+	overclocker_placed = b

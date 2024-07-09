@@ -1,9 +1,15 @@
 extends Machine
 
+@export var iron_data : MPMaterial
+@export var crystal_data : MPMaterial
+
+var output_mat : MPMaterial
+
 @onready var animated_sprite_2d = $AnimatedSprite2D
 
 func _ready():
 	animated_sprite_2d.stop()
+
 
 @onready var resource_detector = $ResourceDetector
 
@@ -18,6 +24,20 @@ func place():
 
 	animated_sprite_2d.play()
 	timer.start()
+	
+	var tiles = resource_detector.get_overlapping_bodies()
+	if resource_detector.has_overlapping_bodies():
+		var tilemap: TileMap = tiles[0]
+		if is_instance_valid(tilemap):
+			var tile_coords = tilemap.get_tile_coords(global_position + Vector2(0, 20).rotated(rotation))
+			var tile = tilemap.get_cell_tile_data(1, tile_coords)
+			if is_instance_valid(tile):
+				if tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(0,0):
+					output_mat = iron_data
+				elif tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(3, 0):
+					output_mat = crystal_data
+					output.ambient_mode = true
+	
 
 func is_valid_place() -> bool:
 	var bodies: Array = hitbox.get_overlapping_bodies()
@@ -31,7 +51,7 @@ func is_valid_place() -> bool:
 			if is_instance_valid(tile):
 				if tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(0,0) or tilemap.get_cell_atlas_coords(1, tile_coords) == Vector2i(3, 0):
 					resource = true
-	Debug.sprint(str((bodies.size() - 1) == 0) + "," + str(resource))
+	#(str((bodies.size() - 1) == 0) + "," + str(resource))
 	#Debug.sprint(offset_vec)
 	return ((bodies.size()-1) == 0) and resource
 
@@ -52,4 +72,5 @@ func send_pos(pos: Vector2):
 	global_position = pos
 
 func spawn_resource():
+	output.output_type = output_mat
 	output.generate(0, 1)
