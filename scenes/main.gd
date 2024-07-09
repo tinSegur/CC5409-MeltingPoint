@@ -12,6 +12,7 @@ extends Node2D
 @onready var inventory = $Inventory
 var players_ready = 0
 var variety = 0
+var victory_happened = false
 var iron_positions : Array[Vector2]
 var gold_positions : Array[Vector2]
 var crystal_positions : Array[Vector2]
@@ -127,6 +128,7 @@ func _on_inventory_stock_variety(d):
 	else:
 		variety -= 1
 	
-	if variety == 8:
+	if variety == 8 and !victory_happened:
 		for player in players.get_children():
 			player.victory()
+		victory_happened = true

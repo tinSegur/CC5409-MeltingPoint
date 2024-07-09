@@ -42,7 +42,7 @@ func overclock_machine(machine : Machine):
 	if machine == self:
 		return
 	
-	if machine.placed:
+	if !machine.overclocked:
 		machine.modulate = Color(0.9, 0.7, 1.0, 1.0)
 		if placed:
 			machine.timer.wait_time = machine.timer.wait_time/2
@@ -55,7 +55,7 @@ func unoverclock_machine(machine : Machine):
 	if machine == self:
 		return
 	
-	if machine.placed:
+	if machine.overclocked:
 		machine.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		if placed:
 			machine.timer.wait_time = machine.timer.wait_time*2

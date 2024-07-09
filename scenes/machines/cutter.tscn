@@ -195,6 +195,9 @@ properties/3/replication_mode = 2
 properties/4/path = NodePath(".:offset_vec")
 properties/4/spawn = true
 properties/4/replication_mode = 1
+properties/5/path = NodePath(".:scale")
+properties/5/spawn = true
+properties/5/replication_mode = 2
 
 [node name="Cutter" type="StaticBody2D"]
 collision_layer = 2
@@ -205,6 +208,7 @@ plate_recipe = ExtResource("3_efp70")
 offset_vec = Vector2(0, 0)
 info = ExtResource("2_e2bll")
 rotable = false
+flippable = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_x3hw5")

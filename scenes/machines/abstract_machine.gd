@@ -6,7 +6,9 @@ extends StaticBody2D
 @export var info: MPBuildInfo
 
 var placed = false
+var overclocked = false
 @export var rotable = true
+@export var flippable = false
 @export var builder_id: int = 0
 @onready var hitbox = $Hitbox
 @onready var timer : Timer = $Timer
@@ -35,10 +37,16 @@ func _physics_process(delta):
 
 func _input(event):
 	if !placed and builder_id == multiplayer.get_unique_id():
-		if event.is_action("next_tile") && rotable:
-			mouse_rotate.rpc(true)
-		elif event.is_action("prev_tile") && rotable:
-			mouse_rotate.rpc(false)
+		if event.is_action("next_tile"):
+			if rotable:
+				mouse_rotate.rpc(true)
+			elif flippable:
+				scale.x = -1
+		elif event.is_action("prev_tile"):
+			if rotable:
+				mouse_rotate.rpc(false)
+			elif flippable:
+				scale.x = 1 
 
 
 @rpc("call_local", "any_peer")
