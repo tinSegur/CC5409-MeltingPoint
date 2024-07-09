@@ -15,10 +15,30 @@ func _ready():
 	super._ready()
 	output.stable_mode = true
 
+func _input(event):
+	if !placed and builder_id == multiplayer.get_unique_id():
+		if event.is_action("next_tile"):
+			if rotable:
+				mouse_rotate.rpc(true)
+			elif flippable:
+				scale.x = -1
+				sprite.scale.x = -1
+				orient = 1
+				update_sprite()
+		elif event.is_action("prev_tile"):
+			if rotable:
+				mouse_rotate.rpc(false)
+			elif flippable:
+				scale.x = 1
+				sprite.scale.x = 1
+				orient = 0
+				update_sprite()
+
 func _input_event(viewport, event, shape_idx):
 	if event.is_action_pressed("mine") and placed:
 		temp = (temp+1)%10
 		set_temp.rpc(temp)
+
 
 func place():
 	super.place()
@@ -65,6 +85,7 @@ func _on_area_2d_2_area_entered(area):
 
 func update_sprite():
 	sprite.set_frame_coords(Vector2i(temp, 2*is_charged + orient))
+	print(Vector2i(temp, 2*is_charged + orient))
 
 
 @rpc("call_remote")
