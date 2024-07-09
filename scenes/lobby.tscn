@@ -1,11 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://bslhrv3eo36wd"]
+[gd_scene load_steps=11 format=3 uid="uid://bslhrv3eo36wd"]
 
 [ext_resource type="Script" path="res://scenes/lobby.gd" id="1_g2fmt"]
 [ext_resource type="PackedScene" uid="uid://chbh4lxk8rmmd" path="res://scenes/ui/lobby_player.tscn" id="2_060bj"]
 [ext_resource type="Texture2D" uid="uid://wk4qsp2dsnfg" path="res://assets/ui/menu_nine_patch.png" id="3_70chq"]
 [ext_resource type="Theme" uid="uid://bsov5mkb3jbwv" path="res://assets/ui/ui_theme.tres" id="4_polcg"]
+[ext_resource type="Script" path="res://addons/SliderLabel/SliderLabel.gd" id="5_ilp2l"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gfab3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1x5np"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2xmk0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dte7t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhleo"]
 
 [node name="Lobby" type="MarginContainer"]
 anchors_preset = 15
@@ -114,52 +123,55 @@ text = "Join"
 visible = false
 layout_mode = 2
 
-[node name="ReadyMenu" type="VBoxContainer" parent="PanelContainer/Menus"]
+[node name="ReadyMenu" type="HBoxContainer" parent="PanelContainer/Menus"]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Menus/ReadyMenu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer"]
 layout_mode = 2
 text = "Players:
 "
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/Menus/ReadyMenu"]
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer"]
 layout_mode = 2
 
-[node name="Players" type="VBoxContainer" parent="PanelContainer/Menus/ReadyMenu/PanelContainer"]
+[node name="Players" type="VBoxContainer" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer"]
 layout_mode = 2
 
-[node name="RoleA" type="Button" parent="PanelContainer/Menus/ReadyMenu/HBoxContainer"]
+[node name="RoleA" type="Button" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_polcg")
 text = "Engineer"
 
-[node name="RoleB" type="Button" parent="PanelContainer/Menus/ReadyMenu/HBoxContainer"]
+[node name="RoleB" type="Button" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_polcg")
 text = "Scientist"
 
-[node name="RoleC" type="Button" parent="PanelContainer/Menus/ReadyMenu/HBoxContainer"]
+[node name="RoleC" type="Button" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_polcg")
 text = "Scout"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer"]
 layout_mode = 2
 
-[node name="BackReady" type="Button" parent="PanelContainer/Menus/ReadyMenu/HBoxContainer2"]
+[node name="BackReady" type="Button" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -167,25 +179,446 @@ theme = ExtResource("4_polcg")
 text = "Back
 "
 
-[node name="Ready" type="Button" parent="PanelContainer/Menus/ReadyMenu/HBoxContainer2"]
+[node name="Ready" type="Button" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_polcg")
 text = "Ready"
 
-[node name="TimeContainer" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu"]
+[node name="TimeContainer" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="Label2" type="Label" parent="PanelContainer/Menus/ReadyMenu/TimeContainer"]
+[node name="Label2" type="Label" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer/TimeContainer"]
 layout_mode = 2
 text = "Starting in:"
 
-[node name="Time" type="Label" parent="PanelContainer/Menus/ReadyMenu/TimeContainer"]
+[node name="Time" type="Label" parent="PanelContainer/Menus/ReadyMenu/VBoxContainer/TimeContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "5"
+
+[node name="LobbySettings" type="VBoxContainer" parent="PanelContainer/Menus/ReadyMenu"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings"]
+layout_mode = 2
+text = "World Settings"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HSeparator4" type="HSeparator" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="IronSettings" type="VBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer"]
+layout_mode = 2
+text = "Iron"
+
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_1x5np")
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Amount"
+
+[node name="IronAmount" type="HSlider" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 40.0
+value = 12.0
+ticks_on_borders = true
+
+[node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer2/HBoxContainer/IronAmount"]
+layout_mode = 0
+offset_right = 24.0
+offset_bottom = 18.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 12
+text = "100"
+script = ExtResource("5_ilp2l")
+visibility_rule = 3
+separation = 0
+metadata/_edit_initialized_ = true
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings"]
+layout_mode = 2
+theme_override_constants/separation = 6
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2xmk0")
+
+[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer3/HBoxContainer2"]
+custom_minimum_size = Vector2(37, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Min Depth"
+autowrap_mode = 2
+
+[node name="IronMin" type="HSlider" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer3/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 150.0
+value = 9.0
+ticks_on_borders = true
+
+[node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer3/HBoxContainer2/IronMin"]
+offset_right = 24.0
+offset_bottom = 18.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 12
+text = "100"
+script = ExtResource("5_ilp2l")
+visibility_rule = 3
+separation = 0
+metadata/_edit_initialized_ = true
+
+[node name="MarginContainer4" type="MarginContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer4/HBoxContainer3"]
+custom_minimum_size = Vector2(37, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Max Depth"
+autowrap_mode = 2
+
+[node name="IronMax" type="HSlider" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer4/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 150.0
+value = 70.0
+ticks_on_borders = true
+
+[node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/IronSettings/MarginContainer4/HBoxContainer3/IronMax"]
+offset_right = 24.0
+offset_bottom = 18.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 12
+text = "100"
+script = ExtResource("5_ilp2l")
+visibility_rule = 3
+separation = 0
+metadata/_edit_initialized_ = true
+
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="GoldSettings" type="VBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer"]
+layout_mode = 2
+text = "Gold"
+
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_dte7t")
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Amount"
+
+[node name="GoldAmount" type="HSlider" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 40.0
+value = 12.0
+ticks_on_borders = true
+
+[node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer2/HBoxContainer/GoldAmount"]
+layout_mode = 0
+offset_right = 24.0
+offset_bottom = 18.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 12
+text = "100"
+script = ExtResource("5_ilp2l")
+visibility_rule = 3
+separation = 0
+metadata/_edit_initialized_ = true
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings"]
+layout_mode = 2
+theme_override_constants/separation = 6
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2xmk0")
+
+[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer3/HBoxContainer2"]
+custom_minimum_size = Vector2(37, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Min Depth"
+autowrap_mode = 2
+
+[node name="GoldMin" type="HSlider" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer3/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 150.0
+value = 60.0
+ticks_on_borders = true
+
+[node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer3/HBoxContainer2/GoldMin"]
+offset_right = 24.0
+offset_bottom = 18.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 12
+text = "100"
+script = ExtResource("5_ilp2l")
+visibility_rule = 3
+separation = 0
+metadata/_edit_initialized_ = true
+
+[node name="MarginContainer4" type="MarginContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer4/HBoxContainer3"]
+custom_minimum_size = Vector2(37, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Max Depth"
+autowrap_mode = 2
+
+[node name="GoldMax" type="HSlider" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer4/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 150.0
+value = 110.0
+ticks_on_borders = true
+
+[node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/GoldSettings/MarginContainer4/HBoxContainer3/GoldMax"]
+offset_right = 24.0
+offset_bottom = 18.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 12
+text = "100"
+script = ExtResource("5_ilp2l")
+visibility_rule = 3
+separation = 0
+metadata/_edit_initialized_ = true
+
+[node name="HSeparator3" type="HSeparator" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CrystalSettings" type="VBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer"]
+layout_mode = 2
+text = "Crystals"
+
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_bhleo")
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Amount"
+
+[node name="CrystalAmount" type="HSlider" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 40.0
+value = 10.0
+ticks_on_borders = true
+
+[node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer2/HBoxContainer/CrystalAmount"]
+layout_mode = 0
+offset_right = 24.0
+offset_bottom = 18.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 12
+text = "100"
+script = ExtResource("5_ilp2l")
+visibility_rule = 3
+separation = 0
+metadata/_edit_initialized_ = true
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings"]
+layout_mode = 2
+theme_override_constants/separation = 6
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2xmk0")
+
+[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer3/HBoxContainer2"]
+custom_minimum_size = Vector2(37, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Min Depth"
+autowrap_mode = 2
+
+[node name="CrystalMin" type="HSlider" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer3/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 150.0
+value = 100.0
+ticks_on_borders = true
+
+[node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer3/HBoxContainer2/CrystalMin"]
+offset_right = 24.0
+offset_bottom = 18.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 12
+text = "100"
+script = ExtResource("5_ilp2l")
+visibility_rule = 3
+separation = 0
+metadata/_edit_initialized_ = true
+
+[node name="MarginContainer4" type="MarginContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer4/HBoxContainer3"]
+custom_minimum_size = Vector2(37, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Max Depth"
+autowrap_mode = 2
+
+[node name="CrystalMax" type="HSlider" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer4/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 150.0
+value = 150.0
+ticks_on_borders = true
+
+[node name="SliderLabel" type="Label" parent="PanelContainer/Menus/ReadyMenu/LobbySettings/ScrollContainer/VBoxContainer/CrystalSettings/MarginContainer4/HBoxContainer3/CrystalMax"]
+offset_right = 24.0
+offset_bottom = 18.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 12
+text = "100"
+script = ExtResource("5_ilp2l")
+visibility_rule = 3
+separation = 0
+metadata/_edit_initialized_ = true
 
 [node name="StartTimer" type="Timer" parent="."]

@@ -18,7 +18,19 @@ signal upnp_completed(error)
 const SERVER_PORT = 5409
 var thread = null
 
+
 var overclocker_placed = false
+
+# World gen variables
+var iron_amount : int = 12
+var iron_min : int = 9
+var iron_max : int = 70
+var gold_amount : int = 12
+var gold_min : int = 60
+var gold_max : int = 110
+var crystal_amount : int = 10
+var crystal_min : int = 100
+var crystal_max : int = 150
 
 func add_player(player: Statics.PlayerData) -> void:
 	players.append(player)
