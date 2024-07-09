@@ -59,7 +59,7 @@ func change_temp(new_temp : int):
 	sprite = $Sprite2D
 	inner_temp = move_toward(inner_temp, new_temp, max((new_temp - inner_temp)*melt_speed, melt_speed))
 
-	delta_temp=new_temp-inner_temp
+	delta_temp = abs(inner_temp - new_temp)
 	if can_melt :
 		
 		# Color logic

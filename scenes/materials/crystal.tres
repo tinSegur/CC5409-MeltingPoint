@@ -8,7 +8,7 @@
 script = ExtResource("1_6rl0r")
 type = 2
 melting_point = 2
-breaking_delta = 2.0
+breaking_delta = 1.5
 can_break = true
 can_melt = false
 melt_icon = ExtResource("1_n7t5a")
